@@ -9,7 +9,7 @@ import {
 import "./App.scss";
 
 import Login from './components/login/login';
-import Dashboard from './components/dashboard/dashboard';
+import Menu from './components/dashboard/menu';
 import Usuarios from './components/usuarios/usuarios';
 import Hclinicas from './components/hclinicas/hclinicas';
 import Agenda from './components/agenda/agenda';
@@ -42,8 +42,8 @@ function App() {
         <Route path="/login" exact component={Login}> 
           <Login />
         </Route>
-        <Route path="/dashboard">
-         <Dashboard />
+        <Route path="/menu">
+         <Menu />
         </Route>
         <Route path="/usuarios">
           <Usuarios />
