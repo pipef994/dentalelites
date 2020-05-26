@@ -228,6 +228,10 @@ class usuarios extends React.Component {
               <option value="clien">Cliente</option>
             </select>
           </div>
+          <div className="form-group col-sm-5">
+            <label htmlFor="email">Correo</label>
+            <input type="email" id="email" name="email"/>
+          </div>
           <div className="container">
             <div className="row">
               <div className="col-sm-2">
@@ -239,11 +243,11 @@ class usuarios extends React.Component {
                   Crear{" "}
                 </Button>
               </div>
-              <div className="col-sm-2">
+              {/* <div className="col-sm-2">
                 <Button variant="contained" color="secondary" align="center">
                   Inhabilitar
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
