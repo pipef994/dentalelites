@@ -243,11 +243,6 @@ class usuarios extends React.Component {
                   Crear{" "}
                 </Button>
               </div>
-              {/* <div className="col-sm-2">
-                <Button variant="contained" color="secondary" align="center">
-                  Inhabilitar
-                </Button>
-              </div> */}
             </div>
           </div>
         </div>

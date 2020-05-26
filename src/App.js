@@ -5,7 +5,7 @@ import * as ReactBootStrap from "react-bootstrap";
 
 import Login from "./components/login/login";
 import Menu from "./components/dashboard/Navbar";
-// import Usuarios from "./components/usuarios/usuarios";
+import Usuarios from "./components/usuarios/usuarios";
 // import Hclinicas from "./components/hclinicas/hclinicas";
 // import Agenda from "./components/agenda/agenda";
 // import Calendario from "./components/agenda/calendario";
@@ -21,6 +21,17 @@ function App() {
           <Route path="/Navbar">
             <Menu />
           </Route>
+          <Route path="/usuarios">
+            <Usuarios />
+          </Route>
+          <Route
+            component={() => (
+              <div className="ed-grid">
+                <h1>Error 404</h1>
+                <span>Pagina no encontrada</span>
+              </div>
+            )}
+          />
         </Switch>
       </BrowserRouter>
     </div>

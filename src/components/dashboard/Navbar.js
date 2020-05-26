@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import * as ReactBootStrap from "react-bootstrap";
 
@@ -27,7 +27,9 @@ class Navbar extends React.Component {
               id="collasible-nav-dropdown"
             >
               <ReactBootStrap.NavDropdown.Item href="Usuarios">
-                Crear
+                <Link to="../usuarios/usuarios.jsx">
+                  Crear
+                </Link>
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="#action/1.2">
                 Inhabilitar
