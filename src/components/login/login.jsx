@@ -1,6 +1,7 @@
 import React from 'react'
 import "./login.scss"
-import loginImg from "../images/logo.png"
+import loginImg from "../images/login.png"
+import { Link } from "react-router-dom";
 
 const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
@@ -48,8 +49,8 @@ class login extends React.Component {
             </div>
             <div className="form">
               <div className="form-group">
-                <label htmlFor="email">Usuario</label>
-                <input type="text" name="email" id="email" placeholder=" Ingrese el usuario"
+                <label htmlFor="email">Email</label>
+                <input type="text" name="email" id="email" placeholder=" Ingrese el correo"
                   value={this.state.email} onChange={this.onChange.bind(this)} required />
               </div>
               <div className="form-group">
@@ -62,16 +63,16 @@ class login extends React.Component {
           <div className="footer">
             <button type="button" className="btn" onClick={this.join.bind(this)}>
               Ingresar
-          </button>
+            </button>
             <button type="button" className="btn2">
               Cancelar
-          </button>
+            </button>
           </div>
           <br />
           <div >
             {/* <a href="http://google.com" class="button2" target="_blank">Recordar Contraseña</a> */}
-            <a href="../recovery_user/recovery_user.jsx" className="button2" target="_blank">Recordar Contraseña</a>
-            {/* <link rel="stylesheet" href="../recovery_user/recovery_user.jsx"/> */}
+            {/* <a href="../recovery_user/recovery_user.jsx" className="button2" target="_blank">Recordar Contraseña</a> */}
+            <Link to="./recuperar" className="button2" target="_blank" >Recuperar Contraseña</Link>
           </div>
         </div>
       </div>

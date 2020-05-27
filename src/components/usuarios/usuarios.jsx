@@ -130,7 +130,6 @@ class usuarios extends React.Component {
             >
               <option value="wh"></option>
               <option value="cc">Cédula de ciudadanía</option>
-              <option value="cc">Cédula de ciudadanía</option>
               <option value="ce">Cédula de extranjería</option>
               <option value="di">Documento personal de Identificación</option>
               <option value="ps">Pasaporte</option>

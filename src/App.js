@@ -6,24 +6,23 @@ import * as ReactBootStrap from "react-bootstrap";
 import Login from "./components/login/login";
 import Menu from "./components/dashboard/Navbar";
 import Usuarios from "./components/usuarios/usuarios";
+import Home from "./Home";
+import Recuperar from "./components/login/recuperar";
 // import Hclinicas from "./components/hclinicas/hclinicas";
 // import Agenda from "./components/agenda/agenda";
 // import Calendario from "./components/agenda/calendario";
 
 function App() {
+  const storage = window.localStorage.getItem("email");
   return (
     <div>
       <BrowserRouter>
+        {storage && <Menu />}
         <Switch>
-          <Route path="/login" exact component={Login}>
-            <Login />
-          </Route>
-          <Route path="/Navbar">
-            <Menu />
-          </Route>
-          <Route path="/usuarios">
-            <Usuarios />
-          </Route>
+          <Route path="/" exact component={Home} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/usuarios" component={Usuarios} />
+          <Route path="/recuperar" component={Recuperar} />
           <Route
             component={() => (
               <div className="ed-grid">
@@ -35,13 +34,6 @@ function App() {
         </Switch>
       </BrowserRouter>
     </div>
-    //  <div>
-    //    <BrowserRouter>
-    //     <div>
-    //       <Menu/>
-    //     </div>
-    //    </BrowserRouter>
-    //  </div>
   );
 }
 
