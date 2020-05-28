@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
-import "../usuarios/disableUser.jsx";
+import UserImg from '../images/disableUser.png'
+import "./disableUser.scss";
 
 const DisableUser = () => {
 
@@ -10,6 +11,9 @@ const DisableUser = () => {
           <div className="header">Inhabilitar usuario</div>
           <br />
           <div className="content">
+          <div className="image">
+              <img src={UserImg} />
+            </div>
             <div className="form">
               <div className="form-group">
                 <label htmlFor="tipId">Tipo de documento</label>
@@ -28,6 +32,9 @@ const DisableUser = () => {
                   <option value="ti">Tarjeta de identidad</option>
                 </select>
               </div>
+              <br/> 
+              <br/> 
+              <br/> 
               <div className="form-group">
                 <label htmlFor="nId">Número de Identificación</label>
                 <input type="text" id="nId" name="nId"

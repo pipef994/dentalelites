@@ -1,5 +1,5 @@
-.disableUser {
-  width: 27em;
+.disableUSer {
+  width: 40em;
   height: 40em;
   display: flex;
   justify-content: center;
@@ -30,12 +30,21 @@
     .header {
       font-size: 24px;
       font-family: "Open Sans", sans-serif;
+      font-weight: 900
     }
 
     .content {
       display: flex;
       flex-direction: column;
       align-items: center;
+      .image {
+        width: 10em;
+        text-align: center;
+        
+        img {
+          width: 60%;
+          height: 60%;
+        }
       }
 
       .form {
@@ -56,7 +65,7 @@
 
           input {
             margin-top: 6px;
-            min-width: 18em;
+            min-width: 20em;
             height: 37px;
             padding: 0px 10px;
             font-size: 16px;
@@ -66,11 +75,6 @@
             border-radius: 4px;
             margin-bottom: 31px;
             transition: all 250ms ease-in-out;
-
-            &:hover {
-              //background-color: #ffffff;
-              //box-shadow: 0px 0px 14px 0.3px #0e81ce96;
-            }
 
             &:focus {
               outline: none;
@@ -85,9 +89,9 @@
       margin-top: 3em;
     }
 
-
     .btn {
       font-size: 20px;
+      font-family: "Open Sans", sans-serif;
       padding: 5px 20px;
       border: 0;
       background-color: #09ca9aef;
@@ -107,12 +111,5 @@
     .body{
       text-align: center;
     }
-
   }
-
-
-// .base-container {
-
-
-
-// }
+}
