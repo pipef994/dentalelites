@@ -7,20 +7,36 @@ import { useForm } from "react-hook-form";
 
 const Recuperar = () => {
 
-  const { register, errors, handleSubmit, setError, clearError  } = useForm();
+  const { register, errors, handleSubmit, setError, clearError } = useForm();
 
   const [entradas, setEntradas] = useState([])
 
   const onSubmit = (data, e) => {
     console.log(data);
     setEntradas([...entradas,
-    data])
+      data])
     e.target.reset();
   }
 
+// //Se consulta si el correo ingresado existe
+// let url = `http://localhost:8080/usuarios/consultarUsuarios`
+
+//   const api = new XMLHttpRequest();
+//   api.open('GET', url, true);
+//   api.send();
+
+//   api.onreadystatechange = function(){
+//     if (this.status == 200 && this.readyState == 4) {
+//       let datos = JSON.parse(this.responseText);
+//       console.log(datos.email);
+//       let resultado = document.querySelector('#resusltado');
+//       resultado.innerHTML = '';
+//     }
+//  
+
   return (
     <Fragment>
-      <form className='login' onSubmit={handleSubmit(onSubmit)}>
+      <form className='recuperar' onSubmit={handleSubmit(onSubmit)}>
         <div className="base-container">
           <div className="header">Recuperar Contraseña</div>
           <br />
@@ -38,7 +54,7 @@ const Recuperar = () => {
                   ref={register({
                     required: { value: true, message: 'Campo obligatorio' }
                   })} />
-                { errors.email &&
+                {errors.email &&
                   <span className="text-danger text-small d-block mb-2">
                     {errors.email.message}
                   </span>
@@ -47,7 +63,8 @@ const Recuperar = () => {
               <div className="footer">
                 <button type="submit"
                   className="btn"
-                  id="submit">
+                  id="submit" 
+                >
                   Enviar
                 </button>
               </div>

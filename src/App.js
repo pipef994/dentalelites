@@ -2,12 +2,14 @@ import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "./App.scss";
 
+import Home from "./Home";
 import Login from "./components/login/login";
 import Menu from "./components/dashboard/Navbar";
 import Usuarios from "./components/usuarios/usuarios";
-import Home from "./Home";
 import Recuperar from "./components/login/recuperar";
 import Hclinicas from "./components/hclinicas";
+import Disableuser from "./components/usuarios/disableUser";
+// import Hclinicas from "./components/hclinicas/hclinicas";
 // import Agenda from "./components/agenda/agenda";
 // import Calendario from "./components/agenda/calendario";
 
@@ -24,6 +26,8 @@ function App() {
               <Route path="/login" exact component={Login} />
               <Route path="/usuarios" component={Usuarios} />
               <Route path="/recuperar" component={Recuperar} />
+              <Route path="/disableUser" exact component={Disableuser} />
+              <Route path="/recuperar" exact component={Recuperar} />
               <Route path="/historia-clinica" component={Hclinicas} />
               <Route
                 component={() => (

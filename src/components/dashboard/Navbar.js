@@ -16,7 +16,7 @@ class Navbar extends React.Component {
         bg="dark"
         variant="dark"
       >
-        <ReactBootStrap.Navbar.Brand href="#home">
+        <ReactBootStrap.Navbar.Brand href="/home">
           Dental Elite
         </ReactBootStrap.Navbar.Brand>
         <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -27,12 +27,14 @@ class Navbar extends React.Component {
               id="collasible-nav-dropdown"
             >
               <ReactBootStrap.NavDropdown.Item href="Usuarios">
-                <Link to="../usuarios/usuarios.jsx">
+                <Link to="usuarios">
                   Crear
                 </Link>
               </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="#action/1.2">
-                Inhabilitar
+              <ReactBootStrap.NavDropdown.Item href="DisableUser">
+                <Link to="disableUser">
+                  Inhabilitar
+                </Link>
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
             <ReactBootStrap.NavDropdown
