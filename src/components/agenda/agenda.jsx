@@ -1,34 +1,33 @@
-import React from 'react'
-import {
-  Switch,
-  Route,
-  NavLink,
-} from "react-router-dom";
-import Calendario from "./calendario";
+import React, { useState, Fragment } from 'react';
+import DiUserImg from '../images/disableUser.png'
+import { useForm } from "react-hook-form";
+import "./disableUser.scss";
 
+const Agenda = () => {
 
-class agenda extends React.Component {
-  constructor(args) {
-    super(args)
-    this.state = {
-      tipServ: '',
-      odont: ''
-    }
+  const { register, errors, handleSubmit, setError, clearError } = useForm();
+
+  const [entradas, setEntradas] = useState([])
+
+  const onSubmit = (data, e) => {
+    console.log(data);
+    setEntradas([...entradas,
+      data])
+    e.target.reset();
   }
 
-  onChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-  render() {
-    return (
-      <form action="">
-        {/* <div className="form-group"> */}
-          <h1>Agenda</h1>
-          <br />
-          <div className="form-group">
+  return (
+    <Fragment>
+    <form className="Agenda">
+      <div className="base-container">
+        <div className="header">Crear usuario</div>
+        <br />
+        <div className="content">
+          <div className="image">
+            {/* <img src={UserImg} /> */}
+          </div>
+          <div className="form">
+            <div className="form-group">
             <label htmlFor="tipServ">Tipo Servicio</label>
             <select id="tipServ" name="tipServ"
               value={this.state.tipServ}
@@ -37,28 +36,23 @@ class agenda extends React.Component {
               <option value="gn">General</option>
               <option value="es">Especializado</option>
             </select>
-          </div>
-          <label htmlFor="odont">Odontologo</label>
+            </div>
+            <div className="form-group">
+            <label htmlFor="odont">Odontologo</label>
           <input type="text" name="odont" id="odont" />
-          <hr />
-          <br />
-          <div className="footer">
-            <button type="button" className="next" >
-              Siguiente
-        </button>
-            <NavLink to="/agenda/calendario" className="btn btn-dark" activeClassName="active">
-              Calendario
-        </NavLink>
+            </div>
+            <div className="footer">
+              <button type="submit" className="btn" id="submit" >
+                Crear
+              </button>
+            </div>
           </div>
-          <Switch>
-            <Route path="/agenda/calendario">
-              <Calendario />
-            </Route>
-          </Switch>
-        {/* </div> */}
-      </form >
-    )
-  }
+        </div>
+      </div>
+    </form>
+  </Fragment>
+
+  )
 }
 
-export default agenda
+export default Agenda;

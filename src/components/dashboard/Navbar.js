@@ -42,7 +42,7 @@ class Navbar extends React.Component {
               id="collasible-nav-dropdown"
             >
               <ReactBootStrap.NavDropdown.Item href="#action/2.1">
-                Asignar
+                <Link to="agenda"> Agenda </Link>
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="#action/2.2">
                 Cancelar

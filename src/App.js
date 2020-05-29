@@ -9,6 +9,7 @@ import Menu from "./components/dashboard/Navbar";
 import Usuarios from "./components/usuarios/usuarios";
 import Disableuser from "./components/usuarios/disableUser"
 import Recuperar from "./components/login/recuperar"; 
+// import Agenda from "./components/Agenda/Agenda";
 // import Hclinicas from "./components/hclinicas/hclinicas";
 // import Agenda from "./components/agenda/agenda";
 // import Calendario from "./components/agenda/calendario";
@@ -25,6 +26,7 @@ function App() {
           <Route path="/usuarios" component={Usuarios} />
           <Route path="/disableUser" exact component={Disableuser}/>
           <Route path="/recuperar" exact component={Recuperar} />
+          {/* <Route path="/Agenda" exact component={Agenda} /> */}
           <Route
             component={() => (
               <div className="ed-grid">
