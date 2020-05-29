@@ -1,7 +1,21 @@
 import React, { useState, Fragment } from 'react';
-import "../usuarios/disableUser.jsx";
+import DiUserImg from '../images/disableUser.png'
+import { useForm } from "react-hook-form";
+import "./disableUser.scss";
+
 
 const DisableUser = () => {
+
+  const { register, errors, handleSubmit, setError, clearError } = useForm();
+
+  const [entradas, setEntradas] = useState([])
+
+  const onSubmit = (data, e) => {
+    console.log(data);
+    setEntradas([...entradas,
+      data])
+    e.target.reset();
+  }
 
   return (
     <Fragment>
@@ -10,6 +24,9 @@ const DisableUser = () => {
           <div className="header">Inhabilitar usuario</div>
           <br />
           <div className="content">
+          <div className="image">
+              <img src={DiUserImg} />
+            </div>
             <div className="form">
               <div className="form-group">
                 <label htmlFor="tipId">Tipo de documento</label>
@@ -33,7 +50,6 @@ const DisableUser = () => {
                 <input type="text" id="nId" name="nId"
                   placeholder="N° Identificación" />
               </div>
-              <br />
               <div className="footer">
                 <button type="submit" className="btn" id="submit" >
                   Inhabilitar
