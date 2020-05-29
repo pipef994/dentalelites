@@ -1,77 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class antOdont extends React.Component {
+function AntOdont(props) {
+  const [formData, setFormData] = useState({
+    tratPrev: '',
+    cepDent: '',
+    seDental: '',
+    enjuBucal: '',
+    traDental: '',
+    habitos: '',
+    observacion: ''
+  })
 
-  constructor(args) {
-    super(args)
-    this.state = {
-      tratPrev: '',
-      cepDent: '',
-      seDental: '',
-      enjuBucal: '',
-      traDental: '',
-      habitos: '',
-      observacion:''
-    }
-  }
-
-  onChange(e) {
-    this.setState({
+  const onChange = (e) => {
+    const newState = {
+      ...formData,
       [e.target.name]: e.target.value
-    })
+    }
+    setFormData(newState)
+    props.updateValues(newState)
   }
 
-  render() {
-    return (
-      <form>
-        <div className="form-group">
-          <h2>Antecedentes Odontologicos</h2>
-          <label htmlFor="tratPrev">Tratamientos Previos</label>
-          <select name="tratPrev" id="tratPrev" className="form-control"
-            value={this.state.tratPrev} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="cepDent">Cepillo Dental</label>
-          <select name="cepDent" id="cepDent" className="form-control"
-            value={this.state.cepDent} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="seDental">Seda Dental</label>
-          <select name="seDental" id="seDental" className="form-control"
-            value={this.state.seDental} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="enjuBucal">Enjuague Bucal</label>
-          <select name="enjuBucal" id="enjuBucal" className="form-control"
-            value={this.state.enjuBucal} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <label htmlFor="habitos">Habitos</label>
-          <select name="habitos" id="habitos" className="form-control"
-            value={this.state.habitos} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
+  return (
+    <form>
+      <div className="card">
+        <h5 className="card-header">Antecedentes Odontologicos</h5>
+        <div className="card-body">
+          <div className="form-row">
+            <YesNoSelectInput name="tratPrev" value={formData.tratPrev} onChange={onChange} label="Tratamientos Previos" />
+            <YesNoSelectInput name="cepDent" value={formData.cepDent} onChange={onChange} label="Cepillo Dental" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="seDental" value={formData.seDental} onChange={onChange} label="Seda Dental" />
+            <YesNoSelectInput name="enjuBucal" value={formData.enjuBucal} onChange={onChange} label="Enjuague Bucal" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="habitos" value={formData.paAlgSan} onChange={onChange} label="Habitos" />
+            <div className="form-group col-md-6">
+              <label htmlFor="observacion">Observación</label>
+              <textarea name="observacion" id="observacion" className="form-control"
+                value={formData.observacion} onChange={onChange}> </textarea>
+            </div>
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="observacion">Observaciones</label>
-          <textarea name="observacion" id="observacion" class="form-control"
-            value={this.state.observacion} onChange={this.onChange.bind(this)}> </textarea>
-        </div>
-      </form>
-    )
-  }
-
+      </div>
+    </form >
+  )
 }
+
+function YesNoSelectInput(props) {
+  return (
+    <SelectInput {...props} options={
+      [
+        { value: "", text: "Seleccione" },
+        { value: "si", text: "Si" },
+        { value: "no", text: "No" }
+      ]
+    } />
+  )
+}
+
+function SelectInput(props) {
+  return (
+    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
+      <label htmlFor={props.name}>{props.label}</label>
+      <select name={props.name} id={props.name} className="form-control"
+        value={props.value} onChange={props.onChange}>
+        {props.options.map(option => (
+          <option key={option.value} value={option.value}>{option.text}</option>
+        ))}
+      </select>
+    </div>
+  )
+}
+
+export default AntOdont;

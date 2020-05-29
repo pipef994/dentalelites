@@ -1,175 +1,141 @@
-import React from 'react'
+import React, { useState } from 'react';
 
+function DatosIdentificacion(props) {
+  const [formData, setFormData] = useState({
+    FlastName: '',
+    SlastName: '',
+    name: '',
+    nIdent: '',
+    direction: '',
+    tell: '',
+    cell: '',
+    muni: '',
+    email: '',
+    rh: '',
+    tvinculacion: '',
+    grammar: '',
+    age: '',
+    sex: '',
+    estC: '',
+    Ocupacion: '',
+    nResponsible: '',
+    relationship: '',
+    tellp: '',
+    nAccompanying: '',
+    tAccompanying: ''
+  })
 
-class datosIdentificacion extends React.Component {
-
-  constructor(args) {
-    super(args)
-    this.state = {
-      FlastName: '',
-      SlastName: '',
-      name: '',
-      nIdent: '',
-      direction: '',
-      tell: '',
-      cell: '',
-      muni: '',
-      email: '',
-      rh: '',
-      tvinculacion: '',
-      grammar: '',
-      age: '',
-      sex: '',
-      estC: '',
-      Ocupacion: '',
-      nResponsible: '',
-      relationship: '',
-      tellp: '',
-      nAccompanying: '',
-      tAccompanying: ''
-    }
-  }
-
-  onChange(e) {
-    this.setState({
+  const onChange = (e) => {
+    const newState = {
+      ...formData,
       [e.target.name]: e.target.value
-    })
+    }
+    setFormData(newState)
+    props.updateValues(newState)
   }
 
-
-  render() {
-    return (
-      <form>
-        <h1>Datos Identificación</h1>
-        <br />
-        <div className="form-group">
-          <label htmlFor="FlastName">Primer Apellido</label>
-          <input type="text" className="form-control"
-            id="FlastName" name="FlastName"
-            value={this.state.FlastName}
-            onChange={this.onChange.bind(this)} ></input> />
-          <label htmlFor="SlastName">Segundo Apellido</label>
-          <input type="text" className="form-control"
-            id="SlastName" name="SlastName"
-            value={this.state.SlastName}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="name">Nombre</label>
-          <input type="text" className="form-control"
-            id="name" name="name" value={this.state.name}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="nIdent">N° Identificación</label>
-          <input type="text" className="form-control"
-            id="nIdent" name="nIdent" value={this.state.nIdent}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="direction">Direccón</label>
-          <input type="text" className="form-control"
-            name="direction" id="direction" value={this.state.direction}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="tell">Telefono</label>
-          <input type="text" className="form-control"
-            name="tell" id="tell" value={this.state.tellq}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="cell">Cell</label>
-          <input type="text" className="form-control"
-            name="cell" id="cell" value={this.state.cell}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="muni">Municipio</label>
-          <input type="text" className="form-control"
-            name="muni" id="muni" value={this.state.muni}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="email">Correo Electronico</label>
-          <input type="email" className="form-control"
-            name="email" id="email" value={this.state.email}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="rh">RH</label>
-          <input type="text" className="form-control"
-            name="rh" id="rh" value={this.state.rh}
-            onChange={this.onChange.bind(this)} />
-        </div>
-        <div className="form-group">
-          <label htmlFor="tvinculacion">Tipo Vinculación EPS</label>
-          <br />
-          <select className="form-control" id="tvinculacion" name="tvinculacion"
-            value={this.state.tvinculacion} onChange={this.onChange.bind(this)}>
-            <option value="wh"></option>
-            <option value="sub">SUB</option>
-            <option value="ccot">C.COT</option>
-            <option value="cben">C.BEN</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="grammar">Fecha Nacimiento</label>
-          <input type="date" className="form-control"
-            name="grammar" id="grammar" value={this.state.grammar}
-            onChange={this.onChange.bind(this)} />
-          <label htmlFor="age">Edad</label>
-          <input type="number" className="form-control"
-            name="age" id="age" value={this.state.age}
-            onChange={this.onChange.bind(this)} />
-        </div>
-        <div className="form-group">
-          <label htmlFor="sex">sexo</label>
-          <br/>
-          <select name="" id="" className="form-control" id="sex" name="sex"
-            value={this.state.sex} onChange={this.onChange.bind(this)}>
-            <option value="wh"></option>
-            <option value="men">Hombre</option>
-            <option value="woman">Mujer</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="estC">Estado Civil</label>
-          <select className="form-control" id="estC" name="estC"
-            value={this.state.estC} onChange={this.onChange.bind(this)}>
-            <option value="soltero">Soltero</option>
-            <option value="casado">Casado</option>
-            <option value="unionLibre">Union libre</option>
-            <option value="divorciado">Casado</option>
-            <option value="viudo">Viudo</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <div className="mb-3">
-            <label htmlFor="Ocupacion">Ocupación</label>
-            <textarea class="form-control" id="Ocupacion"
-              value={this.state.Ocupacion} onChange={this.onChange.bind(this)}></textarea>
+  return (
+    <form>
+      <div className="card">
+        <h5 className="card-header">Datos de Identificación</h5>
+        <div className="card-body">
+          <div className="form-row">
+            <Input name="FlastName" value={formData.FlastName} onChange={onChange} label="Primer Apellido" />
+            <Input name="SlastName" value={formData.SlastName} onChange={onChange} label="Segundo Apellido" />
+          </div>
+          <div className="form-row">
+            <Input name="name" value={formData.name} onChange={onChange} label="Nombre" />
+            <Input name="nIdent" value={formData.nIdent} onChange={onChange} label="N° Identificación" />
+          </div>
+          <div className="form-row">
+            <Input fullWidth name="direction" value={formData.direction} onChange={onChange} label="Direccón" />
+          </div>
+          <div className="form-row">
+            <Input name="tell" value={formData.tell} onChange={onChange} label="Telefono" />
+            <Input name="cell" value={formData.cell} onChange={onChange} label="Celular" />
+          </div>
+          <div className="form-row">
+            <Input name="muni" value={formData.muni} onChange={onChange} label="Municipio" />
+            <Input name="email" value={formData.email} onChange={onChange} label="Correo Electronico" />
+          </div>
+          <div className="form-row">
+            <Input name="rh" value={formData.rh} onChange={onChange} label="RH" />
+            <SelectInput name="tvinculacion" value={formData.tvinculacion} onChange={onChange} label="Tipo Vinculación EPS" options={[
+              { value: "wh", text: "" },
+              { value: "sub", text: "SUB" },
+              { value: "ccot", text: "C.COT" },
+              { value: "cben", text: "C.BEN" }
+            ]} />
+          </div>
+          <div className="form-row">
+            <Input name="grammar" value={formData.grammar} onChange={onChange} label="Fecha Nacimiento" />
+            <Input name="age" value={formData.age} onChange={onChange} label="Edad" />
+          </div>
+          <div className="form-row">
+            <SelectInput name="sex" value={formData.sex} onChange={onChange} label="Sexo" options={[
+              { value: "wh", text: "" },
+              { value: "man", text: "Hombre" },
+              { value: "woman", text: "Mujer" }
+            ]} />
+            <SelectInput name="estC" value={formData.estC} onChange={onChange} label="Estado Civil" options={[
+              { value: "soltero", text: "Soltero" },
+              { value: "casado", text: "Casado" },
+              { value: "unionLibre", text: "Union libre" },
+              { value: "divorciado", text: "Divorciado" },
+              { value: "viudo", text: "Viudo" }
+            ]} />
+          </div>
+          <div className="form-row">
+            <Input name="Ocupacion" value={formData.Ocupacion} onChange={onChange} label="Ocupación" />
+            <Input name="nResponsible" value={formData.nResponsible} onChange={onChange} label="Nombre de Responsable" />
+          </div>
+          <div className="form-row">
+            <Input name="relationship" value={formData.relationship} onChange={onChange} label="Parentesco" />
+            <Input name="tellp" value={formData.tellp} onChange={onChange} label="Telefono de Responsable" />
+          </div>
+          <div className="form-row">
+            <Input name="nAccompanying" value={formData.nAccompanying} onChange={onChange} label="Nombre del Acompañante" />
+            <Input name="tAccompanying" value={formData.tAccompanying} onChange={onChange} label="Telefono del Acompañante" />
+          </div>
+          <div className='form-group mt-4'>
+            <label htmlFor="antMedOdoFa">Antecedentes Medicos y Odontologicos Familiares</label>
+            <textarea name="antMedOdoFa" id="antMedOdoFa" className="form-control"
+              value={formData.antMedOdoFa} onChange={onChange}> </textarea>
           </div>
         </div>
-        <div className="form-group mb-3">
-          <label htmlFor="nResponsible">Nombre de Responsable</label>
-          <input type="text" className="form-control"
-            name="nResponsible" id="nResponsible" value={this.state.nResponsible}
-            onChange={this.onChange.bind(this)} />
-          <div class="invalid-feedback">
-            (en caso de emergencia)
-         </div>
-          <div className="form-group">
-            <label htmlFor="relationship">parentesco</label>
-            <input type="text" className="form-control"
-              name="relationship" id="relationship" value={this.state.relationship}
-              onChange={this.onChange.bind(this)} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="tellp">Telefono</label>
-            <input type="text" className="form-control"
-              name="tellp" id="tellp" value={this.state.tellp}
-              onChange={this.onChange.bind(this)} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="nAccompanying">Nombre del Acompañante</label>
-            <input type="text" className="form-control"
-              name="nAccompanying" id="nAccompanying" value={this.state.nAccompanying}
-              onChange={this.onChange.bind(this)} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="tAccompanying">Telefono del Acompañante</label>
-            <input type="text" className="form-control"
-              name="tAccompanying" id="tAccompanying" value={this.state.tAccompanying}
-              onChange={this.onChange.bind(this)} />
-          </div>
-        </div>
-      </form>
-    )
-  }
-
+      </div>
+    </form >
+  )
 }
+
+function SelectInput(props) {
+  return (
+    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
+      <label htmlFor={props.name}>{props.label}</label>
+      <select name={props.name} id={props.name} className="form-control"
+        value={props.value} onChange={props.onChange}>
+        {props.options.map(option => (
+          <option key={option.value} value={option.value}>{option.text}</option>
+        ))}
+      </select>
+    </div>
+  )
+}
+
+function Input(props) {
+  return (
+    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
+      <label htmlFor={props.name}>{props.label}</label>
+      <input
+        type="text"
+        name={props.name}
+        id={props.name}
+        className="form-control"
+        value={props.value}
+        onChange={props.onChange}
+      />
+    </div>
+  )
+}
+
+export default DatosIdentificacion

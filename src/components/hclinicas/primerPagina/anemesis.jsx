@@ -1,42 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
+const Anemesis = React.memo((props) => {
+  const [formData, setFormData] = useState({
+    motConsul: '',
+    enfActual: ''
+  })
 
-class anemesis extends React.Component {
-
-  constructor(args) {
-    super(args)
-    this.state = {
-      motConsul: '',
-      enfActual: ''
-    }
-  }
-
-  onChange(e) {
-    this.setState({
+  const onChange = (e) => {
+    const newState = {
+      ...formData,
       [e.target.name]: e.target.value
-    })
+    }
+    setFormData(newState)
+    props.updateValues(formData)
   }
 
-  
-  render() {
-    return (
-      <form>
-        <h2>Anemesis</h2>
-        <br />
-        <div className="form-group">
-          <label htmlFor="mtvConsul">Motivo de consulta</label>
-          <textarea name="mtvConsul" id="mtvConsul" class="form-control"
-            value={this.state.mtvConsul} onChange={this.onChange.bind(this)}> </textarea>
-          <br />
-          <label htmlFor="enfActu">Enfermedad Actual</label>
-          <textarea name="enfActu" id="enfActu" class="form-control"
-            value={this.state.enfActu} onChange={this.onChange.bind(this)}> </textarea>
+  return (
+    <form>
+      <div className="card">
+        <h5 className="card-header">Anemesis</h5>
+        <div className="card-body">
+          <div className="form-row">
+            <div className="form-group col-md-6">
+              <label htmlFor="motConsul">Motivo de consulta</label>
+              <textarea name="motConsul" id="motConsul" className="form-control"
+                value={formData.motConsul} onChange={onChange} />
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="enfActual">Enfermedad Actual</label>
+              <textarea name="enfActual" id="enfActual" className="form-control"
+                value={formData.enfActual} onChange={onChange}></textarea>
+            </div>
+          </div>
         </div>
-      </form>
-    )
-  }
-
-
-
-
-}
+      </div>
+    </form>
+  )
+})
+export default Anemesis;

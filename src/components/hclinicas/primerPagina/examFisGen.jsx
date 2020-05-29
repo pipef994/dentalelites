@@ -1,61 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class examFisGen extends React.Component {
+function ExamFisGen(props) {
+  const [formData, setFormData] = useState({
+    pulso: '',
+    frecRsp: '',
+    temp: '',
+    pa: '',
+    talla: '',
+    peso: '',
+    observacion: ''
+  })
 
-  constructor(args) {
-    super(args)
-    this.state = {
-      pulso: '',
-      frecRsp: '',
-      temp: '',
-      pa: '',
-      talla: '',
-      peso:'',
-      observacion: ''
-    }
-  }
-
-  onChange(e) {
-    this.setState({
+  const onChange = (e) => {
+    const newState = {
+      ...formData,
       [e.target.name]: e.target.value
-    })
+    }
+    setFormData(newState)
+    props.updateValues(newState)
   }
 
-
-  render() {
-    return (
-      <form>
-        <div className='form-group'>
-          <h2>Examen Físico General</h2>
-          <label htmlFor="pulso">Pulso</label>
-          <input type="text" id="pulso" name="pulso" class="form-control"
-            value={this.state.pulso} onChange={this.onChange.bind(this)} />
-          <br />
-          <label htmlFor="frecRsp">Frecuencia Respiratoria</label>
-          <input type="text" id="frecRsp" name="frecRsp" class="form-control"
-            value={this.state.frecRsp} onChange={this.onChange.bind(this)} />
-          <br />
-          <label htmlFor="temp">Frecuencia Respiratoria</label>
-          <input type="text" id="temp" name="temp" class="form-control"
-            value={this.state.temp} onChange={this.onChange.bind(this)} />
-          <br />
-          <label htmlFor="pa">P.A</label>
-          <input type="text" id="pa" name="pa" class="form-control"
-            value={this.state.pa} onChange={this.onChange.bind(this)} />
-          <br />
-          <label htmlFor="talla">Talla</label>
-          <input type="text" id="talla" name="talla" class="form-control"
-            value={this.state.talla} onChange={this.onChange.bind(this)} />
-          <br />
-          <label htmlFor="peso">Peso</label>
-          <input type="text" id="peso" name="peso" class="form-control"
-            value={this.state.peso} onChange={this.onChange.bind(this)} />
-          <br />
-           <label htmlFor="observacion">Observaciones</label>
-            <textarea type="text" id="peso" name="peso" class="form-control"
-            value={this.state.peso} onChange={this.onChange.bind(this)}></textarea>
+  return (
+    <form>
+      <div className="card">
+        <h5 className="card-header">Examen Físico General</h5>
+        <div className="card-body">
+          <div className="form-row">
+            <Input name="pulso" value={formData.pulso} onChange={onChange} label="Pulso" />
+            <Input name="frecRsp" value={formData.frecRsp} onChange={onChange} label="Frecuencia Respiratoria" />
+          </div>
+          <div className="form-row">
+            <Input name="temp" value={formData.temp} onChange={onChange} label="Temperatura" />
+            <Input name="pa" value={formData.pa} onChange={onChange} label="P.A" />
+          </div>
+          <div className="form-row">
+            <Input name="talla" value={formData.talla} onChange={onChange} label="Talla" />
+            <Input name="peso" value={formData.peso} onChange={onChange} label="Peso" />
+          </div>
+          <div className="form-row">
+            <div className="form-group col-12">
+              <label htmlFor="observacion">Observación</label>
+              <textarea name="observacion" id="observacion" className="form-control"
+                value={formData.observacion} onChange={onChange}> </textarea>
+            </div>
+          </div>
         </div>
-      </form>
-    )
-  }
+      </div>
+    </form >
+  )
 }
+
+function Input(props) {
+  return (
+    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
+      <label htmlFor={props.name}>{props.label}</label>
+      <input
+        type="text"
+        name={props.name}
+        id={props.name}
+        className="form-control"
+        value={props.value}
+        onChange={props.onChange}
+      />
+    </div>
+  )
+}
+
+export default ExamFisGen;

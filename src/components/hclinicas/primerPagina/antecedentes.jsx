@@ -1,196 +1,124 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
-class antecedentes extends React.Component {
+function Antecedentes(props) {
+  const [formData, setFormData] = useState({
+    traMedico: '',
+    inMedicamentos: '',
+    reMedicas: '',
+    sanExCort: '',
+    paAlgSan: '',
+    enfRespi: '',
+    sinusitis: '',
+    irradia: '',
+    diaBetis: '',
+    fieReu: '',
+    hepatitis: '',
+    hipertension: '',
+    cardiopatia: '',
+    enfRenal: '',
+    enfGas: '',
+    orgSent: '',
+    embarazo: '',
+    observacion: '',
+    antMedOdoFa: ''
+  })
 
-  constructor(args) {
-    super(args)
-    this.state = {
-      traMedico: '',
-      inMedicamentos: '',
-      reMedicas: '',
-      sanExCort: '',
-      paAlgSan: '',
-      enfRespi: '',
-      sinusitis: '',
-      irradia: '',
-      diaBetis: '',
-      fieReu: '',
-      hepatitis: '',
-      hipertension: '',
-      cardiopatia: '',
-      enfRenal: '',
-      enfGas: '',
-      orgSent: '',
-      embarazo: '',
-      observacion: '',
-      antMedOdoFa: ''
-    }
-  }
-
-  onChange(e) {
-    this.setState({
+  const onChange = (e) => {
+    const newState = {
+      ...formData,
       [e.target.name]: e.target.value
-    })
+    }
+    setFormData(newState)
+    props.updateValues(newState)
   }
 
-  render() {
-    return (
-      <form>
-        <h2>Antecendentes Medicos</h2>
-        <br />
-        <div className='form-group'>
-          <label htmlFor="traMedico">Tratamiento Medico</label>
-          <select name="traMedico" id="traMedico" className="form-control"
-            value={this.state.traMedico} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="inMedicamentos">Ingestión de Medeicamentos</label>
-          <select name="inMedicamentos" id="inMedicamentos" className="form-control"
-            value={this.state.inMedicamentos} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="reMedicas">Reacción Medicamentos</label>
-          <select name="reMedicas" id="reMedicas" className="form-control"
-            value={this.state.reMedicas} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="anest">Anestesia</option>
-            <option value="anti">Antibioticos</option>
-          </select>
-          <br />
-          <label htmlFor="sanExCort">Sangra Excesivamente al cortarse?</label>
-          <select name="reMedicas" id="reMedicas" className="form-control"
-            value={this.state.reMedicas} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="paAlgSan">Padece de algun problema sanguineo </label>
-          <select name="paAlgSan" id="paAlgSan" className="form-control"
-            value={this.state.paAlgSan} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="enfRespi">Enfermedades Respiratorias</label>
-          <select name="enfRespi" id="enfRespi" className="form-control"
-            value={this.state.enfRespi} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="sinusitis">Sinusitis</label>
-          <select name="sinusitis" id="sinusitis" className="form-control"
-            value={this.state.sinusitis} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="irradia">Irradiaciones</label>
-          <select name="irradia" id="irradia" className="form-control"
-            value={this.state.irradia} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="diaBetis">Diabetis</label>
-          <select name="diaBetis" id="diaBetis" className="form-control"
-            value={this.state.diaBetis} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="fieReu">Fiebre Reumatica</label>
-          <select name="fieReu" id="fieReu" className="form-control"
-            value={this.state.fieReu} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="hepatitis">Hepatitis</label>
-          <select name="hepatitis" id="hepatitis" className="form-control"
-            value={this.state.hepatitis} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="hipertension">Hipertensión</label>
-          <select name="hipertension" id="hipertension" className="form-control"
-            value={this.state.hipertension} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="cardiopatia">Cardiopatia</label>
-          <select name="cardiopatia" id="cardiopatia" className="form-control"
-            value={this.state.cardiopatia} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="enfRenal">Enfermedades Renales</label>
-          <select name="enfRenal" id="enfRenal" className="form-control"
-            value={this.state.enfRenal} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="enfGas">Enfermedades Gastrointestinales</label>
-          <select name="enfGas" id="enfGas" className="form-control"
-            value={this.state.enfGas} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="orgSent">Organos de los sentidos</label>
-          <select name="orgSent" id="orgSent" className="form-control"
-            value={this.state.orgSent} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
-          <br />
-          <label htmlFor="embarazo">Embarazo</label>
-          <select name="embarazo" id="embarazo" className="form-control"
-            value={this.state.embarazo} onChange={this.onChange.bind(this)}>
-            <option value=""></option>
-            <option value="si">Si</option>
-            <option value="no">No</option>
-          </select>
+  return (
+    <form>
+      <div className="card">
+        <h5 className="card-header">Antecendentes Médicos</h5>
+        <div className="card-body">
+          <div className="form-row">
+            <YesNoSelectInput name="embarazo" value={formData.traMedico} onChange={onChange} label="Tratamiento Medico" />
+            <YesNoSelectInput name="inMedicamentos" value={formData.inMedicamentos} onChange={onChange} label="Ingestión de Medicamentos" />
+          </div>
+          <div className="form-row">
+            <SelectInput name="reMedicas" value={formData.reMedicas} onChange={onChange} label="Reacción Medicamentos" options={
+              [
+                { value: "", text: "Seleccione" },
+                { value: "anest", text: "Anestesia" },
+                { value: "anti", text: "Antibioticos" }
+              ]
+            } />
+            <YesNoSelectInput name="sanExCort" value={formData.inMedicamentos} onChange={onChange} label="Sangra Excesivamente al cortarse?" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="paAlgSan" value={formData.paAlgSan} onChange={onChange} label="Padece de algun problema sanguineo" />
+            <YesNoSelectInput name="enfRespi" value={formData.enfRespi} onChange={onChange} label="Enfermedades Respiratorias" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="sinusitis" value={formData.sinusitis} onChange={onChange} label="Sinusitis" />
+            <YesNoSelectInput name="irradia" value={formData.irradia} onChange={onChange} label="Irradiaciones" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="diaBetis" value={formData.diaBetis} onChange={onChange} label="Diabetis" />
+            <YesNoSelectInput name="fieReu" value={formData.fieReu} onChange={onChange} label="Fiebre Reumatica" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="hepatitis" value={formData.hepatitis} onChange={onChange} label="Hepatitis" />
+            <YesNoSelectInput name="hipertension" value={formData.hipertension} onChange={onChange} label="Hipertensión" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="cardiopatia" value={formData.cardiopatia} onChange={onChange} label="Cardiopatia" />
+            <YesNoSelectInput name="enfRenal" value={formData.enfRenal} onChange={onChange} label="Enfermedades Renales" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="enfGas" value={formData.enfGas} onChange={onChange} label="Enfermedades Gastrointestinales" />
+            <YesNoSelectInput name="orgSent" value={formData.orgSent} onChange={onChange} label="Organos de los sentidos" />
+          </div>
+          <div className="form-row">
+            <YesNoSelectInput name="embarazo" value={formData.embarazo} onChange={onChange} label="Embarazo" />
+            <div className="form-group col-md-6">
+              <label htmlFor="observacion">Observación</label>
+              <textarea name="observacion" id="observacion" className="form-control"
+                value={formData.observacion} onChange={onChange}> </textarea>
+            </div>
+          </div>
+          <div className='form-group mt-4'>
+            <label htmlFor="antMedOdoFa">Antecedentes Medicos y Odontologicos Familiares</label>
+            <textarea name="antMedOdoFa" id="antMedOdoFa" className="form-control"
+              value={formData.antMedOdoFa} onChange={onChange}> </textarea>
+          </div>
         </div>
-        <div className='form-group'>
-          <label htmlFor="observacion">Observación</label>
-          <textarea name="observacion" id="observacion" class="form-control"
-            value={this.state.observacion} onChange={this.onChange.bind(this)}> </textarea>
-        </div>
-        <div className='form-group'>
-          <h2>Antecedentes Medicos y Odontologicos Familiares</h2>
-          <br/>
-          <textarea name="antMedOdoFa" id="antMedOdoFa" class="form-control"
-            value={this.state.antMedOdoFa} onChange={this.onChange.bind(this)}> </textarea>
-        </div>
-      </form>
-    )
-  }
-
-
-
+      </div>
+    </form >
+  )
 }
+
+function YesNoSelectInput(props) {
+  return (
+    <SelectInput {...props} options={
+      [
+        { value: "", text: "Seleccione" },
+        { value: "si", text: "Si" },
+        { value: "no", text: "No" }
+      ]
+    } />
+  )
+}
+
+function SelectInput(props) {
+  return (
+    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
+      <label htmlFor={props.name}>{props.label}</label>
+      <select name={props.name} id={props.name} className="form-control"
+        value={props.value} onChange={props.onChange}>
+        {props.options.map(option => (
+          <option key={option.value} value={option.value}>{option.text}</option>
+        ))}
+      </select>
+    </div>
+  )
+}
+
+export default Antecedentes
