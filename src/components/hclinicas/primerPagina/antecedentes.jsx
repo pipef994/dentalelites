@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 function Antecedentes(props) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(props.formData || {
     traMedico: '',
     inMedicamentos: '',
     reMedicas: '',

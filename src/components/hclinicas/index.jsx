@@ -31,7 +31,7 @@ function HistoriaClinica(props) {
     return (
       <div className="row my-3">
         <div className="col-12">
-          <Component updateValues={changeFormData(dataId)} />
+          <Component formData={formData[dataId]} updateValues={changeFormData(dataId)} />
         </div>
       </div>
     )

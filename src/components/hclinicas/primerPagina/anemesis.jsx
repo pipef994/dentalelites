@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Anemesis = React.memo((props) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(props.formData || {
     motConsul: '',
     enfActual: ''
   })

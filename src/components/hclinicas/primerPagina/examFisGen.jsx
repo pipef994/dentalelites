@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function ExamFisGen(props) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(props.formData || {
     pulso: '',
     frecRsp: '',
     temp: '',

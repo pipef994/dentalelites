@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function DatosIdentificacion(props) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(props.formData || {
     FlastName: '',
     SlastName: '',
     name: '',
