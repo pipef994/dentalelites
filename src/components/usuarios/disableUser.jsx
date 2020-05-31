@@ -19,7 +19,7 @@ const DisableUser = () => {
 
   return (
     <Fragment>
-      <form className="disableUSer">
+      <form className="disableUSer" onSubmit={handleSubmit(onSubmit)}>
         <div className="base-container">
           <div className="header">Inhabilitar usuario</div>
           <br />
@@ -45,10 +45,21 @@ const DisableUser = () => {
                   <option value="ti">Tarjeta de identidad</option>
                 </select>
               </div>
+              <br />
+              <br />
+              <br />
               <div className="form-group">
                 <label htmlFor="nId">Número de Identificación</label>
                 <input type="text" id="nId" name="nId"
-                  placeholder="N° Identificación" />
+                  placeholder="N° Identificación"
+                  ref={register({
+                    required: { value: true, message: 'Campo obligatorio' }
+                  })} />
+                  {errors.nId &&
+                  <span className="text-danger text-small d-block mb-2">
+                    {errors.nId.message}
+                  </span>
+                }
               </div>
               <div className="footer">
                 <button type="submit" className="btn" id="submit" >

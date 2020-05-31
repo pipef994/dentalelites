@@ -1,7 +1,8 @@
 import React, { useState, Fragment } from 'react';
-import DiUserImg from '../images/disableUser.png'
 import { useForm } from "react-hook-form";
-import "./disableUser.scss";
+import "./agenda.scss"
+import Calendar from '../images/calendar.png'
+
 
 const Agenda = () => {
 
@@ -18,39 +19,37 @@ const Agenda = () => {
 
   return (
     <Fragment>
-    <form className="Agenda">
-      <div className="base-container">
-        <div className="header">Crear usuario</div>
-        <br />
-        <div className="content">
-          <div className="image">
-            {/* <img src={UserImg} /> */}
-          </div>
-          <div className="form">
-            <div className="form-group">
-            <label htmlFor="tipServ">Tipo Servicio</label>
-            <select id="tipServ" name="tipServ"
-              value={this.state.tipServ}
-              onChange={this.onChange.bind(this)} >
-              <option value="wh"></option>
-              <option value="gn">General</option>
-              <option value="es">Especializado</option>
-            </select>
+      <form className="agenda">
+        <div className="base-container">
+          <div className="header">Asignar Cita</div>
+          <br />
+          <div className="content">
+            <div className="image">
+              <img src={Calendar} />
             </div>
-            <div className="form-group">
-            <label htmlFor="odont">Odontologo</label>
-          <input type="text" name="odont" id="odont" />
-            </div>
-            <div className="footer">
-              <button type="submit" className="btn" id="submit" >
-                Crear
+            <div className="form">
+              <div className="form-group">
+                <label htmlFor="tipServ">Tipo Servicio</label>
+                <select id="tipServ" name="tipServ">
+                  <option value="sc">Seleccione</option>
+                  <option value="gn">General</option>
+                  <option value="es">Especializado</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="odont">Odontologo</label>
+                <input type="text" name="odont" id="odont" disabled />
+              </div>
+              <div className="footer">
+                <button type="submit" className="btn" id="submit" >
+                  Siguiente
               </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </form>
-  </Fragment>
+      </form>
+    </Fragment>
 
   )
 }
