@@ -34,7 +34,7 @@ const Usuarios = () => {
                   id="tipId"
                   name="tipId"
                 >
-                  <option value="wh"></option>
+                  <option value="sc">Seleccione</option>
                   <option value="cc">Cédula de ciudadanía</option>
                   <option value="ce">Cédula de extranjería</option>
                   <option value="di">Documento personal de Identificación</option>
@@ -50,7 +50,6 @@ const Usuarios = () => {
                   type="text"
                   id="nId"
                   name="nId"
-                  placeholder="Identificación"
                 />
               </div>
               <div className="form-group">
@@ -59,7 +58,6 @@ const Usuarios = () => {
                   type="text"
                   id="firstName"
                   name="firstName"
-                  placeholder="Primer Nombre"
                 />
               </div>
               <div className="form-group">
@@ -68,7 +66,6 @@ const Usuarios = () => {
                   type="text"
                   id="secondName"
                   name="secondName"
-                  placeholder="Segundo Nombre"
                 />
               </div>
               <div className="form-group">
@@ -77,7 +74,6 @@ const Usuarios = () => {
                   type="text"
                   id="firstLastName"
                   name="firstLastName"
-                  placeholder="Primer Apellido"
                 />
               </div>
               <div className="form-group">
@@ -86,7 +82,6 @@ const Usuarios = () => {
                   type="text"
                   id="secondLastName"
                   name="secondLastName"
-                  placeholder="Segundo Apellido"
                 />
               </div>
               <div className="form-group">
@@ -95,7 +90,6 @@ const Usuarios = () => {
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="Correo"
                 />
               </div>
               <div className="form-group">

@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import './calendario.scss'
 
 class calendario extends Component {
   state = {
@@ -48,20 +49,30 @@ class calendario extends Component {
 
   render() {
     return (
-      <div className="container row ">
-        <div className="calendar col-md-4 col-sm-12 aling-items-center">
-          <Calendar
-            className = "mx-auto"
-            onChange={this.onChange}
-            value={this.state.date}
-          />
-        </div>
-        <div className="horas col-md-8 py-4 col-sm-12">
-          {
-            this.renderButtons()
-          }
-        </div>
-      </div>
+      <Fragment>
+        <form className="calendario">
+          <div className="base-container">
+            <div className="container row ">
+              <div className="header">Asignar Cita</div>
+              <br />
+              <div className="content">
+                <div className="calendar col-md-4 col-sm-12 aling-items-center">
+                  <Calendar
+                    className="mx-auto"
+                    onChange={this.onChange}
+                    value={this.state.date}
+                  />
+                </div>
+                <div className="horas col-md-8 py-4 col-sm-12">
+                  {
+                    this.renderButtons()
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </Fragment>
     );
   }
 }

@@ -10,9 +10,9 @@ import Usuarios from "./components/usuarios/usuarios";
 import Disableuser from "./components/usuarios/disableUser"
 import Recuperar from "./components/login/recuperar"; 
 import Agenda from "./components/Agenda/agenda";
+import Calendario from "./components/Agenda/calendario";
 // import Hclinicas from "./components/hclinicas/hclinicas";
 // import Agenda from "./components/agenda/agenda";
-// import Calendario from "./components/agenda/calendario";
 
 function App() {
   const storage = window.localStorage.getItem("email");
@@ -27,6 +27,7 @@ function App() {
           <Route path="/disableUser" exact component={Disableuser}/>
           <Route path="/recuperar" exact component={Recuperar} />
           <Route path="/agenda" exact component={Agenda} />
+          <Route path="/calendario" exact component={Calendario}/>
           <Route
             component={() => (
               <div className="ed-grid">

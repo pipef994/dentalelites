@@ -36,7 +36,7 @@ const DisableUser = () => {
                   id="tipId"
                   name="tipId"
                 >
-                  <option value="wh"></option>
+                  <option value="sc">Seleccione</option>
                   <option value="cc">Cédula de ciudadanía</option>
                   <option value="ce">Cédula de extranjería</option>
                   <option value="di">Documento personal de Identificación</option>
