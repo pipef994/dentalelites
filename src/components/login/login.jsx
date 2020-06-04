@@ -19,12 +19,10 @@ class login extends React.Component {
     this.setState({ show: !this.state.show })
   }
 
-
  limpiarFormulario() {
-    // document.getElementById("login").reset();
-    console.log("entro");
+  this.state.email="";
+  this.state.password="";
   }
-
 
   onChange(e) {
     this.setState({
@@ -53,8 +51,7 @@ class login extends React.Component {
           localStorage.setItem("email", res.data.email);
         } else {
           this.handleModal(true)
-          this.limpiarFormulario();
-          
+          this.limpiarFormulario()
         }
       })
       .catch(e => console.log(e));
