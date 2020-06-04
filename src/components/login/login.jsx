@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./login.scss"
 import loginImg from "../images/login.png"
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Modal, Button } from 'react-bootstrap'
 
 class login extends React.Component {
 
@@ -9,9 +10,20 @@ class login extends React.Component {
     super(args);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      show: false
     }
   }
+
+  handleModal() {
+    this.setState({ show: !this.state.show })
+  }
+
+
+ limpiarFormulario() {
+    document.getElementById("login").reset();
+  }
+
 
   onChange(e) {
     this.setState({
@@ -34,9 +46,14 @@ class login extends React.Component {
       .then(res => {
         if (res.mensaje === "OK") {
           console.log(res);
-          localStorage.setItem("email", res.data.eamil);
-          let history = useHistory();
-          history.push("/Menu");
+          this.props.history.push({
+            pathname: '/'
+          })
+          localStorage.setItem("email", res.data.email);
+        } else {
+          this.handleModal(true)
+          this.limpiarFormulario();
+          
         }
       })
       .catch(e => console.log(e));
@@ -44,7 +61,7 @@ class login extends React.Component {
 
   render() {
     return (
-      <div className="login" onSubmit={this.handleSubmit}>
+      <form id="login" className="login" onSubmit={this.handleSubmit}>
         <div className="base-container" >
           <div className="header">Ingreso</div>
           <br />
@@ -75,12 +92,20 @@ class login extends React.Component {
           </div>
           <br />
           <div >
-            {/* <a href="http://google.com" class="button2" target="_blank">Recordar Contraseña</a> */}
-            {/* <a href="../recovery_user/recovery_user.jsx" className="button2" target="_blank">Recordar Contraseña</a> */}
             <Link to="./recuperar" className="button2" target="_blank" >Recuperar Contraseña</Link>
           </div>
         </div>
-      </div>
+
+        <Modal show={this.state.show}>
+          
+          <Modal.Body>Usuario o contraseña invalido</Modal.Body>
+          {/* <Modal.Footer> */}
+            <Button variant="danger" onClick={() => { this.handleModal() }}>
+              Close
+          </Button>
+          {/* </Modal.Footer> */}
+        </Modal>
+      </form>
     );
   }
 }
