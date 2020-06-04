@@ -1,9 +1,7 @@
 import React from 'react'
 import "./login.scss"
 import loginImg from "../images/login.png"
-import { Link } from "react-router-dom";
-
-const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+import { Link, useHistory } from "react-router-dom";
 
 class login extends React.Component {
 
@@ -33,7 +31,14 @@ class login extends React.Component {
         'Content-Type': 'application/json'
       }
     }).then(res => res.json())
-      .then(res => console.log(res))
+      .then(res => {
+        if (res.mensaje === "OK") {
+          console.log(res);
+          localStorage.setItem("email", res.data.eamil);
+          let history = useHistory();
+          history.push("/Menu");
+        }
+      })
       .catch(e => console.log(e));
   }
 
@@ -50,7 +55,7 @@ class login extends React.Component {
             <div className="form">
               <div className="form-group">
                 <label htmlFor="email">Email</label>
-                <input type="text" name="email" id="email" placeholder=" Ingrese el correo"
+                <input type="email" name="email" id="email" placeholder=" Ingrese el correo"
                   value={this.state.email} onChange={this.onChange.bind(this)} required />
               </div>
               <div className="form-group">
