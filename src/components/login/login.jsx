@@ -21,7 +21,8 @@ class login extends React.Component {
 
 
  limpiarFormulario() {
-    document.getElementById("login").reset();
+    // document.getElementById("login").reset();
+    console.log("entro");
   }
 
 
