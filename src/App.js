@@ -5,6 +5,7 @@ import * as ReactBootStrap from "react-bootstrap";
 
 import Home from "./Home";
 import Login from "./components/login/login";
+import Logout from "./components/login/logout";
 import Menu from "./components/dashboard/Navbar";
 import Usuarios from "./components/usuarios/usuarios";
 import Disableuser from "./components/usuarios/disableUser";
@@ -30,6 +31,7 @@ function App() {
           <Route path="/recuperar" exact component={Recuperar} />
           <Route path="/agenda" exact component={Agenda} />
           <Route path="/calendario" exact component={Calendario} />
+          <Route path="/logout" exact component={Logout} />
           <Route
             component={() => (
               <div className="ed-grid">

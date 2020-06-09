@@ -27,14 +27,10 @@ class Navbar extends React.Component {
               id="collasible-nav-dropdown"
             >
               <ReactBootStrap.NavDropdown.Item href="Usuarios">
-                <Link to="usuarios">
-                  Crear
-                </Link>
+                <Link to="usuarios">Crear</Link>
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="DisableUser">
-                <Link to="disableUser">
-                  Inhabilitar
-                </Link>
+                <Link to="disableUser">Inhabilitar</Link>
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
             <ReactBootStrap.NavDropdown
@@ -63,6 +59,9 @@ class Navbar extends React.Component {
                 Consultar
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
+            <ReactBootStrap.Nav.Link href="/logout">
+            Cerrar Sesion
+            </ReactBootStrap.Nav.Link>
           </ReactBootStrap.Nav>
         </ReactBootStrap.Navbar.Collapse>
       </ReactBootStrap.Navbar>
