@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import DatosIdentificacion from './datosIdentificacion';
 import Anemesis from './anemesis';
 import Antecedentes from './antecedentes';

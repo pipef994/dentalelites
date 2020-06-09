@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import stepsPrimeraPagina from './primerPagina'
+import stepsSegundaPagina from './segundaPagina'
 
 const steps = [
-  ...stepsPrimeraPagina
+  ...stepsPrimeraPagina,
+  ...stepsSegundaPagina,
 ]
 
 function HistoriaClinica(props) {
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState({
+    datosIdentificacion: {},
     anemesis: {},
     antecedentes: {},
     antOdont: {},
+    examFisGen: {},
+    ayudasDiagnosticas: {},
   })
 
   let tempFormData = formData

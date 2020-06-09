@@ -1,63 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class ayudasDiagnosticas extends React.Component {
+function AyudasDiagnosticas(props) {
+  const [formData, setFormData] = useState(props.formData || {
+    peripical: '',
+    panorama: '',
+    bitewing: '',
+    oclusal: '',
+    modelos: '',
+    otros: '',
+    observaciones: ''
+  })
 
-  constructor(args) {
-    this.state = {
-      peripical: '',
-      panorama: '',
-      bitewing: '',
-      oclusal: '',
-      modelos: '',
-      otros: '',
-      observaciones: ''
-    }
-  }
-
-  onChange(e) {
-    this.setState({
+  const onChange = (e) => {
+    const newState = {
+      ...formData,
       [e.target.name]: e.target.value
-    })
+    }
+    setFormData(newState)
+    props.updateValues(newState)
   }
 
-  render() {
-    return (
-      <form >
-        <div className='form-group'>
-          <h3>Ayudas Diagnosticas</h3>
-          <br />
-          <div class="custom-control custom-checkbox custom-control-inline">
-            <input type="checkbox" class="custom-control-input" id="peripical" name="peripical"
-            value={this.state.peripical} onChange={this.onChange.bind(this)}/>
-            <label class="custom-control-label" htmlFor="peripical">Peripical</label>
+  return (
+    <form>
+      <div className="card">
+        <h5 className="card-header">Ayudas Diagnósticas</h5>
+        <div className="card-body">
+          <div className="form-row">
+            <InputCheck name="peripical" value={formData.peripical} onChange={onChange} label="Peripical" />
+            <InputCheck name="panorama" value={formData.panorama} onChange={onChange} label="Panorama" />
           </div>
-          <div class="custom-control custom-checkbox custom-control-inline">
-            <input type="checkbox" class="custom-control-input" id="panorama" name="panorama"
-            value={this.state.panorama} onChange={this.onChange.bind(this)}/>
-            <label class="custom-control-label" htmlFor="panorama">Panorama</label>
+          <div className="form-row">
+            <InputCheck name="bitewing" value={formData.bitewing} onChange={onChange} label="Bitewing" />
+            <InputCheck name="oclusal" value={formData.oclusal} onChange={onChange} label="Oclusal" />
           </div>
-          <div class="custom-control custom-checkbox custom-control-inline">
-            <input type="checkbox" class="custom-control-input" id="bitewing" name="bitewing"
-            value={this.state.bitewing} onChange={this.onChange.bind(this)}/>
-            <label class="custom-control-label" htmlFor="bitewing">Bitewing</label>
+          <div className="form-row">
+            <InputCheck name="modelos" value={formData.modelos} onChange={onChange} label="Modelos" />
           </div>
-          <div class="custom-control custom-checkbox custom-control-inline">
-            <input type="checkbox" class="custom-control-input" id="oclusal" name="oclusal"
-            value={this.state.oclusal} onChange={this.onChange.bind(this)}/>
-            <label class="custom-control-label" htmlFor="oclusal">Oclusal</label>
-          </div>
-          <div class="custom-control custom-checkbox custom-control-inline">
-            <input type="checkbox" class="custom-control-input" id="modelos" name="modelos"
-            value={this.state.modelos} onChange={this.onChange.bind(this)}/>
-            <label class="custom-control-label" htmlFor="modelos">Modelos</label>
+          <div className="form-row">
+            <div className="form-group col-md-12">
+              <label htmlFor="observacion">Observación</label>
+              <textarea name="observacion" id="observacion" className="form-control"
+                value={formData.observacion} onChange={onChange}> </textarea>
+            </div>
           </div>
         </div>
-        <div className='form-group'>
-          <label htmlFor="observaciones">Observaciones</label>
-          <textarea name="observaciones" id="observaciones" class="form-control"
-            value={this.state.observaciones} onChange={this.onChange.bind(this)}> </textarea>
-        </div>
-      </form>
-    )
-  }
+      </div>
+    </form >
+  )
 }
+
+function InputCheck(props) {
+  return (
+    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
+      <div className="form-check">
+        <input
+          type="checkbox"
+          name={props.name}
+          id={props.name}
+          className="form-check-input"
+          value={props.value}
+          onChange={props.onChange}
+        />
+        <label className="form-check-label" htmlFor={props.name}>{props.label}</label>
+      </div>
+    </div>
+  )
+}
+
+export default AyudasDiagnosticas;

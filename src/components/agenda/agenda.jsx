@@ -42,9 +42,7 @@ const Agenda = () => {
                 <input type="text" name="odont" id="odont" disabled />
               </div>
               <div className="footer">
-                <button type="submit" className="btn" id="submit">
-                  <Link to="./calendario.jsx">Siguiente</Link>
-                </button>
+                <Link className="btn" to="./calendario.jsx">Siguiente</Link>
               </div>
             </div>
           </div>
