@@ -6,12 +6,11 @@ import Home from "./Home";
 import Login from "./components/login/login";
 import Menu from "./components/dashboard/Navbar";
 import Usuarios from "./components/usuarios/usuarios";
-import Recuperar from "./components/login/recuperar";
-import Hclinicas from "./components/hclinicas";
 import Disableuser from "./components/usuarios/disableUser";
-// import Hclinicas from "./components/hclinicas/hclinicas";
-// import Agenda from "./components/agenda/agenda";
-// import Calendario from "./components/agenda/calendario";
+import Recuperar from "./components/login/recuperar";
+import Agenda from "./components/agenda/agenda";
+import Calendario from "./components/agenda/calendario";
+import Hclinicas from "./components/hclinicas";
 
 function App() {
   const storage = window.localStorage.getItem("email");
@@ -22,12 +21,18 @@ function App() {
           <React.Fragment>
             <Menu />
             <Switch>
+              {/* <Route path="/login" exact component={Login} />
+          <Route path="/" exact component={Home}>
+            {storage ? <Redirect to="/login" /> : <Login />}
+          </Route> */}
               <Route path="/" exact component={Home} />
               <Route path="/login" exact component={Login} />
               <Route path="/usuarios" component={Usuarios} />
               <Route path="/recuperar" component={Recuperar} />
               <Route path="/disableUser" exact component={Disableuser} />
               <Route path="/recuperar" exact component={Recuperar} />
+              <Route path="/agenda" exact component={Agenda} />
+              <Route path="/calendario" exact component={Calendario} />
               <Route path="/historia-clinica" component={Hclinicas} />
               <Route
                 component={() => (

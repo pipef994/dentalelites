@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, createRef } from 'react';
 import UserImg from '../images/User.png'
 import "./usuarios.scss";
 import { useForm } from "react-hook-form";
@@ -12,12 +12,23 @@ const Usuarios = () => {
     console.log(data);
     setEntradas([...entradas,
       data])
+
+    fetch('http://localhost:8080/usuarios', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
+
     e.target.reset();
   }
 
   return (
     <Fragment>
-      <form className="usuarios">
+      <form className="usuarios" onSubmit={handleSubmit(onSubmit)}>
         <div className="base-container">
           <div className="header">Crear usuario</div>
           <br />
@@ -34,7 +45,7 @@ const Usuarios = () => {
                   id="tipId"
                   name="tipId"
                 >
-                  <option value="wh"></option>
+                  <option value="sc">Seleccione</option>
                   <option value="cc">Cédula de ciudadanía</option>
                   <option value="ce">Cédula de extranjería</option>
                   <option value="di">Documento personal de Identificación</option>
@@ -50,7 +61,6 @@ const Usuarios = () => {
                   type="text"
                   id="nId"
                   name="nId"
-                  placeholder="Identificación"
                 />
               </div>
               <div className="form-group">
@@ -86,6 +96,14 @@ const Usuarios = () => {
                 />
               </div>
               <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                />
+              </div>
+              <div className="form-group">
                 <label htmlFor="tUser">Tipo de Usuario</label>
                 <select
                   className="form-control"
@@ -99,17 +117,9 @@ const Usuarios = () => {
                   <option value="clien">Cliente</option>
                 </select>
               </div>
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                />
-              </div>
               <div className="footer">
-                <button type="submit" className="btn" id="submit" >
-                  Inhabilitar
+                <button type="submit" className="btn" id="submit">
+                  Crear
                 </button>
               </div>
             </div>

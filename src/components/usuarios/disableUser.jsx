@@ -1,7 +1,8 @@
 import React, { useState, Fragment } from 'react';
-import UserImg from '../images/disableUser.png'
-import "./disableUser.scss";
+import DiUserImg from '../images/disableUser.png'
 import { useForm } from "react-hook-form";
+import "./disableUser.scss";
+
 
 const DisableUser = () => {
 
@@ -23,8 +24,8 @@ const DisableUser = () => {
           <div className="header">Inhabilitar usuario</div>
           <br />
           <div className="content">
-            <div className="image">
-              <img src={UserImg} />
+          <div className="image">
+              <img src={DiUserImg} />
             </div>
             <div className="form">
               <div className="form-group">
@@ -35,7 +36,7 @@ const DisableUser = () => {
                   id="tipId"
                   name="tipId"
                 >
-                  <option value="wh"></option>
+                  <option value="sc">Seleccione</option>
                   <option value="cc">Cédula de ciudadanía</option>
                   <option value="ce">Cédula de extranjería</option>
                   <option value="di">Documento personal de Identificación</option>
@@ -60,7 +61,6 @@ const DisableUser = () => {
                   </span>
                 }
               </div>
-              <br />
               <div className="footer">
                 <button type="submit" className="btn" id="submit" >
                   Inhabilitar

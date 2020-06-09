@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./login.scss"
 import loginImg from "../images/login.png"
 import { Link } from "react-router-dom";
-
-const EMAIL_REGEX = new RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+import { Modal, Button } from 'react-bootstrap'
 
 class login extends React.Component {
 
@@ -11,8 +10,18 @@ class login extends React.Component {
     super(args);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      show: false
     }
+  }
+
+  handleModal() {
+    this.setState({ show: !this.state.show })
+  }
+
+ limpiarFormulario() {
+  this.state.email="";
+  this.state.password="";
   }
 
   onChange(e) {
@@ -33,13 +42,24 @@ class login extends React.Component {
         'Content-Type': 'application/json'
       }
     }).then(res => res.json())
-      .then(res => console.log(res))
+      .then(res => {
+        if (res.mensaje === "OK") {
+          console.log(res);
+          this.props.history.push({
+            pathname: '/'
+          })
+          localStorage.setItem("email", res.data.email);
+        } else {
+          this.handleModal(true)
+          this.limpiarFormulario()
+        }
+      })
       .catch(e => console.log(e));
   }
 
   render() {
     return (
-      <div className="login" onSubmit={this.handleSubmit}>
+      <form id="login" className="login" onSubmit={this.handleSubmit}>
         <div className="base-container" >
           <div className="header">Ingreso</div>
           <br />
@@ -50,7 +70,7 @@ class login extends React.Component {
             <div className="form">
               <div className="form-group">
                 <label htmlFor="email">Email</label>
-                <input type="text" name="email" id="email" placeholder=" Ingrese el correo"
+                <input type="email" name="email" id="email" placeholder=" Ingrese el correo"
                   value={this.state.email} onChange={this.onChange.bind(this)} required />
               </div>
               <div className="form-group">
@@ -70,12 +90,20 @@ class login extends React.Component {
           </div>
           <br />
           <div >
-            {/* <a href="http://google.com" class="button2" target="_blank">Recordar Contraseña</a> */}
-            {/* <a href="../recovery_user/recovery_user.jsx" className="button2" target="_blank">Recordar Contraseña</a> */}
             <Link to="./recuperar" className="button2" target="_blank" >Recuperar Contraseña</Link>
           </div>
         </div>
-      </div>
+
+        <Modal show={this.state.show}>
+          
+          <Modal.Body>Usuario o contraseña invalido</Modal.Body>
+          {/* <Modal.Footer> */}
+            <Button variant="danger" onClick={() => { this.handleModal() }}>
+              Close
+          </Button>
+          {/* </Modal.Footer> */}
+        </Modal>
+      </form>
     );
   }
 }
