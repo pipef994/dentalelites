@@ -4,6 +4,7 @@ import "./App.scss";
 
 import Home from "./Home";
 import Login from "./components/login/login";
+import Logout from "./components/login/logout";
 import Menu from "./components/dashboard/Navbar";
 import Usuarios from "./components/usuarios/usuarios";
 import Disableuser from "./components/usuarios/disableUser";
@@ -34,6 +35,7 @@ function App() {
               <Route path="/agenda" exact component={Agenda} />
               <Route path="/calendario" exact component={Calendario} />
               <Route path="/historia-clinica" component={Hclinicas} />
+              <Route path="/logout" exact component={Logout} />
               <Route
                 component={() => (
                   <div className="ed-grid">
