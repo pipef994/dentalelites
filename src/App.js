@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "./App.scss";
 
@@ -14,11 +14,13 @@ import Calendario from "./components/agenda/calendario";
 import Hclinicas from "./components/hclinicas";
 
 function App() {
+  const [loginUpdate, setloginUpdate] = useState(window.localStorage.getItem("email"))
   const storage = window.localStorage.getItem("email");
   return (
     <div>
       <BrowserRouter>
-        {storage || true ? ( // Remover el || true cuando se vaya a publicar
+        {/* {storage || true ? ( // Remover el || true cuando se vaya a publicar */}
+        {storage ? ( // Remover el || true cuando se vaya a publicar
           <React.Fragment>
             <Menu />
             <Switch>
@@ -27,15 +29,12 @@ function App() {
             {storage ? <Redirect to="/login" /> : <Login />}
           </Route> */}
               <Route path="/" exact component={Home} />
-              <Route path="/login" exact component={Login} />
               <Route path="/usuarios" component={Usuarios} />
-              <Route path="/recuperar" component={Recuperar} />
               <Route path="/disableUser" exact component={Disableuser} />
-              <Route path="/recuperar" exact component={Recuperar} />
               <Route path="/agenda" exact component={Agenda} />
               <Route path="/calendario" exact component={Calendario} />
               <Route path="/historia-clinica" component={Hclinicas} />
-              <Route path="/logout" exact component={Logout} />
+              <Route path="/logout" exact render={(props) => <Logout {...props} updateLogin={setloginUpdate} />} />
               <Route
                 component={() => (
                   <div className="ed-grid">
@@ -48,7 +47,8 @@ function App() {
           </React.Fragment>
         ) : (
           <Switch>
-            <Route path="/login" exact component={Login} />
+            <Route path="/login" exact render={(props) => <Login {...props} updateLogin={setloginUpdate} />} />
+            <Route path="/recuperar" component={Recuperar} />
             <Redirect from="*" to="/login" />
           </Switch>
         )}

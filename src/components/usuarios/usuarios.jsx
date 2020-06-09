@@ -61,6 +61,7 @@ const Usuarios = () => {
                   type="text"
                   id="nId"
                   name="nId"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
@@ -69,6 +70,7 @@ const Usuarios = () => {
                   type="text"
                   id="firstName"
                   name="firstName"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
@@ -77,6 +79,7 @@ const Usuarios = () => {
                   type="text"
                   id="secondName"
                   name="secondName"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
@@ -85,6 +88,7 @@ const Usuarios = () => {
                   type="text"
                   id="firstLastName"
                   name="firstLastName"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
@@ -93,6 +97,7 @@ const Usuarios = () => {
                   type="text"
                   id="secondLastName"
                   name="secondLastName"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">
@@ -101,6 +106,7 @@ const Usuarios = () => {
                   type="email"
                   id="email"
                   name="email"
+                  className="form-control"
                 />
               </div>
               <div className="form-group">

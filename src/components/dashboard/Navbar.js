@@ -49,9 +49,7 @@ class Navbar extends React.Component {
               title="Historia Clinica"
               id="collasible-nav-dropdown"
             >
-              <ReactBootStrap.NavDropdown.Item href="#action/3.1">
-                Crear
-              </ReactBootStrap.NavDropdown.Item>
+              <ReactBootStrap.NavDropdown.Item href=""></ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="#action/3.2">
                 Modificar
               </ReactBootStrap.NavDropdown.Item>
@@ -59,8 +57,10 @@ class Navbar extends React.Component {
                 Consultar
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
+          </ReactBootStrap.Nav>
+          <ReactBootStrap.Nav>
             <ReactBootStrap.Nav.Link href="/logout">
-            Cerrar Sesion
+              Cerrar Sesion
             </ReactBootStrap.Nav.Link>
           </ReactBootStrap.Nav>
         </ReactBootStrap.Navbar.Collapse>
