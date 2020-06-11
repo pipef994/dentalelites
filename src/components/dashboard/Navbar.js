@@ -50,7 +50,10 @@ class Navbar extends React.Component {
               id="collasible-nav-dropdown"
             >
               <ReactBootStrap.NavDropdown.Item href=""></ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="#action/3.2">
+              <ReactBootStrap.NavDropdown.Item href="/historia-clinica">
+                Crear
+              </ReactBootStrap.NavDropdown.Item>
+              <ReactBootStrap.NavDropdown.Item href="#action/3.3">
                 Modificar
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="#action/3.3">

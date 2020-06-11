@@ -2,8 +2,8 @@ import React, { useState, Fragment } from 'react';
 import { useForm } from "react-hook-form";
 import Calendar from '../images/calendar.png'
 import { Link } from "react-router-dom";
-
 import "./agenda.scss"
+
 
 const Agenda = () => {
 
@@ -23,13 +23,13 @@ const Agenda = () => {
       <form className="agenda">
         <div className="base-container">
           <div className="header">Asignar Cita</div>
-          <br />
           <div className="content">
             <div className="image">
               <img src={Calendar} />
             </div>
+            <br />
             <div className="form">
-              <div className="form-group col-lg-6">
+              <div className="form-group col-md-6">
                 <label htmlFor="tipServ">Tipo Servicio</label>
                 <select id="tipServ" name="tipServ">
                   <option value="sc">Seleccione</option>
@@ -42,7 +42,7 @@ const Agenda = () => {
                 <input type="text" name="odont" id="odont" disabled />
               </div>
               <div className="footer">
-                <Link className="btn" to="./calendario.jsx">Siguiente</Link>
+                <Link className="btn" to="./calendario">Siguiente</Link>
               </div>
             </div>
           </div>
