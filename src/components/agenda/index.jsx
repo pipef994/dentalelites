@@ -52,7 +52,7 @@ function CitaOdontologica(props) {
           {currentStep < totalSteps - 1 ?
             <button type="button" className="btn btn-primary mx-2" onClick={nextStep}>Siguiente</button>
             :
-            <button type="button" className="btn btn-success mx-2">Guardar</button>
+            <button type="button" className="btn btn-success mx-2">Asignar</button>
           }
         </div>
       </div>

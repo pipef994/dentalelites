@@ -18,21 +18,21 @@ const Recuperar = () => {
     e.target.reset();
   }
 
-// //Se consulta si el correo ingresado existe
-// let url = `http://localhost:8080/usuarios/consultarUsuarios`
+  // //Se consulta si el correo ingresado existe
+  // let url = `http://localhost:8080/usuarios/consultarUsuarios`
 
-//   const api = new XMLHttpRequest();
-//   api.open('GET', url, true);
-//   api.send();
+  //   const api = new XMLHttpRequest();
+  //   api.open('GET', url, true);
+  //   api.send();
 
-//   api.onreadystatechange = function(){
-//     if (this.status == 200 && this.readyState == 4) {
-//       let datos = JSON.parse(this.responseText);
-//       console.log(datos.email);
-//       let resultado = document.querySelector('#resusltado');
-//       resultado.innerHTML = '';
-//     }
-//  
+  //   api.onreadystatechange = function(){
+  //     if (this.status == 200 && this.readyState == 4) {
+  //       let datos = JSON.parse(this.responseText);
+  //       console.log(datos.email);
+  //       let resultado = document.querySelector('#resusltado');
+  //       resultado.innerHTML = '';
+  //     }
+  //  
 
   return (
     <Fragment>
@@ -61,12 +61,14 @@ const Recuperar = () => {
                 }
               </div>
               <div className="footer">
-                <button type="submit"
-                  className="btn"
-                  id="submit" 
-                >
-                  Enviar
-                </button>
+                <div className="form-row">
+                  <button type="submit" className="btn" id="submit" >
+                    Enviar
+                  </button>
+                  <button className="btn_back" id="back">
+                    Volver
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "./App.scss";
 
@@ -9,12 +9,14 @@ import Menu from "./components/dashboard/Navbar";
 import Usuarios from "./components/usuarios/usuarios";
 import Disableuser from "./components/usuarios/disableUser";
 import Recuperar from "./components/login/recuperar";
-import Agenda from "./components/agenda/agenda";
-import Calendario from "./components/agenda/calendario";
+import Agenda from "./components/agenda";
+import Calendario from "./components/agenda/cita";
 import Hclinicas from "./components/hclinicas";
 
 function App() {
-  const [loginUpdate, setloginUpdate] = useState(window.localStorage.getItem("email"))
+  const [loginUpdate, setloginUpdate] = useState(
+    window.localStorage.getItem("email")
+  );
   const storage = window.localStorage.getItem("email");
   return (
     <div>
@@ -34,7 +36,13 @@ function App() {
               <Route path="/agenda" exact component={Agenda} />
               <Route path="/calendario" exact component={Calendario} />
               <Route path="/historia-clinica" component={Hclinicas} />
-              <Route path="/logout" exact render={(props) => <Logout {...props} updateLogin={setloginUpdate} />} />
+              <Route
+                path="/logout"
+                exact
+                render={(props) => (
+                  <Logout {...props} updateLogin={setloginUpdate} />
+                )}
+              />
               <Route
                 component={() => (
                   <div className="ed-grid">
@@ -47,7 +55,13 @@ function App() {
           </React.Fragment>
         ) : (
           <Switch>
-            <Route path="/login" exact render={(props) => <Login {...props} updateLogin={setloginUpdate} />} />
+            <Route
+              path="/login"
+              exact
+              render={(props) => (
+                <Login {...props} updateLogin={setloginUpdate} />
+              )}
+            />
             <Route path="/recuperar" component={Recuperar} />
             <Redirect from="*" to="/login" />
           </Switch>
