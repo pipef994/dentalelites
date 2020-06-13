@@ -9,8 +9,8 @@ import Menu from "./components/dashboard/Navbar";
 import Usuarios from "./components/usuarios/usuarios";
 import Disableuser from "./components/usuarios/disableUser";
 import Recuperar from "./components/login/recuperar";
-import Agenda from "./components/agenda/agenda";
-import Calendario from "./components/agenda/calendario";
+import Agenda from "./components/agenda";
+import Calendario from "./components/agenda/cita";
 import Hclinicas from "./components/hclinicas";
 
 function App() {

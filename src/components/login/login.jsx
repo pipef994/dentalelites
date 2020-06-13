@@ -19,9 +19,9 @@ class login extends React.Component {
     this.setState({ show: !this.state.show })
   }
 
- limpiarFormulario() {
-  this.state.email="";
-  this.state.password="";
+  limpiarFormulario() {
+    this.state.email = "";
+    this.state.password = "";
   }
 
   onChange(e) {
@@ -81,12 +81,14 @@ class login extends React.Component {
             </div>
           </div>
           <div className="footer">
-            <button type="button" className="btn" onClick={this.join.bind(this)}>
-              Ingresar
+            <div className="form-row">
+              <button type="button" className="btn" onClick={this.join.bind(this)}>
+                Ingresar
             </button>
-            <button type="button" className="btn2">
-              Cancelar
+              <button type="button" className="btn2">
+                Cancelar
             </button>
+            </div>
           </div>
           <br />
           <div >
@@ -95,11 +97,11 @@ class login extends React.Component {
         </div>
 
         <Modal show={this.state.show}>
-          
+
           <Modal.Body>Usuario o contraseña invalido</Modal.Body>
           {/* <Modal.Footer> */}
-            <Button variant="danger" onClick={() => { this.handleModal() }}>
-              Close
+          <Button variant="danger" onClick={() => { this.handleModal() }}>
+            Close
           </Button>
           {/* </Modal.Footer> */}
         </Modal>

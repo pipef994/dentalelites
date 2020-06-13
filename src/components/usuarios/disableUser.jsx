@@ -24,13 +24,12 @@ const DisableUser = () => {
           <div className="header">Inhabilitar usuario</div>
           <br />
           <div className="content">
-          <div className="image">
+            <div className="image">
               <img src={DiUserImg} />
             </div>
             <div className="form">
               <div className="form-group">
                 <label htmlFor="tipId">Tipo de documento</label>
-                <br />
                 <select
                   className="form-control"
                   id="tipId"
@@ -45,9 +44,6 @@ const DisableUser = () => {
                   <option value="ti">Tarjeta de identidad</option>
                 </select>
               </div>
-              <br />
-              <br />
-              <br />
               <div className="form-group">
                 <label htmlFor="nId">Número de Identificación</label>
                 <input type="text" id="nId" name="nId"
@@ -55,7 +51,7 @@ const DisableUser = () => {
                   ref={register({
                     required: { value: true, message: 'Campo obligatorio' }
                   })} />
-                  {errors.nId &&
+                {errors.nId &&
                   <span className="text-danger text-small d-block mb-2">
                     {errors.nId.message}
                   </span>

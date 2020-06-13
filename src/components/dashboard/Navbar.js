@@ -26,31 +26,32 @@ class Navbar extends React.Component {
               title="Usuarios"
               id="collasible-nav-dropdown"
             >
-              <ReactBootStrap.NavDropdown.Item href="Usuarios">
-                <Link to="usuarios">Crear</Link>
+              <ReactBootStrap.NavDropdown.Item href="/usuarios">
+                Crear
               </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="DisableUser">
-                <Link to="disableUser">Inhabilitar</Link>
+              <ReactBootStrap.NavDropdown.Item href="/disableUser">
+                Inhabilitar
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
             <ReactBootStrap.NavDropdown
               title="Agenda"
               id="collasible-nav-dropdown"
             >
-              <ReactBootStrap.NavDropdown.Item href="Agenda">
-                <Link to="agenda"> Agenda </Link>
+              <ReactBootStrap.NavDropdown.Item href="/agenda">
+                Agendar
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="#action/2.2">
                 Cancelar
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
-
             <ReactBootStrap.NavDropdown
               title="Historia Clinica"
               id="collasible-nav-dropdown"
             >
-              <ReactBootStrap.NavDropdown.Item href=""></ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="#action/3.2">
+              <ReactBootStrap.NavDropdown.Item href="/historia-clinica">
+                Crear
+              </ReactBootStrap.NavDropdown.Item>
+              <ReactBootStrap.NavDropdown.Item href="#action/3.3">
                 Modificar
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="#action/3.3">
