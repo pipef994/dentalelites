@@ -18,7 +18,14 @@ function HistoriaClinica(props) {
     antecedentes: {},
     antOdont: {},
     examFisGen: {},
+    examExtIntra: {},
+    examDental: {},
+    examPeriodontal: {},
+    examPulpar: {},
+    examRadio: {},
     ayudasDiagnosticas: {},
+    diagnostico: {},
+    planTratamiento: {},
   })
 
   let tempFormData = formData
