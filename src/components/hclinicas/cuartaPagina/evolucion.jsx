@@ -32,10 +32,10 @@ class evolucion extends React.Component {
               </div>
             </div>
             <script type="text/javascript">
-              $(function () {
+              {/* $(function () {
                 $('#date').datetimepicker();
-            });
-        </script>
+            }); */}
+            </script>
           </div>
         </div>
       </form>

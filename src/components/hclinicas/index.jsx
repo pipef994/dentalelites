@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import stepsPrimeraPagina from './primerPagina'
 import stepsSegundaPagina from './segundaPagina'
+import stepsTercerPagina from './tercerPagina'
 
 const steps = [
   ...stepsPrimeraPagina,
   ...stepsSegundaPagina,
+  ...stepsTercerPagina,
 ]
 
 function HistoriaClinica(props) {
