@@ -100,7 +100,7 @@ function DatosIdentificacion(props) {
           <div className='form-group mt-4'>
             <label htmlFor="antMedOdoFa">Antecedentes Medicos y Odontologicos Familiares</label>
             <textarea name="antMedOdoFa" id="antMedOdoFa" className="form-control"
-              value={formData.antMedOdoFa} onChange={onChange}> </textarea>
+              value={formData.antMedOdoFa} onChange={onChange} />
           </div>
         </div>
       </div>

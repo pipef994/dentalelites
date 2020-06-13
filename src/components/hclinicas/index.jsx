@@ -10,8 +10,22 @@ const steps = [
   ...stepsTercerPagina,
 ]
 
+const alerts = {
+  "success": {
+    type: "success",
+    text: "Historia Clínica almacenada con éxito"
+  },
+  "error": {
+    type: "danger",
+    text: "Ocurrió un error al almacenar la Historia Clínica"
+  }
+}
+
 function HistoriaClinica(props) {
   const [currentStep, setCurrentStep] = useState(0)
+  const [showAlert, setShowAlert] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [saveStatus, setSaveStatus] = useState("")
   const [formData, setFormData] = useState({
     datosIdentificacion: {},
     anemesis: {},
@@ -51,12 +65,56 @@ function HistoriaClinica(props) {
     )
   }
 
+  const cleanAlert = () => {
+    setShowAlert(false)
+    setSaveStatus("")
+  }
+
+  const triggerAlert = ({ type, text }) => {
+    return (
+      <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
+        {text}
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={cleanAlert}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    )
+  }
+
   const nextStep = () => {
     setCurrentStep(currentStep + 1)
     setFormData(tempFormData)
   }
   const previousStep = () => {
     setCurrentStep(currentStep - 1)
+  }
+
+  const saveHC = () => {
+    setSaving(true)
+    fetch('http://localhost:8080/historia/clinica', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        if (res.mensaje === "OK") {
+          setShowAlert(true)
+          setSaveStatus("success")
+        } else {
+          setShowAlert(true)
+          setSaveStatus("error")
+        }
+      })
+      .catch(e => {
+        console.log(e)
+        setShowAlert(true)
+        setSaveStatus("error")
+      })
+      .finally(() => {
+        setSaving(false)
+      })
   }
 
   const renderButtons = () => {
@@ -67,7 +125,7 @@ function HistoriaClinica(props) {
           {currentStep < totalSteps - 1 ?
             <button type="button" className="btn btn-primary mx-2" onClick={nextStep}>Siguiente</button>
             :
-            <button type="button" className="btn btn-success mx-2">Guardar</button>
+            <button type="button" className="btn btn-success mx-2" onClick={saveHC} disabled={saving}>Guardar</button>
           }
         </div>
       </div>
@@ -90,6 +148,11 @@ function HistoriaClinica(props) {
               aria-valuemin="0"
               aria-valuemax="100" />
           </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12">
+          {showAlert && triggerAlert({ ...alerts[saveStatus] })}
         </div>
       </div>
       <div className="row">

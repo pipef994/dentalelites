@@ -24,14 +24,14 @@ function Diagnostico(props) {
             <div className="form-group col-12">
               <label htmlFor="diagPresu">Diagnóstico Presuntivo</label>
               <textarea name="diagPresu" id="diagPresu" className="form-control"
-                value={formData.diagPresu} onChange={onChange}> </textarea>
+                value={formData.diagPresu} onChange={onChange} />
             </div>
           </div>
           <div className="form-row">
             <div className="form-group col-12">
               <label htmlFor="diagDefini">Diagnóstico Definitivo</label>
               <textarea name="diagDefini" id="diagDefini" className="form-control"
-                value={formData.diagDefini} onChange={onChange}> </textarea>
+                value={formData.diagDefini} onChange={onChange} />
             </div>
           </div>
         </div>

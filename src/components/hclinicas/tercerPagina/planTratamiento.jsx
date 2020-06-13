@@ -39,14 +39,14 @@ function PlanTratamiento(props) {
             <div className="form-group col-12">
               <label htmlFor="descPlan">Descripción del plan</label>
               <textarea name="descPlan" id="descPlan" className="form-control"
-                value={formData.descPlan} onChange={onChange}> </textarea>
+                value={formData.descPlan} onChange={onChange} />
             </div>
           </div>
           <div className="form-row">
             <div className="form-group col-12">
               <label htmlFor="valTrat">Valor del tratamiento</label>
               <textarea name="valTrat" id="valTrat" className="form-control"
-                value={formData.valTrat} onChange={onChange}> </textarea>
+                value={formData.valTrat} onChange={onChange} />
             </div>
           </div>
         </div>

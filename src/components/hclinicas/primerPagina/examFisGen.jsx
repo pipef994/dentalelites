@@ -41,7 +41,7 @@ function ExamFisGen(props) {
             <div className="form-group col-12">
               <label htmlFor="observacion">Observación</label>
               <textarea name="observacion" id="observacion" className="form-control"
-                value={formData.observacion} onChange={onChange}> </textarea>
+                value={formData.observacion} onChange={onChange} />
             </div>
           </div>
         </div>

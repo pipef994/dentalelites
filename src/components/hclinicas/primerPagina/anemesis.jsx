@@ -29,7 +29,7 @@ const Anemesis = React.memo((props) => {
             <div className="form-group col-md-6">
               <label htmlFor="enfActual">Enfermedad Actual</label>
               <textarea name="enfActual" id="enfActual" className="form-control"
-                value={formData.enfActual} onChange={onChange}></textarea>
+                value={formData.enfActual} onChange={onChange} />
             </div>
           </div>
         </div>
