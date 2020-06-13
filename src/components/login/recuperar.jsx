@@ -4,6 +4,7 @@ import "./recuperar.scss";
 import clsx from 'clsx';
 
 import { useForm } from "react-hook-form";
+import { Redirect, Link } from 'react-router-dom';
 
 const Recuperar = () => {
 
@@ -65,8 +66,9 @@ const Recuperar = () => {
                   <button type="submit" className="btn" id="submit" >
                     Enviar
                   </button>
+                  {/* <Redirect to="./recuperar" className="button2" target="_blank"> Recuperar Contraseña</Redirect> */}
                   <button className="btn_back" id="back">
-                    Volver
+                    <Link to="./login">Volver</Link>
                   </button>
                 </div>
               </div>

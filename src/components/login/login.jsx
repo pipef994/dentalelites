@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "./login.scss"
 import loginImg from "../images/login.png"
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Modal, Button } from 'react-bootstrap'
 
 class login extends React.Component {
