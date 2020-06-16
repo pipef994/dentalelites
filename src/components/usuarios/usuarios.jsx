@@ -5,26 +5,56 @@ import { useForm } from "react-hook-form";
 
 const Usuarios = () => {
   const { register, errors, handleSubmit, setError, clearError } = useForm();
-
+  const [saving, setSaving] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
+  const [saveStatus, setSaveStatus] = useState("")
   const [entradas, setEntradas] = useState([]);
 
   const onSubmit = (data, e) => {
     console.log(data);
     setEntradas([...entradas, data]);
 
-    fetch("http://localhost:8080/usuarios", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-      .catch((e) => console.log(e));
+    // fetch("http://localhost:8080/usuarios", {
+    //   method: "POST",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => console.log(res))
+    //   .catch((e) => console.log(e));
 
     e.target.reset();
   };
+
+  const saveUser = (data) => {
+    setSaving(true)
+    fetch('http://localhost:8080/usuarios', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        if (res.mensaje === "OK") {
+          setShowAlert(true)
+          setSaveStatus("success")
+        } else {
+          setShowAlert(true)
+          setSaveStatus("error")
+        }
+      })
+      .catch(e => {
+        console.log(e)
+        setShowAlert(true)
+        setSaveStatus("error")
+      })
+      .finally(() => {
+        setSaving(false)
+      })
+  }
 
   return (
     <Fragment>
@@ -60,6 +90,7 @@ const Usuarios = () => {
                     name="nId"
                     className="form-control"
                   />
+
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="firstName">Primer Nombre</label>
@@ -84,11 +115,20 @@ const Usuarios = () => {
                     id="email"
                     name="email"
                     className="form-control"
+                    ref={register({
+                      required: "*Campo Obligatorio",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+                      }
+                    })}
                   />
+                  {errors.email && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="tUser">Tipo de Usuario</label>
-                  <select className="form-control" id="tUser" name="tUser">
+                  <select className="form-control" id="tUser" name="tUser" ref={register({
+                    required: true
+                  })}>
                     <option value="sc">Seleccione</option>
                     <option value="admin">Administrador</option>
                     <option value="odont">Odontólogo</option>

@@ -1,6 +1,6 @@
-.recuperar {
-  width: 27em;
-  height: 40em;
+.listUser {
+  width: 70em;
+  height: 45em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +30,7 @@
     .header {
       font-size: 24px;
       font-family: "Open Sans", sans-serif;
+      font-weight: 900
     }
 
     .content {
@@ -48,45 +49,10 @@
       }
 
       .form {
-        margin-top: 2em;
+        margin-top: 20em;
         display: flex;
         flex-direction: column;
         align-items: center;
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          width: fit-content;
-
-          label {
-            font-size: 20px;
-          }
-
-          input {
-            margin-top: 6px;
-            min-width: 18em;
-            height: 37px;
-            padding: 0px 10px;
-            font-size: 16px;
-            font-family: "Open Sans", sans-serif;
-            background-color: #f3f3f3;
-            border: 0;
-            border-radius: 4px;
-            margin-bottom: 31px;
-            transition: all 250ms ease-in-out;
-
-            &:hover {
-              //background-color: #ffffff;
-              //box-shadow: 0px 0px 14px 0.3px #0e81ce96;
-            }
-
-            &:focus {
-              outline: none;
-              box-shadow: 0px 0px 12px 0.8px #3474dbb2;
-            }
-          }
-        }
       }
     }
 
@@ -94,10 +60,9 @@
       margin-top: 3em;
     }
 
-
     .btn {
-      margin-left: 4px;
       font-size: 20px;
+      font-family: "Open Sans", sans-serif;
       padding: 5px 20px;
       border: 0;
       background-color: #09ca9aef;
@@ -115,27 +80,8 @@
       }
     }
 
-    .btn_back {
-      margin-left: 5px;
-      font-size: 20px;
-      padding: 5px 20px;
-      border: 0;
-      background-color: #ca2609ef;
-      color: #fff;
-      border-radius: 5px;
-      transition: all 250ms ease-in-out;
-      cursor: pointer;
-    }
-
     .body {
       text-align: center;
     }
-
   }
 }
-
-// .base-container {
-
-
-
-// }

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "./login.scss"
 import loginImg from "../images/login.png"
 import { Link, Redirect } from "react-router-dom";
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap';
 
 class login extends React.Component {
 
@@ -92,7 +92,7 @@ class login extends React.Component {
           </div>
           <br />
           <div >
-            <Link to="./recuperar" className="button2" target="_blank" >Recuperar Contraseña</Link>
+            <Link to="./recuperar" className="button2">Recuperar Contraseña</Link>
           </div>
         </div>
 

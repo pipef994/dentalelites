@@ -12,6 +12,8 @@ import Recuperar from "./components/login/recuperar";
 import Agenda from "./components/agenda";
 import Calendario from "./components/agenda/cita";
 import Hclinicas from "./components/hclinicas";
+import Cancelacion from "./components/agenda/cancelar/cancelacion";
+import ListUser from "./components/usuarios/listUser";
 
 function App() {
   const [userEmail, setloginUpdate] = useState(
@@ -29,9 +31,11 @@ function App() {
               <Route path="/" exact component={Home} />
               <Route path="/usuarios" component={Usuarios} />
               <Route path="/disableUser" exact component={Disableuser} />
+              <Route path="/listUser" exact component={ListUser} />
               <Route path="/agenda" exact component={Agenda} />
               <Route path="/calendario" exact component={Calendario} />
-              <Route path="/historia-clinica" component={Hclinicas} />
+              <Route path="/historia-clinica" exact component={Hclinicas} />
+              <Route path="/cancelacion" exact component={Cancelacion} />
               <Route
                 path="/logout"
                 exact

@@ -32,6 +32,9 @@ class Navbar extends React.Component {
               <ReactBootStrap.NavDropdown.Item href="/disableUser">
                 Inhabilitar
               </ReactBootStrap.NavDropdown.Item>
+              <ReactBootStrap.NavDropdown.Item href="/listUser">
+                Consultar
+              </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
             <ReactBootStrap.NavDropdown
               title="Agenda"
@@ -40,7 +43,7 @@ class Navbar extends React.Component {
               <ReactBootStrap.NavDropdown.Item href="/agenda">
                 Agendar
               </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="#action/2.2">
+              <ReactBootStrap.NavDropdown.Item href="/cancelacion">
                 Cancelar
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
