@@ -13,18 +13,6 @@ const Usuarios = () => {
   const onSubmit = (data, e) => {
     console.log(data);
     setEntradas([...entradas, data]);
-
-    // fetch("http://localhost:8080/usuarios", {
-    //   method: "POST",
-    //   body: JSON.stringify(data),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((res) => console.log(res))
-    //   .catch((e) => console.log(e));
-
     e.target.reset();
   };
 
@@ -70,7 +58,7 @@ const Usuarios = () => {
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label htmlFor="tipId">Tipo de documento</label>
-                  <select className="form-control" id="tipId" name="tipId">
+                  <select className="form-control" name="tipId" ref={register({ required: true })}>
                     <option value="sc">Seleccione</option>
                     <option value="cc">Cédula de ciudadanía</option>
                     <option value="ce">Cédula de extranjería</option>
@@ -81,6 +69,7 @@ const Usuarios = () => {
                     <option value="Re">Registro</option>
                     <option value="ti">Tarjeta de identidad</option>
                   </select>
+                  {errors.tipId && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="nId">N° Identificación</label>
@@ -89,24 +78,29 @@ const Usuarios = () => {
                     id="nId"
                     name="nId"
                     className="form-control"
+                    ref={register({
+                      required: true, maxLength: 12
+                    })}
                   />
-
+                  {errors.nId && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="firstName">Primer Nombre</label>
-                  <input type="text" id="firstName" name="firstName" className="form-control" />
+                  <input type="text" id="firstName" name="firstName" className="form-control" ref={register({ required: true, pattern: /^[A-Za-z]+$/i })} />
+                  {errors.firstName && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="secondName">Segundo Nombre</label>
-                  <input type="text" id="secondName" name="secondName" className="form-control" />
+                  <input type="text" id="secondName" name="secondName" className="form-control" ref={register({ maxLength: 20 })} />
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="firstLastName">Primer Apellido</label>
-                  <input type="text" id="firstLastName" name="firstLastName" className="form-control" />
+                  <input type="text" id="firstLastName" name="firstLastName" className="form-control" ref={register({ required: true, maxLength: 20 })} />
+                  {errors.firstLastName && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="secondLastName">Segundo Apellido</label>
-                  <input type="text" id="secondLastName" name="secondLastName" className="form-control" />
+                  <input type="text" id="secondLastName" name="secondLastName" className="form-control" ref={register({ maxLength: 20 })} />
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="email">Email</label>
@@ -135,10 +129,11 @@ const Usuarios = () => {
                     <option value="aux">Auxiliar</option>
                     <option value="clien">Cliente</option>
                   </select>
+                  {errors.tUser && <p>*Campo Obligatorio</p>}
                 </div>
               </div>
               <div className="footer">
-                <button type="submit" className="btn" id="submit">
+                <button type="submit" className="btn" id="submit" onClick={saveUser}>
                   Crear
                 </button>
               </div>

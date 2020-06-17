@@ -44,12 +44,14 @@ class login extends React.Component {
     }).then(res => res.json())
       .then(res => {
         if (res.mensaje === "OK") {
+          console.log(res.mensaje);
           localStorage.setItem("email", res.data.email);
           this.props.updateLogin(res.data.email);
           this.props.history.push({
             pathname: '/'
           })
         } else {
+          console.log(res.mensaje);
           this.handleModal(true)
           this.limpiarFormulario()
         }
