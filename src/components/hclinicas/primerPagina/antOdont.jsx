@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
 
 function AntOdont(props) {
+  const { errors, handleSubmit, setError, clearError } = useForm();
   const [formData, setFormData] = useState(props.formData || {
     tratPrev: '',
     cepDent: '',
@@ -26,19 +28,25 @@ function AntOdont(props) {
         <h5 className="card-header">Antecedentes Odontologicos</h5>
         <div className="card-body">
           <div className="form-row">
-            <YesNoSelectInput name="tratPrev" value={formData.tratPrev} onChange={onChange} label="Tratamientos Previos" />
-            <YesNoSelectInput name="cepDent" value={formData.cepDent} onChange={onChange} label="Cepillo Dental" />
+            <YesNoSelectInput name="tratPrev" value={formData.tratPrev} onChange={onChange} label="Tratamientos Previos" required />
+
+            <YesNoSelectInput name="cepDent" value={formData.cepDent} onChange={onChange} label="Cepillo Dental" required />
+
           </div>
           <div className="form-row">
-            <YesNoSelectInput name="seDental" value={formData.seDental} onChange={onChange} label="Seda Dental" />
-            <YesNoSelectInput name="enjuBucal" value={formData.enjuBucal} onChange={onChange} label="Enjuague Bucal" />
+            <YesNoSelectInput name="seDental" value={formData.seDental} onChange={onChange} label="Seda Dental" required />
+
+            <YesNoSelectInput name="enjuBucal" value={formData.enjuBucal} onChange={onChange} label="Enjuague Bucal" required />
+
           </div>
           <div className="form-row">
-            <YesNoSelectInput name="habitos" value={formData.paAlgSan} onChange={onChange} label="Habitos" />
+            <YesNoSelectInput name="habitos" value={formData.paAlgSan} onChange={onChange} label="Habitos" required />
+
             <div className="form-group col-md-6">
               <label htmlFor="observacion">Observación</label>
               <textarea name="observacion" id="observacion" className="form-control"
-                value={formData.observacion} onChange={onChange} />
+                value={formData.observacion} onChange={onChange} required />
+
             </div>
           </div>
         </div>

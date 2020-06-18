@@ -11,13 +11,19 @@ const Usuarios = () => {
   const [entradas, setEntradas] = useState([]);
 
   const onSubmit = (data, e) => {
-    console.log(data);
     setEntradas([...entradas, data]);
-    e.target.reset();
+    if (data !== null) {
+      if (data.password === data.rPassword) {
+        saveUser(data);
+      } else {
+
+      }
+    }
   };
 
   const saveUser = (data) => {
     setSaving(true)
+    console.log(data);
     fetch('http://localhost:8080/usuarios', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -59,7 +65,7 @@ const Usuarios = () => {
                 <div className="form-group col-md-6">
                   <label htmlFor="tipId">Tipo de documento</label>
                   <select className="form-control" name="tipId" ref={register({ required: true })}>
-                    <option value="sc">Seleccione</option>
+                    <option value="">Seleccione</option>
                     <option value="cc">Cédula de ciudadanía</option>
                     <option value="ce">Cédula de extranjería</option>
                     <option value="di">
@@ -74,12 +80,12 @@ const Usuarios = () => {
                 <div className="form-group col-md-6">
                   <label htmlFor="nId">N° Identificación</label>
                   <input
-                    type="text"
+                    type="number"
                     id="nId"
                     name="nId"
                     className="form-control"
                     ref={register({
-                      required: true, maxLength: 12
+                      required: true, pattern: [0 - 9]
                     })}
                   />
                   {errors.nId && <p>*Campo Obligatorio</p>}
@@ -123,7 +129,7 @@ const Usuarios = () => {
                   <select className="form-control" id="tUser" name="tUser" ref={register({
                     required: true
                   })}>
-                    <option value="sc">Seleccione</option>
+                    <option value="">Seleccione</option>
                     <option value="admin">Administrador</option>
                     <option value="odont">Odontólogo</option>
                     <option value="aux">Auxiliar</option>
@@ -131,9 +137,19 @@ const Usuarios = () => {
                   </select>
                   {errors.tUser && <p>*Campo Obligatorio</p>}
                 </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="password">Contraseña</label>
+                  <input type="password" id="password" name="password" className="form-control" ref={register({ required: true })} />
+                  {errors.password && <p>*Campo Obligatorio</p>}
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="rPassword">Repetir Contraseña</label>
+                  <input type="rPassword" id="rPassword" name="rPassword" className="form-control" ref={register({ required: true })} />
+                  {errors.rPassword && <p>*Campo Obligatorio</p>}
+                </div>
               </div>
               <div className="footer">
-                <button type="submit" className="btn" id="submit" onClick={saveUser}>
+                <button type="submit" className="btn" id="submit">
                   Crear
                 </button>
               </div>
