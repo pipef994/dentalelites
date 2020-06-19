@@ -2,6 +2,7 @@ import React, { useState, Fragment, createRef } from "react";
 import UserImg from "../images/User.png";
 import "./usuarios.scss";
 import { useForm } from "react-hook-form";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const Usuarios = () => {
   const { register, errors, handleSubmit, setError, clearError } = useForm();
@@ -16,7 +17,7 @@ const Usuarios = () => {
       if (data.password === data.rPassword) {
         saveUser(data);
       } else {
-
+        console.log("Contraseñas diferentes");
       }
     }
   };
@@ -33,17 +34,12 @@ const Usuarios = () => {
     }).then(res => res.json())
       .then(res => {
         if (res.mensaje === "OK") {
-          setShowAlert(true)
-          setSaveStatus("success")
+
         } else {
-          setShowAlert(true)
-          setSaveStatus("error")
         }
       })
       .catch(e => {
         console.log(e)
-        setShowAlert(true)
-        setSaveStatus("error")
       })
       .finally(() => {
         setSaving(false)
@@ -144,7 +140,7 @@ const Usuarios = () => {
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="rPassword">Repetir Contraseña</label>
-                  <input type="rPassword" id="rPassword" name="rPassword" className="form-control" ref={register({ required: true })} />
+                  <input type="Password" id="rPassword" name="rPassword" className="form-control" ref={register({ required: true })} />
                   {errors.rPassword && <p>*Campo Obligatorio</p>}
                 </div>
               </div>
