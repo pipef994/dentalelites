@@ -1,6 +1,6 @@
 .usuarios {
   width: 50em;
-  height: 51em;
+  height: 62em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -43,8 +43,8 @@
         text-align: center;
 
         img {
-          width: 60%;
-          height: 60%;
+          width: 80%;
+          height: 80%;
         }
       }
 
@@ -62,6 +62,10 @@
 
           label {
             font-size: 20px;
+          }
+
+          p {
+            color: red;
           }
 
           // input {

@@ -71,7 +71,7 @@ class login extends React.Component {
             </div>
             <div className="form">
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Correo</label>
                 <input type="email" name="email" id="email" placeholder=" Ingrese el correo"
                   value={this.state.email} onChange={this.onChange.bind(this)} required />
               </div>
@@ -87,9 +87,9 @@ class login extends React.Component {
               <button type="button" className="btn" onClick={this.join.bind(this)}>
                 Ingresar
             </button>
-              <button type="button" className="btn2">
+              {/*               <button type="button" className="btn2">
                 Cancelar
-            </button>
+            </button> */}
             </div>
           </div>
           <br />
@@ -103,7 +103,7 @@ class login extends React.Component {
           <Modal.Body>Usuario o contraseña invalido</Modal.Body>
           {/* <Modal.Footer> */}
           <Button variant="danger" onClick={() => { this.handleModal() }}>
-            Close
+            Cerrar
           </Button>
           {/* </Modal.Footer> */}
         </Modal>

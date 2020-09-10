@@ -47,7 +47,7 @@ const Recuperar = () => {
             </div>
             <div className="form">
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Correo</label>
                 <input type="email"
                   name="email"
                   placeholder=" Ingrese el correo"

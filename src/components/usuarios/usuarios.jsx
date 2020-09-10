@@ -4,12 +4,17 @@ import "./usuarios.scss";
 import { useForm } from "react-hook-form";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-const Usuarios = () => {
+const Usuarios = (props) => {
+  const [modal, setModal] = useState(false);
   const { register, errors, handleSubmit, setError, clearError } = useForm();
   const [saving, setSaving] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
-  const [saveStatus, setSaveStatus] = useState("")
   const [entradas, setEntradas] = useState([]);
+
+  const {
+    buttonLabel,
+    className
+  } = props;
+
 
   const onSubmit = (data, e) => {
     setEntradas([...entradas, data]);
@@ -17,7 +22,7 @@ const Usuarios = () => {
       if (data.password === data.rPassword) {
         saveUser(data);
       } else {
-        console.log("Contraseñas diferentes");
+        toggle();
       }
     }
   };
@@ -34,16 +39,23 @@ const Usuarios = () => {
     }).then(res => res.json())
       .then(res => {
         if (res.mensaje === "OK") {
-
+          console.log("Usuario creado con éxito");
         } else {
+          console.log("Ocurrió un error al crear el usuario");
         }
       })
       .catch(e => {
         console.log(e)
+        console.log("Ocurrió un error al crear el usuario");
       })
       .finally(() => {
         setSaving(false)
       })
+  }
+
+  const toggle = () => {
+
+    setModal(!modal);
   }
 
   return (
@@ -152,6 +164,14 @@ const Usuarios = () => {
             </div>
           </div>
         </div>
+        <Modal isOpen={modal} toggle={toggle} className={className} id="ModalPassword">
+          <ModalBody>
+            Las contraseñas ingresadas son diferentes!
+        </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={toggle}>Cerrar</Button>
+          </ModalFooter>
+        </Modal>
       </form>
     </Fragment>
   );
