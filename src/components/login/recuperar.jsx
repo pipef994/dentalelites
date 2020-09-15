@@ -2,38 +2,41 @@ import React, { useState, Fragment } from 'react';
 import recImg from "../images/recovery.png";
 import "./recuperar.scss";
 import clsx from 'clsx';
-
 import { useForm } from "react-hook-form";
-import { Redirect, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap';
+import Swal from 'sweetalert2'
 
 const Recuperar = () => {
-
+  let history = useHistory();
   const { register, errors, handleSubmit, setError, clearError } = useForm();
-
-  const [entradas, setEntradas] = useState([])
+  //const [entradas, setEntradas] = useState([])
 
   const onSubmit = (data, e) => {
     console.log(data);
-    setEntradas([...entradas,
-      data])
-    e.target.reset();
+
+    fetch('http://localhost:8080/usuarios/validarusuario', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        if (res.mensaje === "OK") {
+          console.log("Existe");
+
+        } else {
+          console.log("No existe");
+          Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Usuario no registrado!'
+          })
+        }
+      })
+      .catch(e => console.log(e));
   }
-
-  // //Se consulta si el correo ingresado existe
-  // let url = `http://localhost:8080/usuarios/consultarUsuarios`
-
-  //   const api = new XMLHttpRequest();
-  //   api.open('GET', url, true);
-  //   api.send();
-
-  //   api.onreadystatechange = function(){
-  //     if (this.status == 200 && this.readyState == 4) {
-  //       let datos = JSON.parse(this.responseText);
-  //       console.log(datos.email);
-  //       let resultado = document.querySelector('#resusltado');
-  //       resultado.innerHTML = '';
-  //     }
-  //  
 
   return (
     <Fragment>
@@ -53,7 +56,7 @@ const Recuperar = () => {
                   placeholder=" Ingrese el correo"
                   className="form-control"
                   ref={register({
-                    required: { value: true, message: 'Campo obligatorio' }
+                    required: { value: true, message: '*Campo obligatorio' }
                   })} />
                 {errors.email &&
                   <span className="text-danger text-small d-block mb-2">
@@ -66,17 +69,16 @@ const Recuperar = () => {
                   <button type="submit" className="btn" id="submit" >
                     Enviar
                   </button>
-                  {/* <Redirect to="./recuperar" className="button2" target="_blank"> Recuperar Contraseña</Redirect> */}
-                  <button className="btn_back" id="back">
-                    <Link to="./login">Volver</Link>
+                  <button className="btn_back" id="back" onClick={() => history.goBack()} >
+                    Volver
                   </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </form>
-    </Fragment>
+      </form >
+    </Fragment >
   )
 }
 
