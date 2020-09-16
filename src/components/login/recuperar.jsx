@@ -1,20 +1,16 @@
 import React, { useState, Fragment } from 'react';
 import recImg from "../images/recovery.png";
 import "./recuperar.scss";
-import clsx from 'clsx';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
-import { Modal, Button } from 'react-bootstrap';
 import Swal from 'sweetalert2'
 
 const Recuperar = () => {
   let history = useHistory();
   const { register, errors, handleSubmit, setError, clearError } = useForm();
-  //const [entradas, setEntradas] = useState([])
 
   const onSubmit = (data, e) => {
     console.log(data);
-
     fetch('http://localhost:8080/usuarios/validarusuario', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -24,8 +20,23 @@ const Recuperar = () => {
     }).then(res => res.json())
       .then(res => {
         if (res.mensaje === "OK") {
-          console.log("Existe");
-
+          fetch('http://localhost:8080/usuarios/enviarContrasena', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+            .then(res => {
+              if (res.mensaje === "OK") {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Envio de correo',
+                  text: 'Se envio un correo con su contraseña de ingreso!'
+                })
+              }
+            }
+            )
         } else {
           console.log("No existe");
           Swal.fire({
