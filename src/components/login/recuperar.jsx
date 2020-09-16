@@ -6,8 +6,9 @@ import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 const Recuperar = () => {
+  const [email, setEmail] = useState();
   let history = useHistory();
-  const { register, errors, handleSubmit, setError, clearError } = useForm();
+  const { register, errors, handleSubmit } = useForm();
 
   const onSubmit = (data, e) => {
     console.log(data);
@@ -34,6 +35,7 @@ const Recuperar = () => {
                   title: 'Envio de correo',
                   text: 'Se envio un correo con su contraseña de ingreso!'
                 })
+                setEmail(''); //Se resetea el campo
               }
             }
             )
@@ -41,7 +43,7 @@ const Recuperar = () => {
           console.log("No existe");
           Swal.fire({
             icon: 'warning',
-            title: 'Oops...',
+            title: 'Uups...',
             text: 'Usuario no registrado!'
           })
         }
@@ -63,6 +65,8 @@ const Recuperar = () => {
               <div className="form-group">
                 <label htmlFor="email">Correo</label>
                 <input type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                   name="email"
                   placeholder=" Ingrese el correo"
                   className="form-control"
