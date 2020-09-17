@@ -30,6 +30,12 @@ class login extends React.Component {
     })
   }
 
+  onKeyPress = (e) => {
+    if (e.which === 13) {
+      this.join(e);
+    }
+  }
+
   join(e) {
     const data = {
       email: this.state.email,
@@ -59,6 +65,7 @@ class login extends React.Component {
       .catch(e => console.log(e));
   }
 
+
   render() {
     return (
       <form id="login" className="login" onSubmit={this.handleSubmit}>
@@ -78,7 +85,7 @@ class login extends React.Component {
               <div className="form-group">
                 <label htmlFor="password">Contraseña</label>
                 <input type="password" name="password" id="password" placeholder="Ingrese la contraseña"
-                  value={this.state.password} onChange={this.onChange.bind(this)} required />
+                  value={this.state.password} onChange={this.onChange.bind(this)} onKeyPress={this.onKeyPress} required />
               </div>
             </div>
           </div>
@@ -111,6 +118,7 @@ class login extends React.Component {
     );
   }
 }
+
 
 export default login
 

@@ -3,9 +3,31 @@ import UserImg from "../images/User.png";
 import "./usuarios.scss";
 import { useForm } from "react-hook-form";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import Swal from 'sweetalert2';
 
 const Usuarios = (props) => {
-  const [modal, setModal] = useState(false);
+
+  /* const [tipId, setPid,
+     nId, setNid,
+     firstName, setFirstName,
+     secondName, setSecondName,
+     firstLastName, setFirstLastName,
+     secondLastName, setSecondLastName,
+     email, setEmail,
+     tUser, setTuser,
+     password, setPassword,
+     rPassword, setRpassword] = useState();*/
+
+  const [tipId, setPid] = useState();
+  const [nId, setNid] = useState();
+  const [firstName, setFirstName] = useState();
+  const [secondName, setSecondName] = useState();
+  const [firstLastName, setFirstLastName] = useState();
+  const [secondLastName, setSecondLastName] = useState();
+  const [email, setEmail] = useState();
+  const [tUser, setTuser] = useState();
+  const [password, setPassword] = useState();
+  const [rPassword, setRpassword] = useState();
   const { register, errors, handleSubmit, setError, clearError } = useForm();
   const [saving, setSaving] = useState(false)
   const [entradas, setEntradas] = useState([]);
@@ -15,6 +37,20 @@ const Usuarios = (props) => {
     className
   } = props;
 
+  const limpiarVariables = () => {
+    setPid('--Seleccione--');
+    setNid('');
+    setFirstName('');
+    setSecondName('');
+    setFirstLastName('');
+    setSecondLastName('');
+    setEmail('');
+    setTuser('');
+    setPassword('');
+    setRpassword('');
+    setPid('--Seleccione--');
+  }
+
 
   const onSubmit = (data, e) => {
     setEntradas([...entradas, data]);
@@ -22,7 +58,11 @@ const Usuarios = (props) => {
       if (data.password === data.rPassword) {
         saveUser(data);
       } else {
-        toggle();
+        Swal.fire({
+          icon: 'warning',
+          title: 'Uups...',
+          text: 'Las contraseñas ingresadas son diferentes!'
+        })
       }
     }
   };
@@ -39,7 +79,11 @@ const Usuarios = (props) => {
     }).then(res => res.json())
       .then(res => {
         if (res.mensaje === "OK") {
-          console.log("Usuario creado con éxito");
+          Swal.fire({
+            icon: 'success',
+            text: 'Usuario creado Exitosamente!'
+          })
+          limpiarVariables();
         } else {
           console.log("Ocurrió un error al crear el usuario");
         }
@@ -51,11 +95,6 @@ const Usuarios = (props) => {
       .finally(() => {
         setSaving(false)
       })
-  }
-
-  const toggle = () => {
-
-    setModal(!modal);
   }
 
   return (
@@ -72,8 +111,12 @@ const Usuarios = (props) => {
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <label htmlFor="tipId">Tipo de documento</label>
-                  <select className="form-control" name="tipId" ref={register({ required: true })}>
-                    <option value="">Seleccione</option>
+                  <select className="form-control" name="tipId"
+                    value={tipId}
+                    onChange={e => setPid(e.target.value)}
+                    ref={register({ required: true })}
+                  >
+                    <option value="">--Seleccione--</option>
                     <option value="cc">Cédula de ciudadanía</option>
                     <option value="ce">Cédula de extranjería</option>
                     <option value="di">
@@ -88,6 +131,8 @@ const Usuarios = (props) => {
                 <div className="form-group col-md-6">
                   <label htmlFor="nId">N° Identificación</label>
                   <input
+                    value={nId}
+                    onChange={e => setNid(e.target.value)}
                     type="number"
                     id="nId"
                     name="nId"
@@ -100,26 +145,40 @@ const Usuarios = (props) => {
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="firstName">Primer Nombre</label>
-                  <input type="text" id="firstName" name="firstName" className="form-control" ref={register({ required: true, pattern: /^[A-Za-z]+$/i })} />
+                  <input type="text" id="firstName" name="firstName" className="form-control"
+                    value={firstName}
+                    onChange={e => setFirstName(e.target.value)}
+                    ref={register({ required: true, pattern: /^[A-Za-z]+$/i })} />
                   {errors.firstName && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="secondName">Segundo Nombre</label>
-                  <input type="text" id="secondName" name="secondName" className="form-control" ref={register({ maxLength: 20 })} />
+                  <input type="text" id="secondName" name="secondName"
+                    value={secondName}
+                    onChange={e => setSecondName(e.target.value)}
+                    className="form-control" ref={register({ maxLength: 20 })} />
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="firstLastName">Primer Apellido</label>
-                  <input type="text" id="firstLastName" name="firstLastName" className="form-control" ref={register({ required: true, maxLength: 20 })} />
+                  <input type="text" id="firstLastName" name="firstLastName"
+                    value={firstLastName}
+                    onChange={e => setFirstLastName(e.target.value)}
+                    className="form-control" ref={register({ required: true, maxLength: 20 })} />
                   {errors.firstLastName && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="secondLastName">Segundo Apellido</label>
-                  <input type="text" id="secondLastName" name="secondLastName" className="form-control" ref={register({ maxLength: 20 })} />
+                  <input type="text" id="secondLastName" name="secondLastName"
+                    value={secondLastName}
+                    onChange={e => setSecondLastName(e.target.value)}
+                    className="form-control" ref={register({ maxLength: 20 })} />
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="email">Email</label>
                   <input
                     type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                     id="email"
                     name="email"
                     className="form-control"
@@ -134,10 +193,13 @@ const Usuarios = (props) => {
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="tUser">Tipo de Usuario</label>
-                  <select className="form-control" id="tUser" name="tUser" ref={register({
-                    required: true
-                  })}>
-                    <option value="">Seleccione</option>
+                  <select className="form-control" id="tUser" name="tUser"
+                    value={tUser}
+                    onChange={e => setTuser(e.target.value)}
+                    ref={register({
+                      required: true
+                    })}>
+                    <option value="">--Seleccione--</option>
                     <option value="admin">Administrador</option>
                     <option value="odont">Odontólogo</option>
                     <option value="aux">Auxiliar</option>
@@ -147,12 +209,22 @@ const Usuarios = (props) => {
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="password">Contraseña</label>
-                  <input type="password" id="password" name="password" className="form-control" ref={register({ required: true })} />
+                  <input type="password" id="password" name="password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    className="form-control" ref={register({ required: true })}
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                    title="Debe contener al menos un número y una letra mayúscula y minúscula, y al menos 6 caracteres" />
                   {errors.password && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
                   <label htmlFor="rPassword">Repetir Contraseña</label>
-                  <input type="Password" id="rPassword" name="rPassword" className="form-control" ref={register({ required: true })} />
+                  <input type="Password" id="rPassword" name="rPassword"
+                    value={rPassword}
+                    onChange={e => setRpassword(e.target.value)}
+                    className="form-control" ref={register({ required: true })}
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                    title="Debe contener al menos un número y una letra mayúscula y minúscula, y al menos 6 caracteres" />
                   {errors.rPassword && <p>*Campo Obligatorio</p>}
                 </div>
               </div>
@@ -164,14 +236,6 @@ const Usuarios = (props) => {
             </div>
           </div>
         </div>
-        <Modal isOpen={modal} toggle={toggle} className={className} id="ModalPassword">
-          <ModalBody>
-            Las contraseñas ingresadas son diferentes!
-        </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={toggle}>Cerrar</Button>
-          </ModalFooter>
-        </Modal>
       </form>
     </Fragment>
   );
