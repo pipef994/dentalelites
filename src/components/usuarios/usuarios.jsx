@@ -54,15 +54,41 @@ const Usuarios = (props) => {
 
   const onSubmit = (data, e) => {
     setEntradas([...entradas, data]);
+    var tip = data.tipId;
+    var lvText;
+    var lvFlag; //Bandera para guardar
     if (data !== null) {
-      if (data.password === data.rPassword) {
-        saveUser(data);
+
+      if ((data.tipId === 'ti' | data.tipId === 'cc') && data.nId.length >= 10 && /^([0-9])*$/.data.nId) {
+        if (tip === 'ti') {
+          lvText = 'La tarjeta de identidad no deben superar los 10 digitos';
+        } else {
+          lvText = 'La cédula de ciudadanía no deben superar los 10 digitos';
+        }
+        Swal.fire(
+          {
+            icon: 'warning',
+            title: 'Uups...',
+            text: lvText
+          })
       } else {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Uups...',
+          text: 'Para las cédula de ciudadanía o tarjeta de identidad solo se deben ingresar números '
+        })
+      }
+      if (data.password != data.rPassword) {
         Swal.fire({
           icon: 'warning',
           title: 'Uups...',
           text: 'Las contraseñas ingresadas son diferentes!'
         })
+      }
+
+
+      if (lvFlag != 'X') {
+        //saveUser(data);
       }
     }
   };
@@ -119,11 +145,7 @@ const Usuarios = (props) => {
                     <option value="">--Seleccione--</option>
                     <option value="cc">Cédula de ciudadanía</option>
                     <option value="ce">Cédula de extranjería</option>
-                    <option value="di">
-                      Documento personal de Identificación
-                  </option>
                     <option value="ps">Pasaporte</option>
-                    <option value="Re">Registro</option>
                     <option value="ti">Tarjeta de identidad</option>
                   </select>
                   {errors.tipId && <p>*Campo Obligatorio</p>}
@@ -133,7 +155,7 @@ const Usuarios = (props) => {
                   <input
                     value={nId}
                     onChange={e => setNid(e.target.value)}
-                    type="number"
+                    type="text"
                     id="nId"
                     name="nId"
                     className="form-control"

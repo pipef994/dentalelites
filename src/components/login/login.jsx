@@ -85,7 +85,10 @@ class login extends React.Component {
               <div className="form-group">
                 <label htmlFor="password">Contraseña</label>
                 <input type="password" name="password" id="password" placeholder="Ingrese la contraseña"
-                  value={this.state.password} onChange={this.onChange.bind(this)} onKeyPress={this.onKeyPress} required />
+                  value={this.state.password} onChange={this.onChange.bind(this)} onKeyPress={this.onKeyPress}
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                  title="Debe contener al menos un número y una letra mayúscula y minúscula, y al menos 6 caracteres"
+                  required />
               </div>
             </div>
           </div>
