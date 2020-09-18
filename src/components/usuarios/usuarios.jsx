@@ -58,8 +58,8 @@ const Usuarios = (props) => {
     var lvText;
     var lvFlag; //Bandera para guardar
     if (data !== null) {
-
-      if ((data.tipId === 'ti' | data.tipId === 'cc') && data.nId.length >= 10 && /^([0-9])*$/.data.nId) {
+      const patron = /^([0-9])*$/;
+      if ((data.tipId === 'ti' || data.tipId === 'cc') && data.nId.length >= 10 && patron.test(data.nId)) {
         if (tip === 'ti') {
           lvText = 'La tarjeta de identidad no deben superar los 10 digitos';
         } else {
@@ -153,11 +153,11 @@ const Usuarios = (props) => {
                 <div className="form-group col-md-6">
                   <label htmlFor="nId">N° Identificación</label>
                   <input
-                    value={nId}
-                    onChange={e => setNid(e.target.value)}
                     type="text"
                     id="nId"
                     name="nId"
+                    value={nId}
+                    onChange={e => setNid(e.target.value)}
                     className="form-control"
                     ref={register({
                       required: true, pattern: [0 - 9]
