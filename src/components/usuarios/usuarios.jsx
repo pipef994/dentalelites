@@ -7,17 +7,6 @@ import Swal from 'sweetalert2';
 
 const Usuarios = (props) => {
 
-  /* const [tipId, setPid,
-     nId, setNid,
-     firstName, setFirstName,
-     secondName, setSecondName,
-     firstLastName, setFirstLastName,
-     secondLastName, setSecondLastName,
-     email, setEmail,
-     tUser, setTuser,
-     password, setPassword,
-     rPassword, setRpassword] = useState();*/
-
   const [tipId, setPid] = useState();
   const [nId, setNid] = useState();
   const [firstName, setFirstName] = useState();
@@ -51,15 +40,15 @@ const Usuarios = (props) => {
     setPid('--Seleccione--');
   }
 
-
   const onSubmit = (data, e) => {
     setEntradas([...entradas, data]);
     var tip = data.tipId;
     var lvText;
     var lvFlag; //Bandera para guardar
+    //var texto = document.querySelector('#nId');
     if (data !== null) {
       const patron = /^([0-9])*$/;
-      if ((data.tipId === 'ti' || data.tipId === 'cc') && data.nId.length >= 10 && patron.test(data.nId)) {
+      if ((data.tipId === 'ti' || data.tipId === 'cc') && data.nId.length > 10 && patron.test(data.nId)) {
         if (tip === 'ti') {
           lvText = 'La tarjeta de identidad no deben superar los 10 digitos';
         } else {
@@ -71,14 +60,18 @@ const Usuarios = (props) => {
             title: 'Uups...',
             text: lvText
           })
-      } else {
+      }
+
+      if (data.tipId === 'ps' && data.nId.length > 8) {
         Swal.fire({
           icon: 'warning',
           title: 'Uups...',
-          text: 'Para las cédula de ciudadanía o tarjeta de identidad solo se deben ingresar números '
+          text: 'Para el pasaporte no se deben superar los 8 digitos'
         })
       }
-      if (data.password != data.rPassword) {
+
+
+      if (data.password !== data.rPassword) {
         Swal.fire({
           icon: 'warning',
           title: 'Uups...',
@@ -88,39 +81,91 @@ const Usuarios = (props) => {
 
 
       if (lvFlag != 'X') {
-        //saveUser(data);
+        saveUser(data);
       }
     }
   };
 
   const saveUser = (data) => {
-    setSaving(true)
-    console.log(data);
-    fetch('http://localhost:8080/usuarios', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-      .then(res => {
+    var flagSave = '';
+
+    if (data !== null) {
+      console.log(data)
+      fetch('http://localhost:8080/usuarios/usuariodocumento', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        console.log(res);
+        res.json()
+        if (res.mensaje === "UsuarioYacreado") {
+          Swal.fire({
+            icon: 'warning',
+            text: 'La cédula ya se encuentra registrada'
+          })
+          flagSave = 'X';
+        }
+      }).catch(e => {
+        console.log(e);
+        console.log("object");
+      })
+        .finally(() => {
+          setSaving(false)
+        })
+
+      fetch('http://localhost:8080/usuarios/validarusuario', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        res.json()
         if (res.mensaje === "OK") {
           Swal.fire({
-            icon: 'success',
-            text: 'Usuario creado Exitosamente!'
+            icon: 'warning',
+            text: 'El correo diligenciado ya se encuentra creado!'
           })
-          limpiarVariables();
-        } else {
-          console.log("Ocurrió un error al crear el usuario");
+          flagSave = 'X';
         }
-      })
-      .catch(e => {
-        console.log(e)
+      }).catch(e => {
+        console.log(e);
         console.log("Ocurrió un error al crear el usuario");
       })
-      .finally(() => {
-        setSaving(false)
-      })
+        .finally(() => {
+          setSaving(false)
+        })
+
+      if (flagSave == null) {
+        fetch('http://localhost:8080/usuarios', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(res => res.json())
+          .then(res => {
+            if (res.mensaje === "OK") {
+              Swal.fire({
+                icon: 'success',
+                text: 'Usuario creado Exitosamente!'
+              })
+              limpiarVariables();
+            } else {
+              console.log("Ocurrió un error al crear el usuario");
+            }
+          })
+          .catch(e => {
+            console.log(e)
+            console.log("Ocurrió un error al crear el usuario");
+          })
+          .finally(() => {
+            setSaving(false)
+          })
+      }
+    }
   }
 
   return (
@@ -158,6 +203,13 @@ const Usuarios = (props) => {
                     name="nId"
                     value={nId}
                     onChange={e => setNid(e.target.value)}
+                    onKeyPress={(e) => {
+                      console.log(tipId);
+                      let key = window.event ? e.which : e.keyCode;
+                      if ((tipId === 'ti' || tipId === 'cc' || tipId === 'ce') && (key < 48 || key > 57)) {
+                        e.preventDefault();
+                      }
+                    }}
                     className="form-control"
                     ref={register({
                       required: true, pattern: [0 - 9]
