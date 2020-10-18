@@ -93,6 +93,7 @@
     .btn {
       font-size: 20px;
       font-family: "Open Sans", sans-serif;
+      margin-right: 50px; // Para dar espacios entre componentes
       padding: 5px 20px;
       border: 0;
       background-color: #09ca9aef;
@@ -110,6 +111,24 @@
       }
     }
 
+    .btn2 {
+      font-size: 20px;
+      font-family: "Open Sans", sans-serif;
+      padding: 4px 20px;
+      border: 0;
+      background-color: #2471A3;
+      color: #fff;
+      border-radius: 5px;
+      transition: all 250ms ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #2386c8;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
     .body {
       text-align: center;
     }

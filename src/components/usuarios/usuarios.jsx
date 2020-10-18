@@ -45,7 +45,7 @@ const Usuarios = (props) => {
     var tip = data.tipId;
     var lvText;
     var lvFlag; //Bandera para guardar
-    //var texto = document.querySelector('#nId');
+    Object.defineProperty(data, 'activo', { value: 'true', writable: true });//Se setea el valor de activo
     if (data !== null) {
       const patron = /^([0-9])*$/;
       if ((data.tipId === 'ti' || data.tipId === 'cc') && data.nId.length > 10 && patron.test(data.nId)) {
@@ -80,92 +80,37 @@ const Usuarios = (props) => {
       }
 
 
-      if (lvFlag != 'X') {
+      if (lvFlag != 'X' && data !== null) {
         saveUser(data);
       }
     }
   };
 
   const saveUser = (data) => {
+    console.log(data);
     var flagSave = '';
-
-    if (data !== null) {
-      console.log(data)
-      fetch('http://localhost:8080/usuarios/usuariodocumento', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
-        console.log(res);
-        res.json()
-        if (res.mensaje === "UsuarioYacreado") {
-          Swal.fire({
-            icon: 'warning',
-            text: 'La cédula ya se encuentra registrada'
-          })
-          flagSave = 'X';
-        }
-      }).catch(e => {
-        console.log(e);
-        console.log("object");
-      })
-        .finally(() => {
-          setSaving(false)
-        })
-
-      fetch('http://localhost:8080/usuarios/validarusuario', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(res => {
-        res.json()
+    fetch('http://localhost:8080/usuarios/validaCrearUser', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      return res.json()
+    })
+      .then(res => {
         if (res.mensaje === "OK") {
           Swal.fire({
             icon: 'warning',
-            text: 'El correo diligenciado ya se encuentra creado!'
+            text: 'Ya existe un usuario con el mismo número de identificación y/o correo electrónico.'
           })
           flagSave = 'X';
+          console.log('No Crear');
+        } else {
+          console.log('Crear');
+          flagSave = '';
         }
-      }).catch(e => {
-        console.log(e);
-        console.log("Ocurrió un error al crear el usuario");
-      })
-        .finally(() => {
-          setSaving(false)
-        })
-
-      if (flagSave == null) {
-        fetch('http://localhost:8080/usuarios', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(res => res.json())
-          .then(res => {
-            if (res.mensaje === "OK") {
-              Swal.fire({
-                icon: 'success',
-                text: 'Usuario creado Exitosamente!'
-              })
-              limpiarVariables();
-            } else {
-              console.log("Ocurrió un error al crear el usuario");
-            }
-          })
-          .catch(e => {
-            console.log(e)
-            console.log("Ocurrió un error al crear el usuario");
-          })
-          .finally(() => {
-            setSaving(false)
-          })
-      }
-    }
+      }).catch(e => console.log(e));
   }
 
   return (
@@ -285,6 +230,7 @@ const Usuarios = (props) => {
                   <label htmlFor="password">Contraseña</label>
                   <input type="password" id="password" name="password"
                     value={password}
+                    // value="PZOcgx11"
                     onChange={e => setPassword(e.target.value)}
                     className="form-control" ref={register({ required: true })}
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
@@ -295,6 +241,7 @@ const Usuarios = (props) => {
                   <label htmlFor="rPassword">Repetir Contraseña</label>
                   <input type="Password" id="rPassword" name="rPassword"
                     value={rPassword}
+                    // value="PZOcgx11"
                     onChange={e => setRpassword(e.target.value)}
                     className="form-control" ref={register({ required: true })}
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"

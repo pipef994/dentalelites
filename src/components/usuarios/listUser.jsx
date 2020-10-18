@@ -1,21 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import "./listUser.scss";
+import * as ReactBootStrap from "react-bootstrap";
 
-function ListUser(props) {
+const ListUser = (props) => {
+  const [usuarios, setUsuarios] = useState([]);
+  useEffect(() => { //Cada vez que cambia los valores 
+    fetch('http://localhost:8080/usuarios/', {
+      method: 'GET'
+    }).then(res => res.json())
+      .then(res => {
+        console.log(res);
+        setUsuarios(res.data); // Con esto tengo la información 
+      })
+      .catch(e => console.log(e));
+  }, [])
 
-  const [formData, setFormData] = useState(props.formData || {
-    tip: '',
-    nId: ''
-  })
+  // const usuarios () [
+  //   {
+  //     nId: "1036653815",
+  //     fName: "Andrés",
+  //     sName: "Felipe",
+  //     fLName: "López",
+  //     sLName: "Rivera",
+  //     estado: "Activo"
+  //   }
+  // ];
 
-  const onChange = (e) => {
-    const newState = {
-      ...formData,
-      [e.target.name]: e.target.value
-    }
-    setFormData(newState)
-    props.updateValues(newState)
+  const renderUser = (usuario, index) => {
+    return (
+      <tr key={index}>
+        <td>{usuario.nId}</td>
+        <td>{usuario.firstName}</td>
+        <td>{usuario.secondName}</td>
+        <td>{usuario.firstLastName}</td>
+        <td>{usuario.secondLastName}</td>
+        <td>{usuario.activo ? "Activo" : "Inactivo"}</td>
+      </tr>
+    )
   }
 
   return (
@@ -25,35 +47,21 @@ function ListUser(props) {
         <div className="form">
           <div className="form-row">
             <div clas></div>
-            <Table striped bordered hover size="sm">
+            <ReactBootStrap.Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>N° Identificación</th>
-                  <th>Nombre</th>
-                  <th>Tipo de Usuario</th>
+                  <th>Documento</th>
+                  <th>Primer Nombre</th>
+                  <th>Segundo Nombre</th>
+                  <th>Primer Apellido</th>
+                  <th>Segundo Apellido</th>
+                  <th>Estado</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+                {usuarios.map(renderUser)}
               </tbody>
-            </Table>
+            </ReactBootStrap.Table>
           </div>
         </div>
       </div>
@@ -61,5 +69,4 @@ function ListUser(props) {
   )
 
 }
-
 export default ListUser;
