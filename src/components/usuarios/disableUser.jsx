@@ -91,7 +91,7 @@ const DisableUser = (props) => {
     <Fragment>
       <form className="disableUSer" onSubmit={handleSubmit(onSubmit)}>
         <div className="base-container">
-          <div className="header">Inhabilitar usuario</div>
+          <div className="header">Deshabilitar Usuario</div>
           <br />
           <div className="content">
             <div className="image">

@@ -23,7 +23,6 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        {/* {userEmail || true ? ( // Remover el || true cuando se vaya a publicar */}
         {userEmail ? (
           <React.Fragment>
             <Menu />

@@ -16,17 +16,6 @@ const ListUser = (props) => {
       .catch(e => console.log(e));
   }, [])
 
-  // const usuarios () [
-  //   {
-  //     nId: "1036653815",
-  //     fName: "Andrés",
-  //     sName: "Felipe",
-  //     fLName: "López",
-  //     sLName: "Rivera",
-  //     estado: "Activo"
-  //   }
-  // ];
-
   const renderUser = (usuario, index) => {
     return (
       <tr key={index}>
@@ -43,7 +32,7 @@ const ListUser = (props) => {
   return (
     <div className="listUser">
       <div className="base-container">
-        <h5><strong>Lista de usuarios</strong></h5>
+        <h5><strong>Usuarios en el sistema</strong></h5>
         <div className="form">
           <div className="form-row">
             <div clas></div>
@@ -67,6 +56,5 @@ const ListUser = (props) => {
       </div>
     </div>
   )
-
 }
 export default ListUser;

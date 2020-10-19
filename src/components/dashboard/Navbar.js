@@ -30,7 +30,7 @@ class Navbar extends React.Component {
                 Crear
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="/disableUser">
-                Inhabilitar
+                Deshabilitar
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="/listUser">
                 Consultar

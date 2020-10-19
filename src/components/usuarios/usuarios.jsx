@@ -70,7 +70,6 @@ const Usuarios = (props) => {
         })
       }
 
-
       if (data.password !== data.rPassword) {
         Swal.fire({
           icon: 'warning',
@@ -78,7 +77,6 @@ const Usuarios = (props) => {
           text: 'Las contraseñas ingresadas son diferentes!'
         })
       }
-
 
       if (lvFlag != 'X' && data !== null) {
         saveUser(data);
@@ -107,7 +105,27 @@ const Usuarios = (props) => {
           flagSave = 'X';
           console.log('No Crear');
         } else {
-          console.log('Crear');
+          fetch('http://localhost:8080/usuarios/crearUsuarios', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then(res => { return res.json() })
+            .then(res => {
+              if (res.mensaje === "OK") {
+                Swal.fire({
+                  icon: 'success',
+                  text: 'Se creo el usuario exitosamente.'
+                })
+                limpiarVariables();
+              } else {
+                Swal.fire({
+                  icon: 'warning',
+                  text: 'Se creo el usuario exitosamente.'
+                })
+              }
+            })
           flagSave = '';
         }
       }).catch(e => console.log(e));
