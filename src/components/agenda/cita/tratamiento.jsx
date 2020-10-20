@@ -22,7 +22,7 @@ function Tratamiento(props) {
         <div className="card-body">
           <div className="form-row">
             <SelectInput name="tratamiento" value={formData.tratamiento} onChange={onChange} label="Tratamiento" options={[
-              { value: "sc", text: "Seleccione" },
+              { value: "sc", text: "--Seleccione--" },
               { value: "gn", text: "General" },
               { value: "es", text: "Especializado" }
             ]} />

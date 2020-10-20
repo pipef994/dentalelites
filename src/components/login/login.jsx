@@ -3,6 +3,7 @@ import "./login.scss"
 import loginImg from "../images/login.png"
 import { Link, Redirect } from "react-router-dom";
 import { Modal, Button } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 class login extends React.Component {
 
@@ -41,6 +42,7 @@ class login extends React.Component {
       email: this.state.email,
       password: this.state.password
     }
+
     fetch('http://localhost:8080/usuarios/login', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -49,20 +51,29 @@ class login extends React.Component {
       }
     }).then(res => res.json())
       .then(res => {
-        if (res.mensaje === "OK") {
-          console.log(res.mensaje);
-          localStorage.setItem("email", res.data.email);
-          this.props.updateLogin(res.data.email);
-          this.props.history.push({
-            pathname: '/'
-          })
-        } else {
-          console.log(res.mensaje);
-          this.handleModal(true)
-          this.limpiarFormulario()
+        switch (res.mensaje) {
+          case "OK":
+            console.log(res.mensaje);
+            localStorage.setItem("email", res.data.email);
+            this.props.updateLogin(res.data.email);
+            this.props.history.push({
+              pathname: '/'
+            })
+            break;
+          case "Inactivo":
+            Swal.fire(
+              {
+                icon: 'warning',
+                title: 'Usuario Inactivo',
+              })
+            break;
+          default:
+            console.log(res.mensaje);
+            this.handleModal(true)
+            this.limpiarFormulario()
+            break;
         }
-      })
-      .catch(e => console.log(e));
+      }).catch(e => console.log(e));
   }
 
 

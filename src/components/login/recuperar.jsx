@@ -20,32 +20,41 @@ const Recuperar = () => {
       }
     }).then(res => res.json())
       .then(res => {
-        if (res.mensaje === "OK") {
-          fetch('http://localhost:8080/usuarios/enviarContrasena', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }).then(res => res.json())
-            .then(res => {
-              if (res.mensaje === "OK") {
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Envio de correo',
-                  text: 'Se envio un correo con su contraseña de ingreso!'
-                })
-                setEmail(''); //Se resetea el campo
+        switch (res.mensaje) {
+          case "OK":
+            fetch('http://localhost:8080/usuarios/enviarContrasena', {
+              method: 'POST',
+              body: JSON.stringify(data),
+              headers: {
+                'Content-Type': 'application/json'
               }
-            }
-            )
-        } else {
-          console.log("No existe");
-          Swal.fire({
-            icon: 'warning',
-            title: 'Uups...',
-            text: 'Usuario no registrado!'
-          })
+            }).then(res => res.json())
+              .then(res => {
+                if (res.mensaje === "OK") {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Envio de correo',
+                    text: 'Se envio un correo con su contraseña de ingreso!'
+                  })
+                  setEmail('');
+                }
+              })
+            break;
+          case "Inactivo":
+            Swal.fire({
+              icon: 'warning',
+              title: 'Usuario Inactivo',
+            })
+            setEmail('');
+            break;
+          default:
+            Swal.fire({
+              icon: 'warning',
+              title: 'Uups...',
+              text: 'Usuario no registrado!'
+            })
+            setEmail('');
+            break;
         }
       })
       .catch(e => console.log(e));

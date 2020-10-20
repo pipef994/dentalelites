@@ -1,4 +1,5 @@
 import React from "react";
+import "./Navbar.scss";
 import { Link, withRouter } from "react-router-dom";
 
 import * as ReactBootStrap from "react-bootstrap";
@@ -15,6 +16,7 @@ class Navbar extends React.Component {
         expand="lg"
         bg="dark"
         variant="dark"
+        class="bg navbar-custom"
       >
         <ReactBootStrap.Navbar.Brand href="/home">
           Dental Elite
