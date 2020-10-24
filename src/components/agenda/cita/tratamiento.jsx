@@ -1,12 +1,35 @@
 import React, { useState } from 'react';
 
 function Tratamiento(props) {
+  const [odontologos, setOdontologos] = useState([]);
   const [formData, setFormData] = useState(props.formData || {
     tratamiento: '',
     odontologo: ''
   })
 
+  const BuscarOdont = (trat) => {
+    fetch(`http://localhost:8080/usuarios/odontologos/${trat}`, {
+      method: 'GET',
+    }).then(res => {
+      return res.json()
+    }).then(res => {
+      if (res.mensaje === "OK") {
+        setOdontologos(res.data);
+      }
+    }).catch(e => console.log(e));
+  }
+
+  const createSelectItems = (data) => {
+    let items = [];
+    for (let i = 0; i < data.length; i++) {
+      let nombre = data[i].firstName + " " + data[i].secondName + " " + data[i].firstLastName + " " + data[i].secondLastName;
+      items.push({ value: data[i].nId, text: nombre });
+    }
+    return items;
+  }
+
   const onChange = (e) => {
+    BuscarOdont(e.target.value);
     const newState = {
       ...formData,
       [e.target.name]: e.target.value
@@ -23,10 +46,15 @@ function Tratamiento(props) {
           <div className="form-row">
             <SelectInput name="tratamiento" value={formData.tratamiento} onChange={onChange} label="Tratamiento" options={[
               { value: "sc", text: "--Seleccione--" },
-              { value: "gn", text: "General" },
-              { value: "es", text: "Especializado" }
+              { value: "gen", text: "General" },
+              { value: "esp", text: "Especializado" }
             ]} />
-            <Input name="odont" value={formData.odontologo} onChange={onChange} label="Odontologo" disabled />
+            <SelectInput name="odont" value={formData.odontologo} label="Odontologo" options={
+              [{ value: "sc", text: "--Seleccione--" },
+              ...createSelectItems(odontologos)
+              ]
+            } />
+            {/* <Input name="odont" value={formData.odontologo} onChange={onChange} label="Odontologo" disabled /> */}
           </div>
         </div>
       </div>

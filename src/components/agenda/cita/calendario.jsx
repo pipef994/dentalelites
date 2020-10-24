@@ -10,6 +10,7 @@ function Calendario(props) {
   })
 
   const onChange = (e) => {
+    console.log(e);
     const newState = {
       ...formData,
       [e.target.name]: e.target.value
@@ -47,7 +48,7 @@ function Calendario(props) {
           {horas.map((hora) => {
             return (
               <div className="col-xs-4 col-sm-4 col-md-3 py-1 text-center" key={hora}>
-                <button type="button" className="btn btn-outline-info" onChange={onChange} value={formData.hour} >{hora}</button>
+                <button type="button" className="btn btn-outline-info" onClick={onChange} value={formData.hour} >{hora}</button>
               </div>
             )
           })}
@@ -55,13 +56,12 @@ function Calendario(props) {
       </div>)
   }
 
-
   return (
     <div className="card">
       <h5 className="card-header">Fecha de Cita</h5>
       <div className="card-body">
         <div className="form-row">
-          <Calendar className="mx-auto" onChange={onChange} value={formData.date} />
+          <Calendar className="mx-auto" value={formData.date} />
           <div className="horas col-md-8 py-4 col-sm-12">
             {
               renderButtons()

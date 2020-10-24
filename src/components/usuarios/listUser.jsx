@@ -17,6 +17,23 @@ const ListUser = (props) => {
   }, [])
 
   const renderUser = (usuario, index) => {
+    var tipoUsuario = "";
+    switch (usuario.tUser) {
+      case "admin":
+        tipoUsuario = "Administrador";
+        break;
+      case "odont":
+        tipoUsuario = "Odontologo";
+        break;
+      case "aux":
+        tipoUsuario = "Auxiliar";
+        break;
+      case "clien":
+        tipoUsuario = "Cliente";
+        break;
+      default:
+        break;
+    }
     return (
       <tr key={index}>
         <td>{usuario.nId}</td>
@@ -24,6 +41,7 @@ const ListUser = (props) => {
         <td>{usuario.secondName}</td>
         <td>{usuario.firstLastName}</td>
         <td>{usuario.secondLastName}</td>
+        <td>{tipoUsuario}</td>
         <td>{usuario.activo ? "Activo" : "Inactivo"}</td>
       </tr>
     )
@@ -44,6 +62,7 @@ const ListUser = (props) => {
                   <th>Segundo Nombre</th>
                   <th>Primer Apellido</th>
                   <th>Segundo Apellido</th>
+                  <th>Tipo Usuario</th>
                   <th>Estado</th>
                 </tr>
               </thead>

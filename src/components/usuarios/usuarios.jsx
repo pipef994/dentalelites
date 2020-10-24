@@ -15,6 +15,7 @@ const Usuarios = (props) => {
   const [secondLastName, setSecondLastName] = useState();
   const [email, setEmail] = useState();
   const [tUser, setTuser] = useState();
+  const [tProfesional, setProfesional] = useState();
   const [password, setPassword] = useState();
   const [rPassword, setRpassword] = useState();
   const { register, errors, handleSubmit, setError, clearError } = useForm();
@@ -35,6 +36,7 @@ const Usuarios = (props) => {
     setSecondLastName('');
     setEmail('');
     setTuser('');
+    setProfesional('');
     setPassword('');
     setRpassword('');
     setPid('--Seleccione--');
@@ -245,10 +247,24 @@ const Usuarios = (props) => {
                   {errors.tUser && <p>*Campo Obligatorio</p>}
                 </div>
                 <div className="form-group col-md-6">
+                  <label htmlFor="tProfesional">Tipo Profesional</label>
+                  <select className="form-control" id="tProfesional" name="tProfesional"
+                    value={tProfesional}
+                    onChange={e => setProfesional (e.target.value)}
+                    ref={register({
+                      required: true
+                    })}>
+                    <option value="">--Seleccione--</option>
+                    <option value="gen">General</option>
+                    <option value="esp">Especialista</option>
+                    <option value="nin">Ninguno</option>
+                  </select>
+                  {errors.tUser && <p>*Campo Obligatorio</p>}
+                </div>
+                <div className="form-group col-md-6">
                   <label htmlFor="password">Contraseña</label>
                   <input type="password" id="password" name="password"
                     value={password}
-                    // value="PZOcgx11"
                     onChange={e => setPassword(e.target.value)}
                     className="form-control" ref={register({ required: true })}
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
@@ -259,7 +275,6 @@ const Usuarios = (props) => {
                   <label htmlFor="rPassword">Repetir Contraseña</label>
                   <input type="Password" id="rPassword" name="rPassword"
                     value={rPassword}
-                    // value="PZOcgx11"
                     onChange={e => setRpassword(e.target.value)}
                     className="form-control" ref={register({ required: true })}
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
