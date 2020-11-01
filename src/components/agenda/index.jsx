@@ -47,33 +47,71 @@ function CitaOdontologica(props) {
     setCurrentStep(currentStep - 1)
   }
 
-  const saveCi = () => {
-    setSaving(true);
-    fetch('http://localhost:8080/citas', {
-      method: 'POST',
-      body: JSON.stringify(formData),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-      .then(res => {
-        if (res.mensaje === "OK") {
-          Swal.fire({
-            icon: 'success',
-            text: 'Cita Agendada con exito!'
-          })
-        }
-      }).catch(e => {
-        console.log(e);
-        Swal.fire({
-          icon: 'warning',
-          text: 'Ocurrio un inconveniente al agendar tu cita!'
+  const validaciones = (formData) => {
+    let bandera = new Boolean(false);
+
+    // Validar si la fecha escogida es mayor a la actual
+    let fechActual = new Date();
+    fechActual.setHours(0, 0, 0, 0); //Funcioón para ret
+    formData.calendario.date.setHours(0, 0, 0, 0);
+    if (formData.calendario.date < fechActual) {
+      Swal.fire({
+        icon: 'warning',
+        text: 'La fecha seleccionada es inferior a la actual, por favor selecciona una fecha superior!'
+      })
+    } else {
+      bandera = true;
+    }
+    // Validar si la fecha seleccionada es igual a la actual
+    if (formData.calendario.date.getTime() === fechActual.getTime()) {
+      Swal.fire({
+        icon: 'warning',
+        text: 'La fecha seleccionada es igual a la actual, por favor selecciona una fecha superior!'
+      })
+    } else {
+      bandera = true;
+    }
+    //Consutar Agenda
+    if (bandera) {
+      fetch('http://localhost:8080/citas/consulCita', {
+        method: 'GET'
+      }).then(res => res.json())
+        .then(res => {
+          //Valida si medico tiene citas para ese día u horas
         })
-      })
-      .finally(() => {
-        setSaving(false)
-      })
-    console.log(formData);
+        .catch(e => console.log(e));
+    }
+
+  }
+
+  const saveCi = () => {
+    validaciones(formData);
+    // setSaving(true);
+    // fetch('http://localhost:8080/citas', {
+    //   method: 'POST',
+    //   body: JSON.stringify(formData),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // }).then(res => res.json())
+    //   .then(res => {
+    //     if (res.mensaje === "OK") {
+    //       Swal.fire({
+    //         icon: 'success',
+    //         text: 'Cita Agendada con exito!'
+    //       })
+    //     }
+    //   }).catch(e => {
+    //     console.log(e);
+    //     Swal.fire({
+    //       icon: 'warning',
+    //       text: 'Ocurrio un inconveniente al agendar tu cita!'
+    //     })
+    //   })
+    //   .finally(() => {
+    //     setSaving(false)
+    //   })
+    // console.log(formData);
   }
 
   const renderButtons = () => {
