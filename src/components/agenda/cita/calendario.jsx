@@ -3,20 +3,28 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 function Calendario(props) {
-
   const [formData, setFormData] = useState(props.formData || {
     date: new Date(),
     hour: ''
   })
 
-  const onChange = (e) => {
-    console.log(e);
-    const newState = {
+  const onHour = (hour) => {
+    let tempFormData = {
       ...formData,
-      [e.target.name]: e.target.value
+      hour
     }
-    setFormData(newState)
-    props.updateValues(newState)
+    console.log(tempFormData);
+    setFormData(tempFormData);
+    props.updateValues(tempFormData)
+  }
+  const onDate = date => {
+    let tempFormData = {
+      ...formData,
+      date
+    }
+    console.log(tempFormData);
+    setFormData(tempFormData);
+    props.updateValues(tempFormData)
   }
 
   const renderButtons = () => {
@@ -46,9 +54,10 @@ function Calendario(props) {
       <div className="container-fluid">
         <div className="row">
           {horas.map((hora) => {
+            let buttonClassName = formData.hour === hora ? "btn btn-info" : "btn btn-outline-info";
             return (
               <div className="col-xs-4 col-sm-4 col-md-3 py-1 text-center" key={hora}>
-                <button type="button" className="btn btn-outline-info" onClick={onChange} value={formData.hour} >{hora}</button>
+                <button type="button" className={buttonClassName} onClick={() => onHour(hora)} value={formData.hour}>{hora}</button>
               </div>
             )
           })}
@@ -61,7 +70,7 @@ function Calendario(props) {
       <h5 className="card-header">Fecha de Cita</h5>
       <div className="card-body">
         <div className="form-row">
-          <Calendar className="mx-auto" value={formData.date} />
+          <Calendar className="mx-auto" onChange={onDate} value={formData.date} />
           <div className="horas col-md-8 py-4 col-sm-12">
             {
               renderButtons()

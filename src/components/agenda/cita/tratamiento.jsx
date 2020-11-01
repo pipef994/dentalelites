@@ -19,6 +19,9 @@ function Tratamiento(props) {
     }).catch(e => console.log(e));
   }
 
+  /*Recorre el objeto devuelto por el metodo de BuscarOdont
+  y entregar los valores al arreglo a presentar en el campo
+  odontologo*/
   const createSelectItems = (data) => {
     let items = [];
     for (let i = 0; i < data.length; i++) {
@@ -28,8 +31,17 @@ function Tratamiento(props) {
     return items;
   }
 
-  const onChange = (e) => {
+  const onTratamiento = (e) => {
     BuscarOdont(e.target.value);
+    const newState = {
+      ...formData,
+      [e.target.name]: e.target.value
+    }
+    setFormData(newState)
+    props.updateValues(newState)
+  }
+
+  const onOdontologo = (e) => {
     const newState = {
       ...formData,
       [e.target.name]: e.target.value
@@ -44,17 +56,16 @@ function Tratamiento(props) {
         <h5 className="card-header">Asignación de Cita</h5>
         <div className="card-body">
           <div className="form-row">
-            <SelectInput name="tratamiento" value={formData.tratamiento} onChange={onChange} label="Tratamiento" options={[
+            <SelectInput name="tratamiento" value={formData.tratamiento} onChange={onTratamiento} label="Tratamiento" options={[
               { value: "sc", text: "--Seleccione--" },
               { value: "gen", text: "General" },
               { value: "esp", text: "Especializado" }
             ]} />
-            <SelectInput name="odont" value={formData.odontologo} label="Odontologo" options={
+            <SelectInput name="odont" value={formData.odontologo} onChange={onOdontologo} label="Odontologo" options={
               [{ value: "sc", text: "--Seleccione--" },
               ...createSelectItems(odontologos)
               ]
             } />
-            {/* <Input name="odont" value={formData.odontologo} onChange={onChange} label="Odontologo" disabled /> */}
           </div>
         </div>
       </div>
@@ -75,23 +86,20 @@ function SelectInput(props) {
     </div>
   )
 }
-
-function Input(props) {
-  return (
-    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
-      <label htmlFor={props.name}>{props.label}</label>
-      <input
-        type="text"
-        name={props.name}
-        id={props.name}
-        className="form-control"
-        value={props.value}
-        onChange={props.onChange}
-      />
-    </div>
-  )
-}
-
-
-
 export default Tratamiento;
+
+// function Input(props) {
+//   return (
+//     <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
+//       <label htmlFor={props.name}>{props.label}</label>
+//       <input
+//         type="text"
+//         name={props.name}
+//         id={props.name}
+//         className="form-control"
+//         value={props.value}
+//         onChange={props.onChange}
+//       />
+//     </div>
+//   )
+// }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import stepsCita from './cita';
+import Swal from 'sweetalert2';
 
 //Constantes para paso
 const steps = [
@@ -9,13 +10,15 @@ const steps = [
 
 function CitaOdontologica(props) {
   const [currentStep, setCurrentStep] = useState(0)
+  const [saving, setSaving] = useState(false)
+  const [saveStatus, setSaveStatus] = useState("")
   const [formData, setFormData] = useState({
-    tratamiento: {}
+    tratamiento: {},
+    calendario: {}
   })
 
-  let tempFormData = formData
-
-  const totalSteps = steps.length
+  let tempFormData = formData;
+  const totalSteps = 3;
 
   const changeFormData = (dataId) => {
     return (data) => {
@@ -37,11 +40,40 @@ function CitaOdontologica(props) {
   }
 
   const nextStep = () => {
-    setCurrentStep(currentStep + 1)
-    setFormData(tempFormData)
+    setCurrentStep(currentStep + 1);
+    setFormData(tempFormData);
   }
   const previousStep = () => {
     setCurrentStep(currentStep - 1)
+  }
+
+  const saveCi = () => {
+    setSaving(true);
+    fetch('http://localhost:8080/citas', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        if (res.mensaje === "OK") {
+          Swal.fire({
+            icon: 'success',
+            text: 'Cita Agendada con exito!'
+          })
+        }
+      }).catch(e => {
+        console.log(e);
+        Swal.fire({
+          icon: 'warning',
+          text: 'Ocurrio un inconveniente al agendar tu cita!'
+        })
+      })
+      .finally(() => {
+        setSaving(false)
+      })
+    console.log(formData);
   }
 
   const renderButtons = () => {
@@ -52,14 +84,14 @@ function CitaOdontologica(props) {
           {currentStep < totalSteps - 1 ?
             <button type="button" className="btn btn-primary mx-2" onClick={nextStep}>Siguiente</button>
             :
-            <button type="button" className="btn btn-success mx-2">Asignar</button>
+            <button type="button" className="btn btn-success mx-2" onClick={saveCi} disabled={saving}>Asignar</button>
           }
         </div>
       </div>
     )
   }
 
-  //Se valdia el progreso
+  //Se valida el progreso
   const progress = Number((currentStep + 1) / totalSteps * 100)
 
   return (

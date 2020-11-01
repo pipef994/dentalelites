@@ -42,9 +42,8 @@ function HistoriaClinica(props) {
     planTratamiento: {},
   })
 
-  let tempFormData = formData
-
-  const totalSteps = steps.length
+  let tempFormData = formData;
+  const totalSteps = steps.length;
 
   const changeFormData = (dataId) => {
     return (data) => {
