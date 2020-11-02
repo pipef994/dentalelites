@@ -52,9 +52,14 @@ function CitaOdontologica(props) {
 
     // Validar si la fecha escogida es mayor a la actual
     let fechActual = new Date();
-    fechActual.setHours(0, 0, 0, 0); //Funcioón para ret
-    formData.calendario.date.setHours(0, 0, 0, 0);
-    if (formData.calendario.date < fechActual) {
+    let fcalendario = new Date();
+    let docOdontologo = formData.tratamiento.odont;
+    fcalendario = formData.calendario.date;
+    fechActual.setHours(0, 0, 0, 0); //Función para retirar 
+    fcalendario.setHours(0, 0, 0, 0);
+    console.log(fechActual);
+    console.log(fcalendario);
+    if (fcalendario < fechActual) {
       Swal.fire({
         icon: 'warning',
         text: 'La fecha seleccionada es inferior a la actual, por favor selecciona una fecha superior!'
@@ -63,7 +68,7 @@ function CitaOdontologica(props) {
       bandera = true;
     }
     // Validar si la fecha seleccionada es igual a la actual
-    if (formData.calendario.date.getTime() === fechActual.getTime()) {
+    if (fcalendario.getTime() === fechActual.getTime()) {
       Swal.fire({
         icon: 'warning',
         text: 'La fecha seleccionada es igual a la actual, por favor selecciona una fecha superior!'
@@ -73,13 +78,26 @@ function CitaOdontologica(props) {
     }
     //Consutar Agenda
     if (bandera) {
+      console.log(docOdontologo);
       fetch('http://localhost:8080/citas/consulCita', {
-        method: 'GET'
-      }).then(res => res.json())
-        .then(res => {
-          //Valida si medico tiene citas para ese día u horas
-        })
-        .catch(e => console.log(e));
+        method: 'POST',
+        body: JSON.stringify(docOdontologo),
+        headers: {
+          'content-Type': 'application/json'
+        }
+      }).then(cita => cita.json()).then(cita => {
+        if (cita.mensaje === 'CitaCreada') {
+          //Continuar con el desarrollo
+        }
+      })
+      // fetch('http://localhost:8080/citas/consulCita', {
+      //   method: 'GET'
+      // }).then(res => res.json())
+      //   .then(res => {
+      //     console.log(res.data);
+
+      //   })
+      //   .catch(e => console.log(e));
     }
 
   }
