@@ -14,6 +14,7 @@ import Calendario from "./components/agenda/cita";
 import Hclinicas from "./components/hclinicas";
 import Cancelacion from "./components/agenda/cancelar/cancelacion";
 import ListUser from "./components/usuarios/listUser";
+import Odontograma from "./components/odontograma";
 
 function App() {
   const [userEmail, setloginUpdate] = useState(
@@ -35,6 +36,7 @@ function App() {
               <Route path="/calendario" exact component={Calendario} />
               <Route path="/historia-clinica" exact component={Hclinicas} />
               <Route path="/cancelacion" exact component={Cancelacion} />
+              <Route path="/odontograma" exact component={Odontograma} />
               <Route
                 path="/logout"
                 exact
