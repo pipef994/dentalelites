@@ -20,7 +20,7 @@ const Anemesis = React.memo((props) => {
   return (
     <form>
       <div className="card">
-        <h5 className="card-header">Anemesis</h5>
+        <h5 className="card-header">Anamnesis</h5>
         <div className="card-body">
           <div className="form-row">
             <div className="form-group col-md-6">

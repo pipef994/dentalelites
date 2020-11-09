@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useForm } from "react-hook-form";
 
 function Tratamiento(props) {
   const [odontologos, setOdontologos] = useState([]);
@@ -60,7 +61,7 @@ function Tratamiento(props) {
               { value: "sc", text: "--Seleccione--" },
               { value: "gen", text: "General" },
               { value: "esp", text: "Especializado" }
-            ]} />
+            ]} required />
             <SelectInput name="odont" value={formData.odontologo} onChange={onOdontologo} label="Odontologo" options={
               [{ value: "sc", text: "--Seleccione--" },
               ...createSelectItems(odontologos)
@@ -87,19 +88,3 @@ function SelectInput(props) {
   )
 }
 export default Tratamiento;
-
-// function Input(props) {
-//   return (
-//     <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
-//       <label htmlFor={props.name}>{props.label}</label>
-//       <input
-//         type="text"
-//         name={props.name}
-//         id={props.name}
-//         className="form-control"
-//         value={props.value}
-//         onChange={props.onChange}
-//       />
-//     </div>
-//   )
-// }
