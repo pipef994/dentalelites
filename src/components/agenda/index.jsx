@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import stepsCita from './cita';
 import Swal from 'sweetalert2';
+import moment from 'moment';
+import 'moment/locale/es';
+moment.locale('es');
 
 //Constantes para paso
 const steps = [
@@ -110,7 +113,10 @@ function CitaOdontologica(props) {
               icon: 'success',
               text: 'Cita Agendada con exito, a su correo llegara la notificación del agendamiento de la cita!'
             });
-            fetch(`http://localhost:8080/citas/enviarCita/${email}`, {
+
+            let fdate = moment(tempFormData.calendario.date).format("MMMM DD YYYY");
+            let hour = tempFormData.calendario.hour;
+            fetch(`http://localhost:8080/citas/enviarCita/${email}/${fdate}/${hour}`, {
               method: 'GET',
             }).then(res => res.json()).
               then(res => {
