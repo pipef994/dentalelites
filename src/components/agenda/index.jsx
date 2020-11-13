@@ -4,6 +4,7 @@ import stepsCita from './cita';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import 'moment/locale/es';
+import _ from "lodash";
 moment.locale('es');
 
 //Constantes para paso
@@ -52,18 +53,16 @@ function CitaOdontologica(props) {
   }
 
   const validaciones = (formData) => {
+
     let flagConsulCita = new Boolean(false);
     let fechActual = new Date();
     let fcalendario = new Date();
-    let hour = formData.calendario.hour;
+    let horaCita = formData.calendario.hour;
     let docOdontologo = formData.tratamiento.odont;
-    var salida;
-    fcalendario = formData.calendario.date;
-    let day = fcalendario.getDate();
-    console.log('Numero de dia', day);
-    fechActual.setHours(0, 0, 0, 0); //Función para retirar 
-    fcalendario.setHours(0, 0, 0, 0);
 
+    fcalendario = formData.calendario.date;
+    fechActual.setHours(0, 0, 0, 0);
+    fcalendario.setHours(0, 0, 0, 0);
 
     if (fcalendario.getTime() <= fechActual.getTime()) {
       Swal.fire({
@@ -73,70 +72,72 @@ function CitaOdontologica(props) {
     } else {
       flagConsulCita = true;
     }
-    //Consutar Agenda
+
     if (flagConsulCita) {
-      fetch(`http://localhost:8080/citas/consulCita/${docOdontologo}/${fcalendario}/${hour}`, {
+      //Se consulta la cita individual
+      // fcalendario = '2020-11-14T05:00:00.000Z'; //Transformar la fecha a formato interno
+      fetch(`http://localhost:8080/citas/consulCita/${docOdontologo}/${fcalendario}/${horaCita}`, {
         method: 'GET',
-      }).then(cita => cita.json()).then(cita => {
-        console.log("Tamaño cita", cita.data.length);
-        if (cita.data.length === 0) {
-          salida = false;
-          return salida;
-        } else {
-          Swal.fire({
-            icon: 'warning',
-            text: 'Por favor seleccione otra hora o fecha diferente, ya que el odontologo se encuentra agendado.'
-          })
+      }).then(res => {
+        return res.json()
+      }).then(res => {
+        if (res.mensaje === "OK") {
         }
-        setSaving(false);
-      })
+      }).catch(e => console.log(e));
     }
   }
 
-  const saveCi = () => {
+  const xx = () => {
     setSaving(true);
     setFormData(tempFormData);
-    let valor = validaciones(tempFormData);
-    if (valor !== false) {
-      setSaving(true);
-      fetch('http://localhost:8080/citas', {
-        method: 'POST',
-        body: JSON.stringify(tempFormData),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then(res => res.json())
-        .then(res => {
-          if (res.mensaje === "OK") {
-            var email = window.localStorage.getItem("email"); //Se toma el correo de memoria
-            Swal.fire({
-              icon: 'success',
-              text: 'Cita Agendada con exito, a su correo llegara la notificación del agendamiento de la cita!'
-            });
+    validaciones(tempFormData);
+  }
 
-            let fdate = moment(tempFormData.calendario.date).format("MMMM DD YYYY");
-            let hour = tempFormData.calendario.hour;
-            fetch(`http://localhost:8080/citas/enviarCita/${email}/${fdate}/${hour}`, {
-              method: 'GET',
-            }).then(res => res.json()).
-              then(res => {
-                if (res.mensaje === 'OK') {
-                  console.log('Correo enviado');
-                }
-              })
-          }
-        }).catch(e => {
-          console.log(e);
+  const saveCi = (formData) => {
+    // setSaving(true);
+    // setFormData(tempFormData);
+    // let valor = validaciones(tempFormData);
+    // console.log("Valor consulta", valor);
+    // if (valor !== false) {
+    setSaving(true);
+    fetch('http://localhost:8080/citas', {
+      method: 'POST',
+      body: JSON.stringify(tempFormData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        if (res.mensaje === "OK") {
+          var email = window.localStorage.getItem("email"); //Se toma el correo de memoria
           Swal.fire({
-            icon: 'warning',
-            text: 'Ocurrio un inconveniente al agendar tu cita!'
-          })
+            icon: 'success',
+            text: 'Cita Agendada con exito, a su correo llegara la notificación del agendamiento de la cita!'
+          });
+
+          let fdate = moment(tempFormData.calendario.date).format("MMMM DD YYYY");
+          let hour = tempFormData.calendario.hour;
+          fetch(`http://localhost:8080/citas/enviarCita/${email}/${fdate}/${hour}`, {
+            method: 'GET',
+          }).then(res => res.json()).
+            then(res => {
+              if (res.mensaje === 'OK') {
+                console.log('Correo enviado');
+              }
+            })
+        }
+      }).catch(e => {
+        console.log(e);
+        Swal.fire({
+          icon: 'warning',
+          text: 'Ocurrio un inconveniente al agendar tu cita!'
         })
-        .finally(() => {
-          setSaving(false)
-        })
-      console.log(formData);
-    }
+      })
+      .finally(() => {
+        setSaving(false)
+      })
+    console.log(formData);
+    // }
   }
 
   const renderButtons = () => {
@@ -147,7 +148,8 @@ function CitaOdontologica(props) {
           {currentStep < totalSteps - 1 ?
             <button type="button" className="btn btn-primary mx-2" onClick={nextStep}>Siguiente</button>
             :
-            <button type="button" className="btn btn-success mx-2" onClick={saveCi} disabled={saving}>Asignar</button>
+            // <button type="button" className="btn btn-success mx-2" onClick={saveCi} disabled={saving}>Asignar</button>
+            <button type="button" className="btn btn-success mx-2" onClick={xx} disabled={saving}>Asignar</button>
           }
         </div>
       </div>
