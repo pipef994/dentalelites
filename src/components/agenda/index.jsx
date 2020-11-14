@@ -69,37 +69,38 @@ function CitaOdontologica(props) {
         icon: 'warning',
         text: 'La fecha seleccionada debe ser mayor a la actual!'
       })
+      flagConsulCita = false;
     } else {
       flagConsulCita = true;
     }
 
     if (flagConsulCita) {
-      //Se consulta la cita individual
-      // fcalendario = '2020-11-14T05:00:00.000Z'; //Transformar la fecha a formato interno
+      fcalendario = fcalendario.toISOString();
       fetch(`http://localhost:8080/citas/consulCita/${docOdontologo}/${fcalendario}/${horaCita}`, {
         method: 'GET',
       }).then(res => {
         return res.json()
       }).then(res => {
         if (res.mensaje === "OK") {
+          Swal.fire({
+            icon: 'warning',
+            text: '¡La fecha o hora seleccionada ya se encuentra agendada por favor selecciona otra!'
+          })
+        } else {
+          saveCi(formData);
         }
       }).catch(e => console.log(e));
     }
   }
 
-  const xx = () => {
+  const orquestador = () => {
     setSaving(true);
     setFormData(tempFormData);
     validaciones(tempFormData);
+    setSaving(false);
   }
 
   const saveCi = (formData) => {
-    // setSaving(true);
-    // setFormData(tempFormData);
-    // let valor = validaciones(tempFormData);
-    // console.log("Valor consulta", valor);
-    // if (valor !== false) {
-    setSaving(true);
     fetch('http://localhost:8080/citas', {
       method: 'POST',
       body: JSON.stringify(tempFormData),
@@ -137,7 +138,6 @@ function CitaOdontologica(props) {
         setSaving(false)
       })
     console.log(formData);
-    // }
   }
 
   const renderButtons = () => {
@@ -148,8 +148,7 @@ function CitaOdontologica(props) {
           {currentStep < totalSteps - 1 ?
             <button type="button" className="btn btn-primary mx-2" onClick={nextStep}>Siguiente</button>
             :
-            // <button type="button" className="btn btn-success mx-2" onClick={saveCi} disabled={saving}>Asignar</button>
-            <button type="button" className="btn btn-success mx-2" onClick={xx} disabled={saving}>Asignar</button>
+            <button type="button" className="btn btn-success mx-2" onClick={orquestador} disabled={saving}>Asignar</button>
           }
         </div>
       </div>
