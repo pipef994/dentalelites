@@ -43,7 +43,7 @@ class App extends Component {
     this.setState({ currentStatus: selectedStatus })
   }
 
-  //Toogle - Adicionar o remover un diente
+  //Toogle - Adicionar o remover un diente 
   toggleTooth = data => {
     if (data.status) {
       data.status = false
