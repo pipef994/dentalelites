@@ -1,0 +1,136 @@
+{
+  "toothFaceStatuses": [
+    {
+      "name": "caries",
+      "color": "#FF3333",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "obturado_ok",
+      "color": "#0D2ABB",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "obturado_mal",
+      "color": "#4593E0",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "endodoncia_ok",
+      "color": "#919192",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "endodoncia_mal",
+      "color": "#D5D7DB",
+      "fontColor": "#000000"
+    },
+    {
+      "name": "corona_ok",
+      "color": "#08B341",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "corona_mal",
+      "color": "#71E999",
+      "fontColor": "#000000"
+    },
+    {
+      "name": "protesis_indicada",
+      "color": "#EBEB54",
+      "fontColor": "#000000"
+    },
+    {
+      "name": "protesis_ok",
+      "color": "#BD10C6",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "protesis_mal",
+      "color": "#C75ECB",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "ausente",
+      "color": "#CA6F1E",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "sellante",
+      "color": "#F39C12",
+      "fontColor": "#FFFFFF"
+    },
+    {
+      "name": "normal",
+      "color": "white",
+      "fontColor": "#FFFFFF"
+    }
+  ],
+  "toolbarOptions": [
+    {
+      "name": "Caries",
+      "status": "caries",
+      "className": "btn"
+    },
+    {
+      "name": "Obturado Buen Estado",
+      "status": "obturado_ok",
+      "className": "btn"
+    },
+    {
+      "name": "Obturado Mal Estado",
+      "status": "obturado_mal",
+      "className": "btn"
+    },
+    {
+      "name": "Endodoncia Buen Estado",
+      "status": "endodoncia_ok",
+      "className": "btn"
+    },
+    {
+      "name": "Endodoncia Mal Estado",
+      "status": "endodoncia_mal",
+      "className": "btn"
+    },
+    {
+      "name": "Corona Buen Estado",
+      "status": "corona_ok",
+      "className": "btn"
+    },
+    {
+      "name": "Corona Mal Estado",
+      "status": "corona_mal",
+      "className": "btn"
+    },
+    {
+      "name": "Prótesis Indicada",
+      "status": "protesis_indicada",
+      "className": "btn"
+    },
+    {
+      "name": "Prótesis Buen Estado",
+      "status": "protesis_ok",
+      "className": "btn"
+    },
+    {
+      "name": "Prótesis Mal Estado",
+      "status": "protesis_mal",
+      "className": "btn"
+    },
+    {
+      "name": "Ausente, No Erupcionado",
+      "status": "ausente",
+      "className": "btn"
+    },
+    {
+      "name": "Sellante Indicado",
+      "status": "sellante",
+      "className": "btn"
+    },
+    {
+      "name": "Saludable",
+      "status": "normal",
+      "className": "btn"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
+import config from './config.json'
 import Store from './Store/Store'
 import Tooth from './Tooth'
 import Toolbar from './Toolbar'
@@ -17,42 +18,9 @@ const types = [
   }
 ]
 
-const toothFaceStatuses = [
-  {
-    name: 'restored',
-    color: 'black'
-  },
-  {
-    name: 'carious',
-    color: 'green'
-  },
-  {
-    name: 'healthy',
-    color: 'red'
-  },
-  {
-    name: 'normal',
-    color: 'white'
-  }
-]
+const toothFaceStatuses = config.toothFaceStatuses
 
-const toolbarOptions = [
-  {
-    name: 'Restaurado',
-    status: 'restored',
-    className: 'btn btn-dark'
-  },
-  {
-    name: 'Cariado',
-    status: 'carious',
-    className: 'btn btn-success'
-  },
-  {
-    name: 'Saludable',
-    status: 'healthy',
-    className: 'btn btn-danger'
-  }
-]
+const toolbarOptions = config.toolbarOptions
 
 class App extends Component {
   constructor (props) {
@@ -71,9 +39,7 @@ class App extends Component {
   }
 
   handleStatusSelectorChange = status => {
-    console.log(status)
     const selectedStatus = toothFaceStatuses.find(stat => stat.name === status)
-    console.log(selectedStatus)
     this.setState({ currentStatus: selectedStatus })
   }
 
@@ -158,6 +124,7 @@ class App extends Component {
                 </div>
                 <Toolbar
                   options={toolbarOptions}
+                  statuses={toothFaceStatuses}
                   handleAction={this.handleStatusSelectorChange}
                 />
               </div>
