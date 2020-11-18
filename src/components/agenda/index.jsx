@@ -16,15 +16,17 @@ function CitaOdontologica(props) {
   const [currentStep, setCurrentStep] = useState(0)
   const [saving, setSaving] = useState(false)
   const [saveStatus, setSaveStatus] = useState("")
+  // const [nextPass, setnextPass] = useState(false)
   const [formData, setFormData] = useState({
     tratamiento: {},
     calendario: {}
   })
 
   let tempFormData = formData;
+  tempFormData.tratamiento.user = window.localStorage.getItem("email"); //Se toma el correo de memoria
+  console.log('Formularios', tempFormData);
   const totalSteps = 2;
 
-  console.log(formData);
   const changeFormData = (dataId) => {
     return (data) => {
       tempFormData = {
@@ -101,6 +103,7 @@ function CitaOdontologica(props) {
   }
 
   const saveCi = (formData) => {
+
     fetch('http://localhost:8080/citas', {
       method: 'POST',
       body: JSON.stringify(tempFormData),

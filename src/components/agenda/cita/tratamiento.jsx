@@ -5,7 +5,8 @@ function Tratamiento(props) {
   const [odontologos, setOdontologos] = useState([]);
   const [formData, setFormData] = useState(props.formData || {
     tratamiento: '',
-    odontologo: ''
+    odontologo: '',
+    usuario: window.localStorage.getItem("email"), //Se toma el correo de memoria
   })
 
   const BuscarOdont = (trat) => {
@@ -58,12 +59,12 @@ function Tratamiento(props) {
         <div className="card-body">
           <div className="form-row">
             <SelectInput name="tratamiento" value={formData.tratamiento} onChange={onTratamiento} label="Tratamiento" options={[
-              { value: "sc", text: "--Seleccione--" },
+              { value: "", text: "--Seleccione--" },
               { value: "gen", text: "General" },
               { value: "esp", text: "Especializado" }
             ]} required />
             <SelectInput name="odont" value={formData.odontologo} onChange={onOdontologo} label="Odontologo" options={
-              [{ value: "sc", text: "--Seleccione--" },
+              [{ value: "", text: "--Seleccione--" },
               ...createSelectItems(odontologos)
               ]
             } />

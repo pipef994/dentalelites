@@ -1,71 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
+import DiUserImg from '../../images/cancelCita.png'
+import { useForm } from "react-hook-form";
+import "./cancelacion.scss";
+import Swal from 'sweetalert2';
 
-function Cancelacion(props) {
-  const [formData, setFormData] = useState(props.formData || {
-    tip: '',
-    nId: ''
-  })
 
-  const onChange = (e) => {
-    const newState = {
-      ...formData,
-      [e.target.name]: e.target.value
-    }
-    setFormData(newState)
-    props.updateValues(newState)
+const Cancelacion = (props) => {
+  const [email, setEmail] = useState();
+  const { register, errors, handleSubmit, setError, clearError } = useForm();
+  const [entradas, setEntradas] = useState([])
+
+  const state = {
+    button: 1
+  };
+
+  const onSubmit = (data, e) => {
+    console.log('cancelación cita', data);
+    Swal.fire({
+      title: 'Esta seguro de cancelar la cita?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: `Si`,
+      denyButtonText: `No`,
+      customClass: {
+        cancelButton: 'order-1 right-gap',
+        confirmButton: 'order-2',
+        denyButton: 'order-3',
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire('Saved!', '', 'success')
+        validaUsuario(data);
+      } else if (result.isDenied) {
+        Swal.fire('La cita no se cancelo', '', 'info')
+      }
+    })
+  }
+
+  const validaUsuario = (data) => {
+    // Validamos que el correo exista
+    fetch('http://localhost:8080/usuarios/validarusuario', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        if (res.mensaje === "OK") {
+          cancelarCita(data);
+        } else {
+          Swal.fire('Correo no registrado', '', 'info')
+        }
+      })
+      .catch(e => console.log(e));
+  }
+
+  const cancelarCita = (data) => {
+    fetch(`http://localhost:8080/citas/cancelarCita/${data.email}`, {
+      method: 'GET',
+    }).then(res => res.json()).
+      then(res => {
+        if (res.mensaje === 'OK') {
+          console.log('Cita Cancelada');
+          Swal.fire({
+            icon: 'success',
+            text: 'Cita cancelada con exito!'
+          })
+        }
+      })
   }
 
   return (
-    <form>
-      <div className="card">
-        <h5 className="card-header">Cancelación de Cita</h5>
-        <div className="card-body">
-          <div className="form-row">
-            <SelectInput name="tip" value={formData.tip} onChange={onChange} label="Identificiacion" options={[
-              { value: "sc", text: "Seleccione" },
-              { value: "cc", text: "Cédula de ciudadanía" },
-              { value: "ce", text: "Cédula de extranjería" },
-              { value: "di", text: "Documento personal de Identificación" },
-              { value: "ps", text: "Pasaporte" },
-              { value: "Re", text: "Registro" },
-              { value: "ti", text: "Tarjeta de identidad" }
-            ]} />
-            <Input name="nId" value={formData.nId} onChange={onChange} label="N° Identificación" />
+    <Fragment>
+      <form className="disableUSer" onSubmit={handleSubmit(onSubmit)}>
+        <div className="base-container">
+          <div className="header">Cancelar Cita</div>
+          <br />
+          <div className="content">
+            <div className="image">
+              <img src={DiUserImg} />
+            </div>
+            <div className="form">
+              <div className="form-group">
+                <label htmlFor="email">Correo</label>
+                <input type="email" id="email" name="email"
+                  placeholder="Ingrese el correo"
+                  ref={register({
+                    required: { value: true, message: 'Campo obligatorio' }
+                  })} />
+                {errors.email &&
+                  <span className="text-danger text-small d-block mb-2">
+                    {errors.email.message}
+                  </span>
+                }
+              </div>
+              <div className="form-group" >
+                <label htmlFor="date">Fecha de cita</label>
+              </div>
+              <div className="footer">
+                <button type="submit" className="btn" id="submit" name="submit">
+                  Cancelar
+                </button>
+              </div>
+            </div>
           </div>
-          <button color="success">Cancelar</button>
         </div>
-      </div>
-    </form>
-  )
-}
-
-function SelectInput(props) {
-  return (
-    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
-      <label htmlFor={props.name}>{props.label}</label>
-      <select name={props.name} id={props.name} className="form-control"
-        value={props.value} onChange={props.onChange}>
-        {props.options.map(option => (
-          <option key={option.value} value={option.value}>{option.text}</option>
-        ))}
-      </select>
-    </div>
-  )
-}
-
-function Input(props) {
-  return (
-    <div className={`form-group ${!props.fullWidth ? 'col-md-6' : ''}`}>
-      <label htmlFor={props.name}>{props.label}</label>
-      <input
-        type="text"
-        name={props.name}
-        id={props.name}
-        className="form-control"
-        value={props.value}
-        onChange={props.onChange}
-      />
-    </div>
+      </form>
+    </Fragment>
   )
 }
 

@@ -13,6 +13,7 @@ import Agenda from "./components/agenda";
 import Calendario from "./components/agenda/cita";
 import Hclinicas from "./components/hclinicas";
 import Cancelacion from "./components/agenda/cancelar/cancelacion";
+import Cancelacion2 from "./components/agenda/cancelar/cancelacion2";
 import ListUser from "./components/usuarios/listUser";
 import Odontograma from "./components/odontograma";
 
@@ -35,7 +36,8 @@ function App() {
               <Route path="/agenda" exact component={Agenda} />
               <Route path="/calendario" exact component={Calendario} />
               <Route path="/historia-clinica" exact component={Hclinicas} />
-              <Route path="/cancelacion" exact component={Cancelacion} />
+              <Route path="/cancelacion" exact component={Cancelacion2} />
+              <Route path="/cancela2 " exact component={Cancelacion2} />
               <Route path="/odontograma" exact component={Odontograma} />
               <Route
                 path="/logout"

@@ -21,7 +21,6 @@ function Calendario(props) {
       ...formData,
       date
     }
-    console.log('Fecha Seleccionada', tempFormData);
     setFormData(tempFormData);
     props.updateValues(tempFormData)
   }
