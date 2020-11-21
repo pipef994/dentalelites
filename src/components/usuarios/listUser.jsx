@@ -10,7 +10,6 @@ const ListUser = (props) => {
       method: 'GET'
     }).then(res => res.json())
       .then(res => {
-        console.log(res);
         setUsuarios(res.data); // Con esto tengo la información 
       })
       .catch(e => console.log(e));

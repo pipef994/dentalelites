@@ -140,7 +140,6 @@ function CitaOdontologica(props) {
       .finally(() => {
         setSaving(false)
       })
-    console.log(formData);
   }
 
   const renderButtons = () => {
