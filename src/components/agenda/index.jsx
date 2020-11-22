@@ -78,6 +78,7 @@ function CitaOdontologica(props) {
 
     if (flagConsulCita) {
       fcalendario = fcalendario.toISOString();
+      console.log(fcalendario);
       fetch(`http://localhost:8080/citas/consulCita/${docOdontologo}/${fcalendario}/${horaCita}`, {
         method: 'GET',
       }).then(res => {

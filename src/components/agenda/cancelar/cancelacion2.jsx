@@ -15,16 +15,23 @@ const Cancelacion = (props) => {
   const [citas, setCitas] = useState([]);
   const [citas2, setCitas2] = useState([]);
 
+  var contador = 0;
+
   const consultarCitas = (data) => {
+    let fecha = new Date();
+    fecha.setDate(1);
+    fecha.setHours(0, 0, 0, 0);
+    fecha = fecha.toISOString();
     let email = data.email;
-    fetch(`http://localhost:8080/citas/consultarCitasUser/${email}`, {
+    fetch(`http://localhost:8080/citas/consultarCitasUser/${email}/${fecha}`, {
       method: 'GET',
     }).then(res => res.json()).
       then(res => {
         if (res.mensaje === 'OK') {
           tratarDatos(res.data);
+        }else{
         }
-      })
+      }).catch(e => console.log(e));
   }
 
   const tratarDatos = (data) => {
@@ -48,17 +55,17 @@ const Cancelacion = (props) => {
         denyButton: 'order-3',
       }
     }).then((result) => {
+      setCitas2(citas);
+      let registros = citas;
       if (result.isConfirmed) {
         let contador = 0;
-        let registros = citas;
         registros.map((registro) => {
           if (registro.date == dato.date) {
             registros.splice(contador, 1)
           }
           contador++;
         });
-        setCitas2(registros);
-        console.log(registros);
+        setCitas(registros);
       } else if (result.isDenied) {
         Swal.fire('La cita no se cancelo', '', 'info')
       }
@@ -122,7 +129,7 @@ const Cancelacion = (props) => {
             </tr>
           </thead>
           <tbody>
-            {citas.length != citas2.length ? citas.map(renderCitas) : citas2.map(renderCitas)}
+            {citas.length > citas2.length ? citas.map(renderCitas) : citas2.map(renderCitas)}
           </tbody>
         </Table>
       </Container>
