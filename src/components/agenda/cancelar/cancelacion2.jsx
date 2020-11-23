@@ -1,4 +1,5 @@
 import React, { useState, Fragment, useEffect } from 'react';
+import * as ReactBootStrap from "react-bootstrap";
 import DiUserImg from '../../images/cancelCita.png'
 import { useForm } from "react-hook-form";
 import {
@@ -15,7 +16,19 @@ const Cancelacion = (props) => {
   const [citas, setCitas] = useState([]);
   const [citas2, setCitas2] = useState([]);
 
-  var contador = 0;
+  const renderUser = (cita, index) => {
+    let fecha = new Date(cita.date);
+    let dsfsda = fecha.toLocaleDateString() + cita.hour;
+    return (
+      <tr key={dsfsda}>
+        <td>{fecha.toLocaleDateString()}</td>
+        <td>{cita.hour}</td>
+        <td>
+          <Button color="danger" className="btn4" onClick={() => eliminar(cita)}> Eliminar</Button>
+        </td>
+      </tr>
+    )
+  }
 
   const consultarCitas = (data) => {
     let fecha = new Date();
@@ -29,7 +42,6 @@ const Cancelacion = (props) => {
       then(res => {
         if (res.mensaje === 'OK') {
           tratarDatos(res.data);
-        }else{
         }
       }).catch(e => console.log(e));
   }
@@ -39,9 +51,7 @@ const Cancelacion = (props) => {
       return elem.calendario;
     })
     setCitas(datos);
-    return datos;
   }
-
   const eliminar = (dato) => {
     Swal.fire({
       title: 'Esta seguro de cancelar la cita?',
@@ -55,10 +65,10 @@ const Cancelacion = (props) => {
         denyButton: 'order-3',
       }
     }).then((result) => {
-      setCitas2(citas);
-      let registros = citas;
+      let registros = [...citas];
       if (result.isConfirmed) {
         let contador = 0;
+        console.log(dato);
         registros.map((registro) => {
           if (registro.date == dato.date) {
             registros.splice(contador, 1)
@@ -72,70 +82,51 @@ const Cancelacion = (props) => {
     })
   }
 
-
-  const renderCitas = (data, index) => {
-    let fecha = new Date(data.date);
-    fecha.toLocaleDateString();
-    return (
-      <tr key={index}>
-        <td>{fecha.toLocaleDateString()}</td>
-        <td>{data.hour}</td>
-        <td>
-          <Button color="danger" className="btn4" onClick={() => eliminar(data)}>Eliminar</Button>
-        </td>
-      </tr>
-    )
-  }
-
+  console.log(citas);
+  console.log('render');
   return (
-    <Fragment>
-      <form className="disableUSer" onSubmit={handleSubmit(consultarCitas)}>
-        <div className="base-container">
-          <div className="header">Cancelar Cita</div>
-          <br />
-          <div className="content">
-            <div className="form">
-              <div className="form-group">
-                <label htmlFor="email">Correo</label>
-                <input type="email" id="email" name="email"
-                  placeholder="Ingrese el correo"
-                  ref={register({
-                    required: { value: true, message: 'Campo obligatorio' }
-                  })} />
-                {errors.email &&
-                  <span className="text-danger text-small d-block mb-2">
-                    {errors.email.message}
-                  </span>
-                }
-              </div>
-              <div className="footer">
-                <button type="submit" className="btn" id="submit" name="submit">
-                  Consultar citas
-                </button>
-              </div>
-            </div>
+    <form className="listUser" onSubmit={handleSubmit(consultarCitas)}>
+      <div className="base-container">
+        <h5><strong>Cancelar Cita</strong></h5>
+        <br />
+        <div className="form">
+          <div className="form-group">
+            <label htmlFor="email">Correo</label>
+            <input type="email" id="email" name="email"
+              placeholder="Ingrese el correo"
+              ref={register({
+                required: { value: true, message: 'Campo obligatorio' }
+              })} />
+            {errors.email &&
+              <span className="text-danger text-small d-block mb-2">
+                {errors.email.message}
+              </span>
+            }
+          </div>
+          <div className="footer">
+            <button type="submit" className="btn" id="submit" name="submit">
+              Consultar citas
+            </button>
           </div>
           <br />
           <br />
+          <ReactBootStrap.Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Fecha cita</th>
+                <th>Hora Cita</th>
+                <th>Acciónn</th>
+              </tr>
+            </thead>
+            <tbody>
+              {citas.map(renderUser)}
+            </tbody>
+          </ReactBootStrap.Table>
         </div>
-      </form>
-      <Container>
-        <Table>
-          <thead>
-            <tr>
-              <th>Fecha cita</th>
-              <th>Hora Cita</th>
-              <th>Accion</th>
-            </tr>
-          </thead>
-          <tbody>
-            {citas.length > citas2.length ? citas.map(renderCitas) : citas2.map(renderCitas)}
-          </tbody>
-        </Table>
-      </Container>
-    </Fragment>
+      </div>
+    </form>
   )
-
 }
+
 
 export default Cancelacion;
