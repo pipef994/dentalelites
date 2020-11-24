@@ -14,13 +14,12 @@ import Swal from 'sweetalert2';
 const Cancelacion = (props) => {
   const { register, errors, handleSubmit, setError, clearError } = useForm();
   const [citas, setCitas] = useState([]);
-  const [citas2, setCitas2] = useState([]);
 
   const renderUser = (cita, index) => {
     let fecha = new Date(cita.date);
-    let dsfsda = fecha.toLocaleDateString() + cita.hour;
+    let id = cita.id;
     return (
-      <tr key={dsfsda}>
+      <tr key={id}>
         <td>{fecha.toLocaleDateString()}</td>
         <td>{cita.hour}</td>
         <td>
@@ -47,11 +46,16 @@ const Cancelacion = (props) => {
   }
 
   const tratarDatos = (data) => {
-    let datos = data.map(function (elem) {
-      return elem.calendario;
-    })
-    setCitas(datos);
+    const dataAux = [];
+    data.forEach(element => {
+      dataAux.push({
+        id: element.id,
+        ...element.calendario
+      });
+    });
+    setCitas(dataAux);
   }
+
   const eliminar = (dato) => {
     Swal.fire({
       title: 'Esta seguro de cancelar la cita?',
@@ -68,13 +72,24 @@ const Cancelacion = (props) => {
       let registros = [...citas];
       if (result.isConfirmed) {
         let contador = 0;
-        console.log(dato);
-        registros.map((registro) => {
-          if (registro.date == dato.date) {
-            registros.splice(contador, 1)
+        console.log('dato.id', dato.id);
+        registros.forEach(registro => {
+          if (registro.id === dato.id) {
+            registros.splice(contador, 1);
           }
           contador++;
         });
+        fetch(`http://localhost:8080/citas/cancelarCita/${dato.id}`, {
+          method: 'GET',
+        }).then(call => call.json()).
+          then(call => {
+            if (call.mensaje === 'OK') {
+              Swal.fire({
+                icon: 'success',
+                text: 'Cita Borrada con exito!'
+              })
+            }
+          }).catch(e => console.log(e));
         setCitas(registros);
       } else if (result.isDenied) {
         Swal.fire('La cita no se cancelo', '', 'info')
@@ -82,8 +97,8 @@ const Cancelacion = (props) => {
     })
   }
 
-  console.log(citas);
-  console.log('render');
+  // console.log(citas);
+  // console.log('render');
   return (
     <form className="listUser" onSubmit={handleSubmit(consultarCitas)}>
       <div className="base-container">
