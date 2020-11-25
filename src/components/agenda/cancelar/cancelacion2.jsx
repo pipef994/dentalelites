@@ -9,11 +9,12 @@ import {
 } from "reactstrap";
 import "./cancelacion2.css";
 import Swal from 'sweetalert2';
-
+import moment from 'moment';
 
 const Cancelacion = (props) => {
   const { register, errors, handleSubmit, setError, clearError } = useForm();
   const [citas, setCitas] = useState([]);
+  const [correocancelar, setCorreo] = useState();
 
   const renderUser = (cita, index) => {
     let fecha = new Date(cita.date);
@@ -35,6 +36,7 @@ const Cancelacion = (props) => {
     fecha.setHours(0, 0, 0, 0);
     fecha = fecha.toISOString();
     let email = data.email;
+    setCorreo(data.email);
     fetch(`http://localhost:8080/citas/consultarCitasUser/${email}/${fecha}`, {
       method: 'GET',
     }).then(res => res.json()).
@@ -72,13 +74,13 @@ const Cancelacion = (props) => {
       let registros = [...citas];
       if (result.isConfirmed) {
         let contador = 0;
-        console.log('dato.id', dato.id);
         registros.forEach(registro => {
           if (registro.id === dato.id) {
             registros.splice(contador, 1);
           }
           contador++;
         });
+
         fetch(`http://localhost:8080/citas/cancelarCita/${dato.id}`, {
           method: 'GET',
         }).then(call => call.json()).
@@ -90,15 +92,23 @@ const Cancelacion = (props) => {
               })
             }
           }).catch(e => console.log(e));
+        let fdate = moment(dato.date).format("MMMM DD YYYY");
+        let hour = dato.hour;
+        fetch(`http://localhost:8080/citas/sendCancelAppointment/${correocancelar}/${fdate}/${hour}`, {
+          method: 'GET',
+        }).then(call => call.json()).
+          then(call => {
+            if (call.mensaje === 'OK') {
+              console.log("Envio correo");
+            }
+          }).catch(e => console.log(e));
+
         setCitas(registros);
       } else if (result.isDenied) {
         Swal.fire('La cita no se cancelo', '', 'info')
       }
     })
   }
-
-  // console.log(citas);
-  // console.log('render');
   return (
     <form className="listUser" onSubmit={handleSubmit(consultarCitas)}>
       <div className="base-container">
