@@ -117,6 +117,7 @@ const Cancelacion = (props) => {
             <label htmlFor="email">Correo</label>
             <input type="email" id="email" name="email"
               placeholder="Ingrese el correo"
+              className="form-control"
               ref={register({
                 required: { value: true, message: 'Campo obligatorio' }
               })} />

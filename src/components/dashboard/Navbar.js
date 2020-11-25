@@ -12,13 +12,14 @@ class Navbar extends React.Component {
   render() {
     return (
       <ReactBootStrap.Navbar
+        className="color-nav"
         collapseOnSelect
         expand="lg"
-        bg="dark"
-        variant="dark"
-        class="bg navbar-custom"
+        // bg="dark"
+        // variant="dark"
+        // class="bg navbar-custom"
       >
-        <ReactBootStrap.Navbar.Brand href="/home">
+        <ReactBootStrap.Navbar.Brand href="/home" className="texto">
           Dental Elite
         </ReactBootStrap.Navbar.Brand>
         <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />

@@ -66,15 +66,28 @@ function CitaOdontologica(props) {
     fechActual.setHours(0, 0, 0, 0);
     fcalendario.setHours(0, 0, 0, 0);
 
-    if (fcalendario.getTime() <= fechActual.getTime()) {
+    let aux = moment(fcalendario).weekday();
+    console.log("dia de la semana", aux);
+
+    if (aux === 6) {
       Swal.fire({
         icon: 'warning',
-        text: 'La fecha seleccionada debe ser mayor a la actual!'
+        text: 'Por favor selecciona otra fecha!, los domingos no son días habiles.'
       })
       flagConsulCita = false;
     } else {
-      flagConsulCita = true;
+      if (fcalendario.getTime() <= fechActual.getTime()) {
+        Swal.fire({
+          icon: 'warning',
+          text: 'La fecha seleccionada debe ser mayor a la actual!'
+        })
+        flagConsulCita = false;
+      } else {
+        flagConsulCita = true;
+      }
     }
+
+
 
     if (flagConsulCita) {
       fcalendario = fcalendario.toISOString();

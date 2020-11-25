@@ -28,33 +28,36 @@ function App() {
         {userEmail ? (
           <React.Fragment>
             <Menu />
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/usuarios" component={Usuarios} />
-              <Route path="/disableUser" exact component={Disableuser} />
-              <Route path="/listUser" exact component={ListUser} />
-              <Route path="/agenda" exact component={Agenda} />
-              <Route path="/calendario" exact component={Calendario} />
-              <Route path="/historia-clinica" exact component={Hclinicas} />
-              <Route path="/cancelacion" exact component={Cancelacion2} />
-              <Route path="/cancela2 " exact component={Cancelacion2} />
-              <Route path="/odontograma" exact component={Odontograma} />
-              <Route
-                path="/logout"
-                exact
-                render={(props) => (
-                  <Logout {...props} updateLogin={setloginUpdate} />
-                )}
-              />
-              <Route
-                component={() => (
-                  <div className="ed-grid">
-                    <h1>Error 404</h1>
-                    <span>Pagina no encontrada</span>
-                  </div>
-                )}
-              />
-            </Switch>
+            <div className="container-windows">
+              <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/home" exact component={Home} />
+                <Route path="/usuarios" component={Usuarios} />
+                <Route path="/disableUser" exact component={Disableuser} />
+                <Route path="/listUser" exact component={ListUser} />
+                <Route path="/agenda" exact component={Agenda} />
+                <Route path="/calendario" exact component={Calendario} />
+                <Route path="/historia-clinica" exact component={Hclinicas} />
+                <Route path="/cancelacion" exact component={Cancelacion2} />
+                <Route path="/cancela2 " exact component={Cancelacion2} />
+                <Route path="/odontograma" exact component={Odontograma} />
+                <Route
+                  path="/logout"
+                  exact
+                  render={(props) => (
+                    <Logout {...props} updateLogin={setloginUpdate} />
+                  )}
+                />
+                <Route
+                  component={() => (
+                    <div className="ed-grid">
+                      <h1>Error 404</h1>
+                      <span>Pagina no encontrada</span>
+                    </div>
+                  )}
+                />
+              </Switch>
+            </div>
           </React.Fragment>
         ) : (
           <Switch>
