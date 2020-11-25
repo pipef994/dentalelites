@@ -1,18 +1,16 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as ReactBootStrap from "react-bootstrap";
 import DiUserImg from '../../images/cancelCita.png'
 import { useForm } from "react-hook-form";
 import {
-  Table,
   Button,
-  Container,
 } from "reactstrap";
 import "./cancelacion2.css";
 import Swal from 'sweetalert2';
 import moment from 'moment';
 
 const Cancelacion = (props) => {
-  const { register, errors, handleSubmit, setError, clearError } = useForm();
+  const { register, errors, handleSubmit } = useForm();
   const [citas, setCitas] = useState([]);
   const [correocancelar, setCorreo] = useState();
 
@@ -140,7 +138,7 @@ const Cancelacion = (props) => {
               <tr>
                 <th>Fecha cita</th>
                 <th>Hora Cita</th>
-                <th>Acciónn</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>

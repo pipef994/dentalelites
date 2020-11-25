@@ -56,14 +56,20 @@ class Navbar extends React.Component {
               <ReactBootStrap.NavDropdown.Item href="/historia-clinica">
                 Crear
               </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="#action/3.3">
+              <ReactBootStrap.NavDropdown.Item href="#action/3.1">
                 Modificar
               </ReactBootStrap.NavDropdown.Item>
               <ReactBootStrap.NavDropdown.Item href="#action/3.3">
                 Consultar
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
+            <ReactBootStrap.Nav>
+              <ReactBootStrap.Nav.Link href="/odontograma">
+                Odontograma
+              </ReactBootStrap.Nav.Link>
+            </ReactBootStrap.Nav>
           </ReactBootStrap.Nav>
+
           <ReactBootStrap.Nav>
             <ReactBootStrap.Nav.Link href="/logout">
               Cerrar Sesion
