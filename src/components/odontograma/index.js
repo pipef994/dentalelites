@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import Swal from 'sweetalert2'
 
 import config from './config.json'
 import Store from './Store/Store'
@@ -26,11 +27,16 @@ class App extends Component {
   constructor (props) {
     super(props)
 
+    this.defaultDentalArch = { ...Store.dentalArch }
+
     this.state = {
       ...Store,
       dentalArchType: 'adult',
       currentStatus: toothFaceStatuses.find(stat => stat.name === 'restored'),
-      isSaving: false
+      isSaving: false,
+      idPaciente: '',
+      isSearching: false,
+      userInfo: null
     }
   }
 
@@ -67,12 +73,111 @@ class App extends Component {
   saveData = () => {
     const dentalArchData = this.state.dentalArch[this.state.dentalArchType]
     const dataObject = {
-      timeStap: new Date(),
+      id: this.state.userInfo.id,
+      timestamp: new Date(),
+      idPaciente: this.state.isPaciente,
+      dentalArchType: this.state.dentalArchType,
       dentalArch: dentalArchData
-      // User id ?
     }
-    // Aquí va la lógica para llamar al servicio y almacenar la información
-    console.log('Data to send to the server', dataObject)
+
+    const method = dataObject.id ? 'POST' : 'PUT'
+
+    fetch('http://localhost:8080/odotograma', {
+      method,
+      body: JSON.stringify(dataObject),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.mensaje === 'OdontogramaCreado') {
+          Swal.fire({
+            icon: 'success',
+            text: 'Odontograma almacenado'
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            text:
+              'Ocurrió un error al almacenar el odontograma, por favor vuelva a intentarlo'
+          })
+        }
+      })
+      .catch(e => console.log(e))
+      .finally(() => {
+        this.setState({
+          isSaving: false
+        })
+      })
+
+    console.log('Data sent to the server', dataObject)
+  }
+
+  handleIdChange = e => {
+    this.setState({
+      idPaciente: e.target.value
+    })
+  }
+
+  resetForm = () => {
+    this.setState({
+      idPaciente: '',
+      userInfo: null,
+      dentalArch: this.defaultDentalArch,
+      isSearching: false
+    })
+  }
+
+  handleUserSearch = async () => {
+    this.setState({
+      isSearching: true
+    })
+    fetch(`http://localhost:8080/odontograma/${this.state.idPaciente}`, {
+      method: 'GET'
+    })
+      .then(res => res.json())
+      .then(res => {
+        switch (res.mensaje) {
+          case 'OK':
+            this.setState({
+              userInfo: {
+                ...res.data
+              },
+              dentalArch: res.data.dentalArch
+            })
+            break
+          case 'NO_ODONTO':
+            this.setState({
+              userInfo: {
+                idPaciente: this.state.idPaciente
+              },
+              dentalArch: this.defaultDentalArch
+            })
+            break
+          case 'NO_PACIENTE':
+            const errorMsg =
+              'El paciente no existe, por favor verifique la identificación'
+            this.setState({
+              isSearching: false,
+              dentalArch: this.defaultDentalArch,
+              error: errorMsg
+            })
+            Swal.fire(errorMsg, '', 'info')
+            break
+        }
+        this.setState({
+          isSearching: false
+        })
+      })
+      .catch(e => {
+        console.log(e)
+        this.setState({
+          isSearching: false,
+          dentalArch: this.defaultDentalArch
+        })
+        Swal.fire('Error consultando la información del paciente', '', 'error')
+      })
   }
 
   render () {
@@ -88,61 +193,112 @@ class App extends Component {
         <div className='row my-3'>
           <div className='col-12'>
             <div className='card'>
-              <h5 className='card-header'>Datos de arco dental</h5>
+              <h5 className='card-header'>Datos del paciente</h5>
               <div className='card-body'>
-                <div className='dentalArchSelector'>
-                  {types.map(type => (
-                    <div key={type.id} className='form-check form-check-inline'>
-                      <input
-                        type='radio'
-                        id={type.id}
-                        name='type'
-                        className='form-check-input'
-                        value={type.id}
-                        checked={this.state.dentalArchType === type.id}
-                        onChange={this.handleChange}
-                      />
-                      <label className='form-check-label' htmlFor={type.id}>
-                        {type.lable}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-                <div className='dentalArch'>
-                  {this.state.dentalArch[dentalArchType].map((item, index) => {
-                    return (
-                      <Tooth
-                        key={item.id}
-                        index={index}
-                        data={item}
-                        toggleTooth={this.toggleTooth}
-                        statusConfig={toothFaceStatuses}
-                        setFace={this.setFace}
-                      />
-                    )
-                  })}
-                </div>
-                <Toolbar
-                  options={toolbarOptions}
-                  statuses={toothFaceStatuses}
-                  handleAction={this.handleStatusSelectorChange}
-                />
+                <form className='form-inline'>
+                  <div className='form-group mb-2'>
+                    <label htmlFor='idPaciente'>
+                      Identificación del paciente
+                    </label>
+                    <input
+                      class='form-control mx-2'
+                      type='text'
+                      id='idPaciente'
+                      name='idPaciente'
+                      placeholder='Id del paciente'
+                      value={this.state.idPaciente}
+                      onChange={this.handleIdChange}
+                    />
+                  </div>
+                  <button
+                    type='button'
+                    className='btn btn-primary mb-2'
+                    disabled={this.state.isSearching}
+                    onClick={this.handleUserSearch}
+                  >
+                    Consultar odontograma
+                  </button>
+                  {this.state.userInfo && (
+                    <button
+                      type='button'
+                      className='btn btn-outline-danger ml-2 mb-2'
+                      onClick={this.resetForm}
+                    >
+                      Nuevo odontograma
+                    </button>
+                  )}
+                </form>
               </div>
             </div>
           </div>
         </div>
-        <div className='row my-3'>
-          <div className='col-12'>
-            <button
-              type='button'
-              className='btn btn-success mx-2'
-              onClick={this.saveData}
-              disabled={this.state.isSaving}
-            >
-              Guardar
-            </button>
-          </div>
-        </div>
+        {this.state.userInfo && this.state.userInfo.idPaciente && (
+          <Fragment>
+            <div className='row my-3'>
+              <div className='col-12'>
+                <div className='card'>
+                  <h5 className='card-header'>Datos de arco dental</h5>
+                  <div className='card-body'>
+                    <div className='dentalArchSelector'>
+                      {types.map(type => (
+                        <div
+                          key={type.id}
+                          className='form-check form-check-inline'
+                        >
+                          <input
+                            type='radio'
+                            id={type.id}
+                            name='type'
+                            className='form-check-input'
+                            value={type.id}
+                            checked={this.state.dentalArchType === type.id}
+                            onChange={this.handleChange}
+                          />
+                          <label className='form-check-label' htmlFor={type.id}>
+                            {type.lable}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    <div className='dentalArch'>
+                      {this.state.dentalArch[dentalArchType].map(
+                        (item, index) => {
+                          return (
+                            <Tooth
+                              key={item.id}
+                              index={index}
+                              data={item}
+                              toggleTooth={this.toggleTooth}
+                              statusConfig={toothFaceStatuses}
+                              setFace={this.setFace}
+                            />
+                          )
+                        }
+                      )}
+                    </div>
+                    <Toolbar
+                      options={toolbarOptions}
+                      statuses={toothFaceStatuses}
+                      handleAction={this.handleStatusSelectorChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='row my-3'>
+              <div className='col-12'>
+                <button
+                  type='button'
+                  className='btn btn-success mx-2'
+                  onClick={this.saveData}
+                  disabled={this.state.isSaving}
+                >
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </Fragment>
+        )}
       </div>
     )
   }
