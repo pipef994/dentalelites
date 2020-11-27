@@ -133,51 +133,67 @@ class App extends Component {
     this.setState({
       isSearching: true
     })
-    fetch(`http://localhost:8080/odontograma/${this.state.idPaciente}`, {
-      method: 'GET'
+    fetch('http://localhost:8080/usuarios/usuariodocumento', {
+      method: 'POST',
+      body: JSON.stringify({
+        tipId: 'CC',
+        nId: this.state.idPaciente
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then(res => res.json())
-      .then(res => {
-        switch (res.mensaje) {
-          case 'OK':
-            this.setState({
-              userInfo: {
-                ...res.data
-              },
-              dentalArch: res.data.dentalArch
+      .then(data => {
+        if (data.mensaje === 'UsuarioYacreado') {
+          fetch(`http://localhost:8080/odontograma/${this.state.idPaciente}`, {
+            method: 'GET'
+          })
+            .then(res => res.json())
+            .then(res => {
+              if (res.mensaje === 'OK') {
+                this.setState({
+                  userInfo: {
+                    ...res.data
+                  },
+                  dentalArch: res.data.dentalArch
+                })
+              } else {
+                this.setState({
+                  userInfo: {
+                    idPaciente: this.state.idPaciente
+                  },
+                  dentalArch: this.defaultDentalArch
+                })
+              }
+              this.setState({
+                isSearching: false
+              })
             })
-            break
-          case 'NO_ODONTO':
-            this.setState({
-              userInfo: {
-                idPaciente: this.state.idPaciente
-              },
-              dentalArch: this.defaultDentalArch
+            .catch(e => {
+              console.log(e)
+              this.setState({
+                isSearching: false,
+                dentalArch: this.defaultDentalArch
+              })
+              Swal.fire(
+                'Error consultando la información del paciente',
+                '',
+                'error'
+              )
             })
-            break
-          case 'NO_PACIENTE':
-            const errorMsg =
-              'El paciente no existe, por favor verifique la identificación'
-            this.setState({
-              isSearching: false,
-              dentalArch: this.defaultDentalArch,
-              error: errorMsg
-            })
-            Swal.fire(errorMsg, '', 'info')
-            break
+        } else {
+          const errorMsg =
+            'El paciente no existe, por favor verifique la identificación'
+          this.setState({
+            isSearching: false,
+            dentalArch: this.defaultDentalArch,
+            error: errorMsg
+          })
+          Swal.fire(errorMsg, '', 'info')
         }
-        this.setState({
-          isSearching: false
-        })
       })
-      .catch(e => {
-        console.log(e)
-        this.setState({
-          isSearching: false,
-          dentalArch: this.defaultDentalArch
-        })
-        Swal.fire('Error consultando la información del paciente', '', 'error')
-      })
+      .catch(e => console.log(e))
   }
 
   render () {
