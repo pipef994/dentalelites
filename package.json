@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "add": "^2.0.6",
+    "animate.css": "^4.1.1",
     "bootstrap": "^4.5.3",
     "clsx": "^1.1.0",
     "global": "^4.4.0",

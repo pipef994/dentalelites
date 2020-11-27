@@ -60,12 +60,20 @@ class login extends React.Component {
             this.props.history.push({
               pathname: '/'
             })
+            Swal.fire({
+              icon: 'success',
+              title: 'Bienvenido al portal de Dental Elite!!',
+              showConfirmButton: false,
+              timer: 1500
+            })
             break;
           case "Inactivo":
             Swal.fire(
               {
                 icon: 'warning',
                 title: 'Usuario Inactivo',
+                showConfirmButton: false,
+                timer: 1500
               })
             break;
           default:
