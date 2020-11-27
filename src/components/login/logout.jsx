@@ -3,24 +3,25 @@ import { Redirect } from 'react-router-dom';
 import { Button } from 'react-bootstrap'
 
 class Logout extends React.Component {
-  state = { 
+  state = {
     navigate: false
-   };
+  };
 
- componentDidMount (){
-   localStorage.removeItem('email');
-   this.setState({ navigate: true})
-   this.props.updateLogin(undefined)
- } ; 
+  componentDidMount() {
+    localStorage.removeItem('email');
+    localStorage.removeItem('Perfil');
+    this.setState({ navigate: true })
+    this.props.updateLogin(undefined)
+  };
 
-  render() { 
+  render() {
     const { navigate } = this.state;
     if (navigate) {
-      return <Redirect to="/login" push={true}/>;
-    }else{
+      return <Redirect to="/login" push={true} />;
+    } else {
       return null;
     }
   }
 }
- 
+
 export default Logout;

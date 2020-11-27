@@ -21,6 +21,7 @@ const DisableUser = (props) => {
     // e.target.reset();
     e.preventDefault();
     if (state.button === 1) {
+      console.log('Objeto', data);
       fetch('http://localhost:8080/usuarios/usuariodocumento', {
         method: 'POST',
         body: JSON.stringify(data),

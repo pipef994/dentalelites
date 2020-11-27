@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import SignatureCanvas from "react-signature-canvas";
 
 function PlanTratamiento(props) {
   const [formData, setFormData] = useState(props.formData || {
@@ -21,6 +22,20 @@ function PlanTratamiento(props) {
     setFormData(newState)
     props.updateValues(newState)
   }
+  const signatureRef = useRef({});
+  const [imageData, setImageData] = useState("");
+  const [error, setError] = useState(false);
+
+  const saveSignature = (signature) => {
+    setImageData(signature);
+  }
+
+  useEffect(() => {
+    console.log(imageData)
+  }, [imageData]);
+
+
+
 
   return (
     <form>
@@ -47,6 +62,37 @@ function PlanTratamiento(props) {
               <label htmlFor="valTrat">Valor del tratamiento</label>
               <textarea name="valTrat" id="valTrat" className="form-control"
                 value={formData.valTrat} onChange={onChange} />
+            </div>
+            <div className="form-row">
+              <div className="form-group col-12">
+                <label id="firma" htmlFor="descPlan2">Firma</label>
+                <br />
+                <SignatureCanvas
+                  className="firma"
+                  canvasProps={{
+                    width: 500,
+                    height: 200,
+                    style: { "border": "1px solid #000000" }
+                    // style: { "border": "outset; border-width: 4px" }
+                  }}
+                  minWidth={2}
+                  maxWidth={3}
+                  penColor="black"
+                  ref={signatureRef}
+                  onEnd={() => (
+                    saveSignature(signatureRef.current.getTrimmedCanvas().toDataURL("image/jpg"))
+                  )}
+                  onBegin={() => { setError(false) }} />
+                <pre>
+                  {
+                    error ? <div>La firma es obligatoria</div> : false
+                  }
+                </pre>
+                <button onClick={() => {
+                  signatureRef.current.clear();
+                  saveSignature(null);
+                }} class="btn btn-danger" > Borrar </button>
+              </div>
             </div>
           </div>
         </div>

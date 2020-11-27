@@ -8,37 +8,33 @@ class Navbar extends React.Component {
   getNavLinkClass = (path) => {
     return this.props.location.pathname === path ? "active" : "";
   };
-
   render() {
+    let perfil = window.localStorage.getItem("Perfil");
+
     return (
-      <ReactBootStrap.Navbar
-        className="color-nav"
-        collapseOnSelect
-        expand="lg"
-        // bg="dark"
-        // variant="dark"
-        // class="bg navbar-custom"
-      >
+      <ReactBootStrap.Navbar className="color-nav" collapseOnSelect expand="lg">
         <ReactBootStrap.Navbar.Brand href="/home" className="texto">
           Dental Elite
         </ReactBootStrap.Navbar.Brand>
         <ReactBootStrap.Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <ReactBootStrap.Navbar.Collapse id="responsive-navbar-nav">
           <ReactBootStrap.Nav className="mr-auto">
-            <ReactBootStrap.NavDropdown
-              title="Usuarios"
-              id="collasible-nav-dropdown"
-            >
-              <ReactBootStrap.NavDropdown.Item href="/usuarios">
-                Crear
-              </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="/disableUser">
-                Deshabilitar
-              </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="/listUser">
-                Consultar
-              </ReactBootStrap.NavDropdown.Item>
-            </ReactBootStrap.NavDropdown>
+            {perfil === "admin" && (
+              <ReactBootStrap.NavDropdown
+                title="Administrar Usuarios"
+                id="collasible-nav-dropdown"
+              >
+                <ReactBootStrap.NavDropdown.Item href="/usuarios">
+                  Crear
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="/disableUser">
+                  Deshabilitar
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="/listUser">
+                  Consultar
+                </ReactBootStrap.NavDropdown.Item>
+              </ReactBootStrap.NavDropdown>
+            )}
             <ReactBootStrap.NavDropdown
               title="Agenda"
               id="collasible-nav-dropdown"
@@ -50,27 +46,30 @@ class Navbar extends React.Component {
                 Cancelar
               </ReactBootStrap.NavDropdown.Item>
             </ReactBootStrap.NavDropdown>
-            <ReactBootStrap.NavDropdown
-              title="Historia Clinica"
-              id="collasible-nav-dropdown"
-            >
-              <ReactBootStrap.NavDropdown.Item href="/historia-clinica">
-                Crear
-              </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="#action/3.1">
-                Modificar
-              </ReactBootStrap.NavDropdown.Item>
-              <ReactBootStrap.NavDropdown.Item href="#action/3.3">
-                Consultar
-              </ReactBootStrap.NavDropdown.Item>
-            </ReactBootStrap.NavDropdown>
-            <ReactBootStrap.Nav>
-              <ReactBootStrap.Nav.Link href="/odontograma">
-                Odontograma
-              </ReactBootStrap.Nav.Link>
-            </ReactBootStrap.Nav>
+            {(perfil === "admin" || perfil === "odont" || perfil === "aux") && (
+              <ReactBootStrap.NavDropdown
+                title="Historia Clinica"
+                id="collasible-nav-dropdown"
+              >
+                <ReactBootStrap.NavDropdown.Item href="/historia-clinica">
+                  Crear
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="#action/3.1">
+                  Modificar
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="#action/3.3">
+                  Consultar
+                </ReactBootStrap.NavDropdown.Item>
+              </ReactBootStrap.NavDropdown>
+            )}
+            {(perfil === "admin" || perfil === "odont" || perfil === "aux") && (
+              <ReactBootStrap.Nav>
+                <ReactBootStrap.Nav.Link href="/odontograma">
+                  Odontograma
+                </ReactBootStrap.Nav.Link>
+              </ReactBootStrap.Nav>
+            )}
           </ReactBootStrap.Nav>
-
           <ReactBootStrap.Nav>
             <ReactBootStrap.Nav.Link href="/logout">
               Cerrar Sesion

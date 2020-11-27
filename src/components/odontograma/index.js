@@ -1,234 +1,241 @@
-import React, { Component, Fragment } from 'react'
-import Swal from 'sweetalert2'
+import React, { Component, Fragment } from "react";
+import Swal from "sweetalert2";
 
-import config from './config.json'
-import Store from './Store/Store'
-import Tooth from './Tooth'
-import Toolbar from './Toolbar'
+import config from "./config.json";
+import Store from "./Store/Store";
+import Tooth from "./Tooth";
+import Toolbar from "./Toolbar";
 
-import './odontograma.scss'
+import "./odontograma.scss";
 
 const types = [
   {
-    id: 'adult',
-    lable: 'Adulto'
+    id: "adult",
+    lable: "Adulto",
   },
   {
-    id: 'kid',
-    lable: 'Infantil'
-  }
-]
+    id: "kid",
+    lable: "Infantil",
+  },
+];
 
-const toothFaceStatuses = config.toothFaceStatuses
+const toothFaceStatuses = config.toothFaceStatuses;
 
-const toolbarOptions = config.toolbarOptions
+const toolbarOptions = config.toolbarOptions;
 
 class App extends Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
 
-    this.defaultDentalArch = { ...Store.dentalArch }
+    this.defaultDentalArch = { ...Store.dentalArch };
 
     this.state = {
       ...Store,
-      dentalArchType: 'adult',
-      currentStatus: toothFaceStatuses.find(stat => stat.name === 'restored'),
+      dentalArchType: "adult",
+      currentStatus: toothFaceStatuses.find((stat) => stat.name === "restored"),
       isSaving: false,
-      idPaciente: '',
+      idPaciente: "",
       isSearching: false,
-      userInfo: null
-    }
+      userInfo: null,
+    };
   }
 
   handleChange = (event, value) => {
-    this.setState({ dentalArchType: event.target.value })
-  }
+    this.setState({ dentalArchType: event.target.value });
+  };
 
-  handleStatusSelectorChange = status => {
-    const selectedStatus = toothFaceStatuses.find(stat => stat.name === status)
-    this.setState({ currentStatus: selectedStatus })
-  }
+  handleStatusSelectorChange = (status) => {
+    const selectedStatus = toothFaceStatuses.find(
+      (stat) => stat.name === status
+    );
+    this.setState({ currentStatus: selectedStatus });
+  };
 
   //Toogle - Adicionar o remover un diente
-  toggleTooth = data => {
+  toggleTooth = (data) => {
     if (data.status) {
-      data.status = false
-      this.setState({ data })
+      data.status = false;
+      this.setState({ data });
     } else {
-      data.status = true
-      this.setState({ data })
+      data.status = true;
+      this.setState({ data });
     }
-  }
+  };
 
   setFace = (face, index, data) => {
-    const action = this.state.currentStatus.name
+    const action = this.state.currentStatus.name;
     if (action === data.faces[index].status) {
-      data.faces[index].status = 'normal'
+      data.faces[index].status = "normal";
     } else {
-      data.faces[index].status = action
+      data.faces[index].status = action;
     }
-    this.setState({ data })
-  }
+    this.setState({ data });
+  };
 
   saveData = () => {
-    const dentalArchData = this.state.dentalArch[this.state.dentalArchType]
+    const dentalArchData = this.state.dentalArch[this.state.dentalArchType];
     const dataObject = {
       id: this.state.userInfo.id,
       timestamp: new Date(),
       idPaciente: this.state.isPaciente,
       dentalArchType: this.state.dentalArchType,
-      dentalArch: dentalArchData
-    }
+      dentalArch: dentalArchData,
+    };
 
-    const method = dataObject.id ? 'POST' : 'PUT'
+    const method = dataObject.id ? "POST" : "PUT";
 
-    fetch('http://localhost:8080/odotograma', {
+    fetch("http://localhost:8080/odotograma", {
       method,
       body: JSON.stringify(dataObject),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.mensaje === 'OdontogramaCreado') {
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.mensaje === "OdontogramaCreado") {
           Swal.fire({
-            icon: 'success',
-            text: 'Odontograma almacenado'
-          })
+            icon: "success",
+            text: "Odontograma almacenado",
+          });
         } else {
           Swal.fire({
-            icon: 'error',
+            icon: "error",
             text:
-              'Ocurrió un error al almacenar el odontograma, por favor vuelva a intentarlo'
-          })
+              "Ocurrió un error al almacenar el odontograma, por favor vuelva a intentarlo",
+          });
         }
       })
-      .catch(e => console.log(e))
+      .catch((e) => console.log(e))
       .finally(() => {
         this.setState({
-          isSaving: false
-        })
-      })
+          isSaving: false,
+        });
+      });
 
-    console.log('Data sent to the server', dataObject)
-  }
+    console.log("Data sent to the server", dataObject);
+  };
 
-  handleIdChange = e => {
+  handleIdChange = (e) => {
     this.setState({
-      idPaciente: e.target.value
-    })
-  }
+      idPaciente: e.target.value,
+    });
+  };
 
   resetForm = () => {
     this.setState({
-      idPaciente: '',
+      idPaciente: "",
       userInfo: null,
       dentalArch: this.defaultDentalArch,
-      isSearching: false
-    })
-  }
+      isSearching: false,
+    });
+  };
 
   handleUserSearch = async () => {
     this.setState({
-      isSearching: true
-    })
-    fetch('http://localhost:8080/usuarios/usuariodocumento', {
-      method: 'POST',
+      isSearching: true,
+    });
+    let idPaciente = this.state.idPaciente;
+    idPaciente = idPaciente.toString();
+    fetch("http://localhost:8080/usuarios/usuariodocumento", {
+      method: "POST",
       body: JSON.stringify({
-        tipId: 'CC',
-        nId: this.state.idPaciente
+        tipId: "cc",
+        nId: idPaciente,
       }),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.mensaje === 'UsuarioYacreado') {
-          fetch(`http://localhost:8080/odontograma/${this.state.idPaciente}`, {
-            method: 'GET'
-          })
-            .then(res => res.json())
-            .then(res => {
-              if (res.mensaje === 'OK') {
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.mensaje === "UsuarioYacreado") {
+          fetch(
+            `http://localhost:8080/odontograma/odontogramaPaciente/${this.state.idPaciente}`,
+            {
+              method: "GET",
+            }
+          )
+            .then((res) => res.json())
+            .then((res) => {
+              if (res.mensaje === "OK") {
                 this.setState({
                   userInfo: {
-                    ...res.data
+                    ...res.data,
                   },
-                  dentalArch: res.data.dentalArch
-                })
+                  dentalArch: res.data.dentalArch,
+                });
               } else {
                 this.setState({
                   userInfo: {
-                    idPaciente: this.state.idPaciente
+                    idPaciente: this.state.idPaciente,
                   },
-                  dentalArch: this.defaultDentalArch
-                })
+                  dentalArch: this.defaultDentalArch,
+                });
               }
               this.setState({
-                isSearching: false
-              })
+                isSearching: false,
+              });
             })
-            .catch(e => {
-              console.log(e)
+            .catch((e) => {
+              console.log(e);
               this.setState({
                 isSearching: false,
-                dentalArch: this.defaultDentalArch
-              })
+                dentalArch: this.defaultDentalArch,
+              });
               Swal.fire(
-                'Error consultando la información del paciente',
-                '',
-                'error'
-              )
-            })
+                "Error consultando la información del paciente",
+                "",
+                "error"
+              );
+            });
         } else {
           const errorMsg =
-            'El paciente no existe, por favor verifique la identificación'
+            "El paciente no existe, por favor verifique la identificación";
           this.setState({
             isSearching: false,
             dentalArch: this.defaultDentalArch,
-            error: errorMsg
-          })
-          Swal.fire(errorMsg, '', 'info')
+            error: errorMsg,
+          });
+          Swal.fire(errorMsg, "", "info");
         }
       })
-      .catch(e => console.log(e))
-  }
+      .catch((e) => console.log(e));
+  };
 
-  render () {
-    const { dentalArchType } = this.state
+  render() {
+    const { dentalArchType } = this.state;
 
     return (
-      <div className='container'>
-        <div className='row my-3'>
-          <div className='col-12'>
-            <h1 className='my-3'>Odontograma</h1>
+      <div className="container">
+        <div className="row my-3">
+          <div className="col-12">
+            <h1 className="my-3">Odontograma</h1>
           </div>
         </div>
-        <div className='row my-3'>
-          <div className='col-12'>
-            <div className='card'>
-              <h5 className='card-header'>Datos del paciente</h5>
-              <div className='card-body'>
-                <form className='form-inline'>
-                  <div className='form-group mb-2'>
-                    <label htmlFor='idPaciente'>
+        <div className="row my-3">
+          <div className="col-12">
+            <div className="card">
+              <h5 className="card-header">Datos del paciente</h5>
+              <div className="card-body">
+                <form className="form-inline">
+                  <div className="form-group mb-2">
+                    <label htmlFor="idPaciente">
                       Identificación del paciente
                     </label>
                     <input
-                      class='form-control mx-2'
-                      type='text'
-                      id='idPaciente'
-                      name='idPaciente'
-                      placeholder='Id del paciente'
+                      class="form-control mx-2"
+                      type="text"
+                      id="idPaciente"
+                      name="idPaciente"
+                      placeholder="Id del paciente"
                       value={this.state.idPaciente}
                       onChange={this.handleIdChange}
                     />
                   </div>
                   <button
-                    type='button'
-                    className='btn btn-primary mb-2'
+                    type="button"
+                    className="btn btn-primary mb-2"
                     disabled={this.state.isSearching}
                     onClick={this.handleUserSearch}
                   >
@@ -236,8 +243,8 @@ class App extends Component {
                   </button>
                   {this.state.userInfo && (
                     <button
-                      type='button'
-                      className='btn btn-outline-danger ml-2 mb-2'
+                      type="button"
+                      className="btn btn-outline-danger ml-2 mb-2"
                       onClick={this.resetForm}
                     >
                       Nuevo odontograma
@@ -250,33 +257,33 @@ class App extends Component {
         </div>
         {this.state.userInfo && this.state.userInfo.idPaciente && (
           <Fragment>
-            <div className='row my-3'>
-              <div className='col-12'>
-                <div className='card'>
-                  <h5 className='card-header'>Datos de arco dental</h5>
-                  <div className='card-body'>
-                    <div className='dentalArchSelector'>
-                      {types.map(type => (
+            <div className="row my-3">
+              <div className="col-12">
+                <div className="card">
+                  <h5 className="card-header">Datos de arco dental</h5>
+                  <div className="card-body">
+                    <div className="dentalArchSelector">
+                      {types.map((type) => (
                         <div
                           key={type.id}
-                          className='form-check form-check-inline'
+                          className="form-check form-check-inline"
                         >
                           <input
-                            type='radio'
+                            type="radio"
                             id={type.id}
-                            name='type'
-                            className='form-check-input'
+                            name="type"
+                            className="form-check-input"
                             value={type.id}
                             checked={this.state.dentalArchType === type.id}
                             onChange={this.handleChange}
                           />
-                          <label className='form-check-label' htmlFor={type.id}>
+                          <label className="form-check-label" htmlFor={type.id}>
                             {type.lable}
                           </label>
                         </div>
                       ))}
                     </div>
-                    <div className='dentalArch'>
+                    <div className="dentalArch">
                       {this.state.dentalArch[dentalArchType].map(
                         (item, index) => {
                           return (
@@ -288,7 +295,7 @@ class App extends Component {
                               statusConfig={toothFaceStatuses}
                               setFace={this.setFace}
                             />
-                          )
+                          );
                         }
                       )}
                     </div>
@@ -301,11 +308,11 @@ class App extends Component {
                 </div>
               </div>
             </div>
-            <div className='row my-3'>
-              <div className='col-12'>
+            <div className="row my-3">
+              <div className="col-12">
                 <button
-                  type='button'
-                  className='btn btn-success mx-2'
+                  type="button"
+                  className="btn btn-success mx-2"
                   onClick={this.saveData}
                   disabled={this.state.isSaving}
                 >
@@ -316,8 +323,8 @@ class App extends Component {
           </Fragment>
         )}
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;
