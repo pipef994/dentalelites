@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import * as ReactBootStrap from "react-bootstrap";
-import DiUserImg from '../../images/cancelCita.png'
+import CancelCita from '../../images/cancelCita.png'
 import { useForm } from "react-hook-form";
 import {
   Button,
 } from "reactstrap";
-import "./cancelacion2.css";
+import "./cancelacion2.scss";
 import Swal from 'sweetalert2';
 import moment from 'moment';
 
@@ -22,7 +22,7 @@ const Cancelacion = (props) => {
         <td>{fecha.toLocaleDateString()}</td>
         <td>{cita.hour}</td>
         <td>
-          <Button color="danger" className="btn4" onClick={() => eliminar(cita)}> Eliminar</Button>
+          <Button color="danger" onClick={() => eliminar(cita)}> Eliminar</Button>
         </td>
       </tr>
     )
@@ -39,10 +39,18 @@ const Cancelacion = (props) => {
       method: 'GET',
     }).then(res => res.json()).
       then(res => {
+        console.log('res.mensaje', res.mensaje);
         if (res.mensaje === 'OK') {
           tratarDatos(res.data);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            text: 'El usuario no tiene citas proximas!'
+          })
         }
-      }).catch(e => console.log(e));
+      }).catch(
+        e => console.log(e)
+      );
   }
 
   const tratarDatos = (data) => {
@@ -108,47 +116,52 @@ const Cancelacion = (props) => {
     })
   }
   return (
-    <form className="listUser" onSubmit={handleSubmit(consultarCitas)}>
-      <div className="base-container">
-        <h5><strong>Cancelar Cita</strong></h5>
-        <br />
-        <div className="form">
-          <div className="form-group">
-            <label htmlFor="email">Correo</label>
-            <input type="email" id="email" name="email"
-              placeholder="Ingrese el correo"
-              className="form-control"
-              ref={register({
-                required: { value: true, message: 'Campo obligatorio' }
-              })} />
-            {errors.email &&
-              <span className="text-danger text-small d-block mb-2">
-                {errors.email.message}
-              </span>
-            }
+    <div className="principal overflow-auto">
+      <form className="listUser" onSubmit={handleSubmit(consultarCitas)}>
+        <div className="base-container">
+          <div className="header">Cancelar Cita</div>
+          <br />
+          <div className="image">
+            <img src={CancelCita} />
           </div>
-          <div className="footer">
-            <button type="submit" className="btn" id="submit" name="submit">
-              Consultar citas
+          <div className="form">
+            <div className="form-group">
+              <label htmlFor="email">Correo</label>
+              <input type="email" id="email" name="email"
+                placeholder="Ingrese el correo"
+                className="form-control"
+                ref={register({
+                  required: { value: true, message: 'Campo obligatorio' }
+                })} />
+              {errors.email &&
+                <span className="text-danger text-small d-block mb-2">
+                  {errors.email.message}
+                </span>
+              }
+            </div>
+            <div className="footer">
+              <button type="submit" className="btn" id="submit" name="submit">
+                Consultar citas
             </button>
+            </div>
+            <br />
+            <br />
+            <ReactBootStrap.Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Fecha cita</th>
+                  <th>Hora Cita</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {citas.map(renderUser)}
+              </tbody>
+            </ReactBootStrap.Table>
           </div>
-          <br />
-          <br />
-          <ReactBootStrap.Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Fecha cita</th>
-                <th>Hora Cita</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              {citas.map(renderUser)}
-            </tbody>
-          </ReactBootStrap.Table>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   )
 }
 
