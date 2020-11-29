@@ -17,6 +17,7 @@ import Cancelacion2 from "./components/agenda/cancelar/cancelacion2";
 import ListUser from "./components/usuarios/listUser";
 import Odontograma from "./components/odontograma";
 import Evolucion from "./components/hclinicas/modificarEvolucion/evolucion";
+import ConsultarHistoria from "./components/hclinicas/consultar/consultarHistoria";
 
 function App() {
   const [userEmail, setloginUpdate] = useState(
@@ -43,6 +44,11 @@ function App() {
                 <Route path="/cancela2 " exact component={Cancelacion2} />
                 <Route path="/odontograma" exact component={Odontograma} />
                 <Route path="/evolucion" exact component={Evolucion} />
+                <Route
+                  path="/consultar-hc"
+                  exact
+                  component={ConsultarHistoria}
+                />
                 <Route
                   path="/logout"
                   exact

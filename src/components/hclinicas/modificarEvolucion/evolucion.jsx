@@ -64,12 +64,12 @@ const Evolucion = (props) => {
 
   const handleChange = event => {
     // console.log("event", event);
-    setState({
-      form: {
-        ...state.form,
-        [event.target.name]: event.target.value,
-      },
-    });
+    // setState({
+    //   form: {
+    //     ...state.form,
+    //     [event.target.name]: event.target.value,
+    //   },
+    // });
   };
   return (
     <div>

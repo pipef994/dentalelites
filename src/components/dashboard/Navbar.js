@@ -57,7 +57,7 @@ class Navbar extends React.Component {
                 <ReactBootStrap.NavDropdown.Item href="/evolucion">
                   Evolución
                 </ReactBootStrap.NavDropdown.Item>
-                <ReactBootStrap.NavDropdown.Item href="#action/3.3">
+                <ReactBootStrap.NavDropdown.Item href="consultar-hc">
                   Consultar
                 </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>

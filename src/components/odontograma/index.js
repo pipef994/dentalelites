@@ -170,6 +170,7 @@ class App extends Component {
             .then((res) => res.json())
             .then((res) => {
               if (res.mensaje === "OK") {
+                console.log("Odontograma", res.data);
                 this.setState({
                   userInfo: {
                     ...res.data,

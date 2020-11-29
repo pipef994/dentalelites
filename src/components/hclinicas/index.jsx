@@ -26,7 +26,7 @@ function HistoriaClinica(props) {
   const [showAlert, setShowAlert] = useState(false)
   const [saving, setSaving] = useState(false)
   const [saveStatus, setSaveStatus] = useState("")
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(props.data || {
     datosIdentificacion: {},
     anemesis: {},
     antecedentes: {},
@@ -90,9 +90,10 @@ function HistoriaClinica(props) {
 
   const saveHC = () => {
     setSaving(true)
+    console.log("formaDAta", tempFormData);
     fetch('http://localhost:8080/historia/clinica', {
       method: 'POST',
-      body: JSON.stringify(formData),
+      body: JSON.stringify(tempFormData),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -124,7 +125,7 @@ function HistoriaClinica(props) {
           {currentStep < totalSteps - 1 ?
             <button type="button" className="btn btn-primary mx-2" onClick={nextStep}>Siguiente</button>
             :
-            <button type="button" className="btn btn-success mx-2" onClick={saveHC} disabled={saving}>Guardar</button>
+            <button type="button" className="btn btn-success mx-2" onClick={saveHC} disabled={props.uneditable || saving}>Guardar</button>
           }
         </div>
       </div>

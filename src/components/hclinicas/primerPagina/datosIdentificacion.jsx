@@ -7,6 +7,7 @@ function DatosIdentificacion(props) {
     FlastName: '',
     SlastName: '',
     name: '',
+    tipId: '',
     nIdent: '',
     direction: '',
     tell: '',
@@ -42,68 +43,75 @@ function DatosIdentificacion(props) {
         <h5 className="card-header">Datos de Identificación</h5>
         <div className="card-body">
           <div className="form-row">
-            <Input name="FlastName" value={formData.FlastName} onChange={onChange} label="Primer Apellido" ref={register({ required: true })} />
+            <SelectInput name="tipId" value={formData.tipId} onChange={onChange} label="Tipo Identificación" options={[
+              { value: "", text: "--Seleccione--" },
+              { value: "cc", text: "Cédula de ciudadanía" },
+              { value: "ce", text: "Cédula de extranjería" },
+              { value: "ps", text: "Pasaporte" },
+              { value: "ti", text: "Tarjeta de identidad" }
+            ]} />
+            <Input name="nIdent" value={formData.nIdent} onChange={onChange} label="N° Identificación" />
+          </div>
+          <div className="form-row">
+            <Input name="FlastName" value={formData.FlastName} onChange={onChange} label="Primer Apellido" />
             {errors.FlastName && <p>*Campo Obligatorio</p>}
-            <Input name="SlastName" value={formData.SlastName} onChange={onChange} label="Segundo Apellido" ref={register({ required: true })} />
+            <Input name="SlastName" value={formData.SlastName} onChange={onChange} label="Segundo Apellido" />
           </div>
           <div className="form-row">
-            <Input name="name" value={formData.name} onChange={onChange} label="Nombre" ref={register({ required: true })} />
-            <Input name="nIdent" value={formData.nIdent} onChange={onChange} label="N° Identificación" ref={register({ required: true })} />
+            <Input name="name" value={formData.name} onChange={onChange} label="Nombre" />
+            <Input name="direction" value={formData.direction} onChange={onChange} label="Dirección" />
           </div>
           <div className="form-row">
-            <Input fullWidth name="direction" value={formData.direction} onChange={onChange} label="Direccón" ref={register({ required: true })} />
+            <Input name="tell" value={formData.tell} onChange={onChange} label="Telefono" />
+            <Input name="cell" value={formData.cell} onChange={onChange} label="Celular" />
           </div>
           <div className="form-row">
-            <Input name="tell" value={formData.tell} onChange={onChange} label="Telefono" ref={register({ required: true })} />
-            <Input name="cell" value={formData.cell} onChange={onChange} label="Celular" ref={register({ required: true })} />
+            <Input name="muni" value={formData.muni} onChange={onChange} label="Municipio" />
+            <Input name="email" value={formData.email} onChange={onChange} label="Correo Electronico" />
           </div>
           <div className="form-row">
-            <Input name="muni" value={formData.muni} onChange={onChange} label="Municipio" ref={register({ required: true })} />
-            <Input name="email" value={formData.email} onChange={onChange} label="Correo Electronico" ref={register({ required: true })} />
-          </div>
-          <div className="form-row">
-            <Input name="rh" value={formData.rh} onChange={onChange} label="RH" ref={register({ required: true })} />
+            <Input name="rh" value={formData.rh} onChange={onChange} label="RH" />
             <SelectInput name="tvinculacion" value={formData.tvinculacion} onChange={onChange} label="Tipo Vinculación EPS" options={[
               { value: "wh", text: "" },
               { value: "sub", text: "SUB" },
               { value: "ccot", text: "C.COT" },
               { value: "cben", text: "C.BEN" }
-            ]} ref={register({ required: true })} />
+            ]} />
           </div>
           <div className="form-row">
-            <Input name="grammar" value={formData.grammar} onChange={onChange} label="Fecha Nacimiento" ref={register({ required: true })} />
-            <Input name="age" value={formData.age} onChange={onChange} label="Edad" ref={register({ required: true })} />
+            <Input name="grammar" value={formData.grammar} onChange={onChange} label="Fecha Nacimiento" />
+            <Input name="age" value={formData.age} onChange={onChange} label="Edad" />
           </div>
           <div className="form-row">
             <SelectInput name="sex" value={formData.sex} onChange={onChange} label="Sexo" options={[
               { value: "wh", text: "" },
               { value: "man", text: "Hombre" },
               { value: "woman", text: "Mujer" }
-            ]} ref={register({ required: true })} />
+            ]} />
             <SelectInput name="estC" value={formData.estC} onChange={onChange} label="Estado Civil" options={[
               { value: "soltero", text: "Soltero" },
               { value: "casado", text: "Casado" },
               { value: "unionLibre", text: "Union libre" },
               { value: "divorciado", text: "Divorciado" },
               { value: "viudo", text: "Viudo" }
-            ]} ref={register({ required: true })} />
+            ]} />
           </div>
           <div className="form-row">
-            <Input name="Ocupacion" value={formData.Ocupacion} onChange={onChange} label="Ocupación" ref={register({ required: true })} />
-            <Input name="nResponsible" value={formData.nResponsible} onChange={onChange} label="Nombre de Responsable" ref={register({ required: true })} />
+            <Input name="Ocupacion" value={formData.Ocupacion} onChange={onChange} label="Ocupación" />
+            <Input name="nResponsible" value={formData.nResponsible} onChange={onChange} label="Nombre de Responsable" />
           </div>
           <div className="form-row">
-            <Input name="relationship" value={formData.relationship} onChange={onChange} label="Parentesco" ref={register({ required: true })} />
-            <Input name="tellp" value={formData.tellp} onChange={onChange} label="Telefono de Responsable" ref={register({ required: true })} />
+            <Input name="relationship" value={formData.relationship} onChange={onChange} label="Parentesco" />
+            <Input name="tellp" value={formData.tellp} onChange={onChange} label="Telefono de Responsable" />
           </div>
           <div className="form-row">
-            <Input name="nAccompanying" value={formData.nAccompanying} onChange={onChange} label="Nombre del Acompañante" ref={register({ required: true })} />
-            <Input name="tAccompanying" value={formData.tAccompanying} onChange={onChange} label="Telefono del Acompañante" ref={register({ required: true })} />
+            <Input name="nAccompanying" value={formData.nAccompanying} onChange={onChange} label="Nombre del Acompañante" />
+            <Input name="tAccompanying" value={formData.tAccompanying} onChange={onChange} label="Telefono del Acompañante" />
           </div>
           <div className='form-group mt-4'>
             <label htmlFor="antMedOdoFa">Antecedentes Medicos y Odontologicos Familiares</label>
             <textarea name="antMedOdoFa" id="antMedOdoFa" className="form-control"
-              value={formData.antMedOdoFa} onChange={onChange} ref={register({ required: true })} />
+              value={formData.antMedOdoFa} onChange={onChange} />
           </div>
         </div>
       </div>
