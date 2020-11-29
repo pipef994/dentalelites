@@ -51,7 +51,7 @@ const Evolucion = (props) => {
   const insertar = () => {
     //Obtengo la firma dibujada
     const data = firstCanvas.current.getSaveData();
-    console.log(data);
+    setState({ firma: data });
     secondCanvas.current.loadSaveData(data);
 
     var valorNuevo = { ...state.form };
@@ -62,11 +62,12 @@ const Evolucion = (props) => {
     setAbrirModal(false);
   }
 
-  const handleChange = (e) => {
+  const handleChange = event => {
+    // console.log("event", event);
     setState({
       form: {
         ...state.form,
-        [e.target.name]: e.target.value,
+        [event.target.name]: event.target.value,
       },
     });
   };
@@ -155,7 +156,7 @@ const Evolucion = (props) => {
             <label>
               Tratamiento:
                </label>
-            <textarea class="form-control" id="exampleTextarea" rows="3" name="tratamiento" onChange={() => handleChange()}></textarea>
+            <textarea class="form-control" id="tratamiento" rows="3" name="tratamiento" onChange={() => handleChange()}></textarea>
           </FormGroup>
           <FormGroup>
             <label>

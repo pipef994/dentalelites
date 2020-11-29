@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 
 import config from "./config.json";
 import Store from "./Store/Store";
@@ -34,6 +35,7 @@ class App extends Component {
       dentalArchType: "adult",
       currentStatus: toothFaceStatuses.find((stat) => stat.name === "restored"),
       isSaving: false,
+      tipId: "",
       idPaciente: "",
       isSearching: false,
       userInfo: null,
@@ -122,6 +124,12 @@ class App extends Component {
     });
   };
 
+  handleTipId = (e) => {
+    this.setState({
+      tipId: e.target.value,
+    });
+  };
+
   resetForm = () => {
     this.setState({
       idPaciente: "",
@@ -137,10 +145,13 @@ class App extends Component {
     });
     let idPaciente = this.state.idPaciente;
     idPaciente = idPaciente.toString();
+    let tipId = this.state.tipId;
+    tipId = tipId.toString();
     fetch("http://localhost:8080/usuarios/usuariodocumento", {
       method: "POST",
       body: JSON.stringify({
-        tipId: "cc",
+        // tipId: "cc",
+        tipId: tipId,
         nId: idPaciente,
       }),
       headers: {
@@ -219,6 +230,22 @@ class App extends Component {
               <h5 className="card-header">Datos del paciente</h5>
               <div className="card-body">
                 <form className="form-inline">
+                  <div className="form-group mb-2">
+                    <label htmlFor="tipId">Tipo de documento</label>
+                    <select
+                      className="form-control"
+                      id="tipId"
+                      name="tipId"
+                      value={this.state.tipId}
+                      onChange={this.handleTipId}
+                    >
+                      <option value="">--Seleccione--</option>
+                      <option value="cc">Cédula de ciudadanía</option>
+                      <option value="ce">Cédula de extranjería</option>
+                      <option value="ps">Pasaporte</option>
+                      <option value="ti">Tarjeta de identidad</option>
+                    </select>
+                  </div>
                   <div className="form-group mb-2">
                     <label htmlFor="idPaciente">
                       Identificación del paciente
