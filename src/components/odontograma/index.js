@@ -33,13 +33,14 @@ class App extends Component {
     this.state = {
       ...Store,
       dentalArchType: "adult",
-      currentStatus: toothFaceStatuses.find((stat) => stat.name === "restored"),
+      currentStatus: toothFaceStatuses.find((stat) => stat.name === "normal"),
       isSaving: false,
       tipId: "",
       idPaciente: "",
       isSearching: false,
       userInfo: null,
     };
+    // console.log("toothFaceStatuses", toothFaceStatuses);
   }
 
   handleChange = (event, value) => {
@@ -79,14 +80,15 @@ class App extends Component {
     const dataObject = {
       id: this.state.userInfo.id,
       timestamp: new Date(),
-      idPaciente: this.state.isPaciente,
+      idPaciente: this.state.idPaciente,
+      tipId: this.state.tipId,
       dentalArchType: this.state.dentalArchType,
       dentalArch: dentalArchData,
     };
 
-    const method = dataObject.id ? "POST" : "PUT";
+    const method = dataObject.id ? "PUT" : "POST";
 
-    fetch("http://localhost:8080/odotograma", {
+    fetch("http://localhost:8080/odontograma", {
       method,
       body: JSON.stringify(dataObject),
       headers: {
@@ -133,6 +135,7 @@ class App extends Component {
   resetForm = () => {
     this.setState({
       idPaciente: "",
+      tipId: "",
       userInfo: null,
       dentalArch: this.defaultDentalArch,
       isSearching: false,
@@ -170,12 +173,17 @@ class App extends Component {
             .then((res) => res.json())
             .then((res) => {
               if (res.mensaje === "OK") {
-                console.log("Odontograma", res.data);
+                console.log("res.data", res.data);
+                let aux = res.data[0];
                 this.setState({
                   userInfo: {
-                    ...res.data,
+                    ...aux,
                   },
-                  dentalArch: res.data.dentalArch,
+                  dentalArch: {
+                    ...this.defaultDentalArch,
+                    [aux.dentalArchType]: aux.dentalArch,
+                  },
+                  dentalArchType: aux.dentalArchType,
                 });
               } else {
                 this.setState({

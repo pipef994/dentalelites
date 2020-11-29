@@ -12,22 +12,31 @@ import {
   ModalFooter,
 } from "reactstrap";
 import CanvasDraw from "react-canvas-draw";
+import Swal from 'sweetalert2';
 
 
 const Evolucion = (props) => {
 
   const firstCanvas = useRef(null);
   const secondCanvas = useRef(null);
+  const [evoData, setEvoData] = useState([]);
 
-  const data = [
-    { fecha: '26/11/2020', tratamiento: "Naruto", firma: "" },
-    { fecha: '27/11/2020', tratamiento: "Goku", firma: "" },
-    { fecha: '28/11/2020', tratamiento: "Kenshin Himura", firma: "" }
-  ];
+  const [idData, setidData] = useState({
+    tipId: "",
+    idPaciente: ""
+  });
+
+  const handleIdChange = (e) => {
+    setidData({
+      ...idData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const [abrirModal, setAbrirModal] = useState(false);
 
   const [state, setState] = useState({
-    data: data,
+    // data: data,
     form: {
       fecha: "",
       tratamiento: "",
@@ -44,101 +53,164 @@ const Evolucion = (props) => {
   };
 
   const clearCanvas = () => {
-    const undo = firstCanvas.current.undo();
+    const undo = firstCanvas.current.clear();
     console.log(undo);
   }
 
   const insertar = () => {
     //Obtengo la firma dibujada
+    let fecha = new Date(state.form.fecha);
+    fecha = fecha.toLocaleDateString()
     const data = firstCanvas.current.getSaveData();
-    setState({ firma: data });
-    secondCanvas.current.loadSaveData(data);
-
-    var valorNuevo = { ...state.form };
-    valorNuevo.fecha = state.data.length + 1;
-    var lista = state.data;
-    lista.push(valorNuevo);
-    setState({ data: lista });
+    var valorNuevo = {
+      ...state.form,
+      firma: data,
+      ...idData,
+      fecha
+    };
     setAbrirModal(false);
+    fetch('http://localhost:8080/evolucion', {
+      method: 'POST',
+      body: JSON.stringify(valorNuevo),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        if (res.mensaje === "evoCreada") {
+          consultarEvolucion();
+          setidData({
+            tipId: "",
+            idPaciente: ""
+          })
+        } else {
+
+        }
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
 
   const handleChange = event => {
-    // console.log("event", event);
-    // setState({
-    //   form: {
-    //     ...state.form,
-    //     [event.target.name]: event.target.value,
-    //   },
-    // });
+    setState({
+      ...state,
+      form: {
+        ...state.form,
+        [event.target.name]: event.target.value,
+      },
+    });
   };
+
+  const consultarEvolucion = () => {
+    let idPaciente = idData.idPaciente;
+    idPaciente = idPaciente.toString();
+    let tipId = idData.tipId;
+    tipId = tipId.toString();
+
+    fetch(`http://localhost:8080/evolucion/searchEvo/${tipId}/${idPaciente}`, {
+      method: 'GET',
+    }).then(res => res.json()).
+      then(res => {
+        console.log('res.mensaje', res.mensaje);
+        if (res.mensaje === 'OK') {
+          setEvoData(res.data);
+        } else {
+          Swal.fire({
+            icon: 'error',
+            text: 'El usuario no se encuentra creado'
+          })
+        }
+      }).catch(
+        e => console.log(e)
+      );
+  }
+
   return (
-    <div>
-      <form className="evolucionUser">
-        <div className="base-container">
-          <div className="header">Evolución Odontológica</div>
-          <br />
-          <div className="form">
-            <div className="form-group">
-              <label htmlFor="tipId">Tipo de documento</label>
-              <select
-                className="form-control"
-                id="tipId"
-                name="tipId"
-              >
-                <option value="">--Seleccione--</option>
-                <option value="cc">Cédula de ciudadanía</option>
-                <option value="ce">Cédula de extranjería</option>
-                <option value="ps">Pasaporte</option>
-                <option value="ti">Tarjeta de identidad</option>
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="nId">Número de Identificación</label>
-              <input type="text" id="nId" name="nId"
-                placeholder="N° Identificación" />
-            </div>
-            <div className="footer">
-              <button type="submit" className="btn btn-success" id="consultar" name="consultar" >
-                Consultar
-                </button>
+    <div className="container">
+      <div className="row my-3">
+        <div className="col-12">
+          <div className="card">
+            <h5 className="card-header">Datos del paciente</h5>
+            <div className="card-body">
+              <form className="form-inline">
+                <div className="form-group mb-2">
+                  <label htmlFor="tipId">Tipo de documento</label>
+                  <select
+                    className="form-control mx-2"
+                    id="tipId"
+                    name="tipId"
+                    value={idData.tipId}
+                    onChange={handleIdChange}
+                  >
+                    <option value="">--Seleccione--</option>
+                    <option value="cc">Cédula de ciudadanía</option>
+                    <option value="ce">Cédula de extranjería</option>
+                    <option value="ps">Pasaporte</option>
+                    <option value="ti">Tarjeta de identidad</option>
+                  </select>
+                </div>
+                <div className="form-group mb-2 ml-5">
+                  <label htmlFor="idPaciente">
+                    Identificación del paciente
+                      </label>
+                  <input
+                    class="form-control mx-2"
+                    type="text"
+                    id="idPaciente"
+                    name="idPaciente"
+                    placeholder="Id del paciente"
+                    value={idData.idPaciente}
+                    onChange={handleIdChange}
+                  />
+                </div>
+                <div className="form-group mb-2">
+                  <button type="button" className="btn btn-info mx-2" id="consultar" name="consultar" onClick={consultarEvolucion}>
+                    Consultar
+                   </button>
+                  <button type="button" className="btn btn-success mx-2" id="crear" name="crear" onClick={() => mostrarModalInsertar()} >
+                    Crear
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </form>
+      </div>
       <Container>
         <br />
-        <Button color="success" onClick={() => mostrarModalInsertar()}>Crear</Button>
         <br />
         <br />
-        <Table>
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Tratamiento odontológico ejecutado</th>
-              <th>Firma Paciente</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              state.data.map((dato) => (
-                <tr key={dato.fecha}>
-                  <td>{dato.fecha}</td>
-                  <td>{dato.tratamiento}</td>
-                  {/* <td>{dato.firma}</td> */}
-                  <td>
-                    <CanvasDraw
-                      hideGrid={true}
-                      disabled={true}
-                      style={{ border: '1px solid #000000', width: 300, height: 150 }}
-                      ref={secondCanvas} />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+        {Boolean(evoData.length) && (
+          <Table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Tratamiento odontológico ejecutado</th>
+                <th>Firma Paciente</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                evoData.map((dato) => (
+                  <tr key={dato.fecha}>
+                    <td>{dato.fecha}</td>
+                    <td>{dato.tratamiento}</td>
+                    <td>
+                      <CanvasDraw
+                        hideGrid={true}
+                        disabled={true}
+                        style={{ border: '1px solid #000000', width: 300, height: 150 }}
+                        saveData={dato.firma}
+                      />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        )}
       </Container>
 
-      {/* <Modal isOpen={state.modalInsertar}> */}
       <Modal isOpen={abrirModal}>
         <ModalHeader>
           <div><h3>Insertar Evolución</h3></div>
@@ -149,14 +221,14 @@ const Evolucion = (props) => {
             <label>
               Fecha:
                </label>
-            <input class="form-control" type="date" value="2011-08-19" id="fecha" name="fecha" onChange={() => handleChange()} />
+            <input class="form-control" type="date" defaultValue="" id="fecha" name="fecha" onChange={handleChange} />
           </FormGroup>
 
           <FormGroup>
             <label>
               Tratamiento:
                </label>
-            <textarea class="form-control" id="tratamiento" rows="3" name="tratamiento" onChange={() => handleChange()}></textarea>
+            <textarea class="form-control" id="tratamiento" rows="3" name="tratamiento" onChange={handleChange}></textarea>
           </FormGroup>
           <FormGroup>
             <label>
@@ -191,7 +263,7 @@ const Evolucion = (props) => {
             </Button>
         </ModalFooter>
       </Modal>
-    </div>
+    </div >
   )
 }
 export default Evolucion;

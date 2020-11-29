@@ -116,7 +116,9 @@ const Cancelacion = (props) => {
     })
   }
   return (
-    <div className="principal overflow-auto">
+    // <div className="card">
+    //   <div className="card-body">
+    <div className="overflow-auto">
       <form className="listUser" onSubmit={handleSubmit(consultarCitas)}>
         <div className="base-container">
           <div className="header">Cancelar Cita</div>
@@ -146,22 +148,26 @@ const Cancelacion = (props) => {
             </div>
             <br />
             <br />
-            <ReactBootStrap.Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Fecha cita</th>
-                  <th>Hora Cita</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                {citas.map(renderUser)}
-              </tbody>
-            </ReactBootStrap.Table>
+            {Boolean(citas.length) && (
+              <ReactBootStrap.Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Fecha cita</th>
+                    <th>Hora Cita</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {citas.map(renderUser)}
+                </tbody>
+              </ReactBootStrap.Table>
+            )}
           </div>
         </div>
       </form>
     </div>
+    // </div>
+    // </div>
   )
 }
 
