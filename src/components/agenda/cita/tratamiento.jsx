@@ -63,7 +63,7 @@ function Tratamiento(props) {
               { value: "gen", text: "General" },
               { value: "esp", text: "Especializado" }
             ]} required />
-            <SelectInput name="odont" value={formData.odontologo} onChange={onOdontologo} label="Odontologo" options={
+            <SelectInput name="odont" value={formData.odontologo} onChange={onOdontologo} label="Odontólogo" options={
               [{ value: "", text: "--Seleccione--" },
               ...createSelectItems(odontologos)
               ]

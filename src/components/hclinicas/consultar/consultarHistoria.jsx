@@ -45,7 +45,7 @@ const ConsultarHistoria = () => {
         <div className="container">
           <div className="row my-3">
             <div className="col-12">
-              <h1 className="my-3">Consultar Historia Clinica</h1>
+              <h1 className="my-3">Consultar Historia Clínica</h1>
             </div>
           </div>
           <div className="row my-3">
@@ -90,7 +90,7 @@ const ConsultarHistoria = () => {
                       // disabled={idData.isSearching}
                       onClick={handleUserSearch}
                     >
-                      Consultar odontograma
+                      Consultar Historia
                   </button>
 
                   </form>

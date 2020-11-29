@@ -242,7 +242,7 @@ class App extends Component {
                   <div className="form-group mb-2">
                     <label htmlFor="tipId">Tipo de documento</label>
                     <select
-                      className="form-control"
+                      className="form-control mx-2"
                       id="tipId"
                       name="tipId"
                       value={this.state.tipId}
@@ -255,7 +255,7 @@ class App extends Component {
                       <option value="ti">Tarjeta de identidad</option>
                     </select>
                   </div>
-                  <div className="form-group mb-2">
+                  <div className="form-group mb-2 ml-5">
                     <label htmlFor="idPaciente">
                       Identificación del paciente
                     </label>
@@ -271,7 +271,7 @@ class App extends Component {
                   </div>
                   <button
                     type="button"
-                    className="btn btn-primary mb-2"
+                    className="btn btn-primary mb-2 ml-3"
                     disabled={this.state.isSearching}
                     onClick={this.handleUserSearch}
                   >
@@ -280,7 +280,7 @@ class App extends Component {
                   {this.state.userInfo && (
                     <button
                       type="button"
-                      className="btn btn-outline-danger ml-2 mb-2"
+                      className="btn btn-outline-danger ml-2 mb-2 ml-3"
                       onClick={this.resetForm}
                     >
                       Nuevo odontograma

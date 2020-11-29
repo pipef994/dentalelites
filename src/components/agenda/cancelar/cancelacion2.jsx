@@ -141,9 +141,9 @@ const Cancelacion = (props) => {
                 </span>
               }
             </div>
-            <div className="footer">
+            <div className="footer mx-5">
               <button type="submit" className="btn" id="submit" name="submit">
-                Consultar citas
+                Consultar
             </button>
             </div>
             <br />

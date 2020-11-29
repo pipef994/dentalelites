@@ -28,7 +28,7 @@ class Navbar extends React.Component {
                   Crear
                 </ReactBootStrap.NavDropdown.Item>
                 <ReactBootStrap.NavDropdown.Item href="/disableUser">
-                  Deshabilitar
+                  Gestionar
                 </ReactBootStrap.NavDropdown.Item>
                 <ReactBootStrap.NavDropdown.Item href="/listUser">
                   Consultar
