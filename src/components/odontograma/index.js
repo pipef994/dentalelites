@@ -260,11 +260,11 @@ class App extends Component {
                       Identificación del paciente
                     </label>
                     <input
-                      class="form-control mx-2"
-                      type="text"
-                      id="idPaciente"
-                      name="idPaciente"
-                      placeholder="Id del paciente"
+                      className='form-control mx-2'
+                      type='text'
+                      id='idPaciente'
+                      name='idPaciente'
+                      placeholder='Id del paciente'
                       value={this.state.idPaciente}
                       onChange={this.handleIdChange}
                     />
