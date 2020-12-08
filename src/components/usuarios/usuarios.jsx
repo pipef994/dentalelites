@@ -62,6 +62,7 @@ const Usuarios = (props) => {
             title: 'Uups...',
             text: lvText
           })
+        lvFlag = 'X';
       }
 
       if (data.tipId === 'ps' && data.nId.length > 8) {
@@ -70,6 +71,7 @@ const Usuarios = (props) => {
           title: 'Uups...',
           text: 'Para el pasaporte no se deben superar los 8 digitos'
         })
+        lvFlag = 'X';
       }
 
       if (data.password !== data.rPassword) {
@@ -78,6 +80,7 @@ const Usuarios = (props) => {
           title: 'Uups...',
           text: 'Las contraseñas ingresadas son diferentes!'
         })
+        lvFlag = 'X';
       }
 
       if (lvFlag != 'X' && data !== null) {
@@ -250,7 +253,7 @@ const Usuarios = (props) => {
                   <label htmlFor="tProfesional">Tipo Profesional</label>
                   <select className="form-control" id="tProfesional" name="tProfesional"
                     value={tProfesional}
-                    onChange={e => setProfesional (e.target.value)}
+                    onChange={e => setProfesional(e.target.value)}
                     ref={register({
                       required: true
                     })}>

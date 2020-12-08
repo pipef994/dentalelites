@@ -86,28 +86,42 @@ const Cancelacion = (props) => {
           }
           contador++;
         });
+        let hourSel = dato.hour.substr(0, 5);
+        hourSel = moment(hourSel, 'HH:mm').subtract(2, 'hour').format("HH:mm");
+        console.log(hourSel);
+        let resTime = moment().format('HH:mm');
 
-        fetch(`http://localhost:8080/citas/cancelarCita/${dato.id}`, {
-          method: 'GET',
-        }).then(call => call.json()).
-          then(call => {
-            if (call.mensaje === 'OK') {
-              Swal.fire({
-                icon: 'success',
-                text: 'Cita Borrada con exito!'
-              })
-            }
-          }).catch(e => console.log(e));
-        let fdate = moment(dato.date).format("MMMM DD YYYY");
-        let hour = dato.hour;
-        fetch(`http://localhost:8080/citas/sendCancelAppointment/${correocancelar}/${fdate}/${hour}`, {
-          method: 'GET',
-        }).then(call => call.json()).
-          then(call => {
-            if (call.mensaje === 'OK') {
-              console.log("Envio correo");
-            }
-          }).catch(e => console.log(e));
+
+        if (resTime > hourSel) {
+          Swal.fire({
+            icon: 'warning',
+            text: 'Señor usuario las citas se pueden cancelar hasta dos horas antes de la programación.'
+          })
+        }
+
+
+
+        // fetch(`http://localhost:8080/citas/cancelarCita/${dato.id}`, {
+        //   method: 'GET',
+        // }).then(call => call.json()).
+        //   then(call => {
+        //     if (call.mensaje === 'OK') {
+        //       Swal.fire({
+        //         icon: 'success',
+        //         text: 'Cita Borrada con exito!'
+        //       })
+        //     }
+        //   }).catch(e => console.log(e));
+        // let fdate = moment(dato.date).format("MMMM DD YYYY");
+        // let hour = dato.hour;
+        // fetch(`http://localhost:8080/citas/sendCancelAppointment/${correocancelar}/${fdate}/${hour}`, {
+        //   method: 'GET',
+        // }).then(call => call.json()).
+        //   then(call => {
+        //     if (call.mensaje === 'OK') {
+        //       console.log("Envio correo");
+        //     }
+        //   }).catch(e => console.log(e));
 
         setCitas(registros);
       } else if (result.isDenied) {

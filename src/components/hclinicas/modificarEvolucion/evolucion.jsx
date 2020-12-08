@@ -118,7 +118,11 @@ const Evolucion = (props) => {
         } else {
           Swal.fire({
             icon: 'error',
-            text: 'El usuario no se encuentra creado'
+            text: 'El usuario no presenta evolución odontológica!'
+          })
+          setidData({
+            tipId: "",
+            idPaciente: ""
           })
         }
       }).catch(
@@ -128,6 +132,11 @@ const Evolucion = (props) => {
 
   return (
     <div className="container">
+      <div className="row my-3">
+        <div className="col-12">
+          <h1 className="my-3">Evolución</h1>
+        </div>
+      </div>
       <div className="row my-3">
         <div className="col-12">
           <div className="card">

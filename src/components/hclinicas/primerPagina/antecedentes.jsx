@@ -49,7 +49,7 @@ function Antecedentes(props) {
           <div className="form-row">
             <SelectInput name="reMedicas" value={formData.reMedicas} onChange={onChange} label="Reacción Medicamentos" options={
               [
-                { value: "", text: "Seleccione" },
+                { value: "", text: "--Seleccione--" },
                 { value: "anest", text: "Anestesia" },
                 { value: "anti", text: "Antibioticos" }
               ]
@@ -119,7 +119,7 @@ function YesNoSelectInput(props) {
   return (
     <SelectInput {...props} options={
       [
-        { value: "", text: "Seleccione" },
+        { value: "", text: "--Seleccione--" },
         { value: "si", text: "Si" },
         { value: "no", text: "No" }
       ]

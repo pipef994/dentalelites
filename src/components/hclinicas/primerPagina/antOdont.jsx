@@ -59,7 +59,7 @@ function YesNoSelectInput(props) {
   return (
     <SelectInput {...props} options={
       [
-        { value: "", text: "Seleccione" },
+        { value: "", text: "--Seleccione--" },
         { value: "si", text: "Si" },
         { value: "no", text: "No" }
       ]
