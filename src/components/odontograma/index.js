@@ -174,7 +174,19 @@ class App extends Component {
             .then((res) => {
               if (res.mensaje === "OK") {
                 console.log("res.data", res.data);
-                let aux = res.data[0];
+                let sortedArray = res.data.sort((a, b) => {
+                  const dateA = new Date(a.timestamp);
+                  const dateB = new Date(b.timestamp);
+                  if (dateA.getTime() < dateB.getTime()) {
+                    return 1;
+                  }
+                  if (dateA.getTime() > dateB.getTime()) {
+                    return -1;
+                  }
+                  return 0;
+                });
+
+                let aux = sortedArray[0];
                 this.setState({
                   userInfo: {
                     ...aux,
@@ -260,11 +272,11 @@ class App extends Component {
                       Identificación del paciente
                     </label>
                     <input
-                      className='form-control mx-2'
-                      type='text'
-                      id='idPaciente'
-                      name='idPaciente'
-                      placeholder='Id del paciente'
+                      className="form-control mx-2"
+                      type="text"
+                      id="idPaciente"
+                      name="idPaciente"
+                      placeholder="Id del paciente"
                       value={this.state.idPaciente}
                       onChange={this.handleIdChange}
                     />
