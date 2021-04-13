@@ -20,13 +20,13 @@ function CitaOdontologica(props) {
   const [formData, setFormData] = useState({
     datospersona: {},
     tratamiento: {},
-    calendario: {}
+    // calendario: {}
   })
 
   let tempFormData = formData;
-  tempFormData.tratamiento.user = window.localStorage.getItem("email"); //Se toma el correo de memoria
-  console.log('Formularios', tempFormData);
-  const totalSteps = 3;
+  // tempFormData.tratamiento.user = window.localStorage.getItem("email"); //Se toma el correo de memoria
+  // console.log('Formularios', tempFormData);
+  const totalSteps = 2;
 
   const changeFormData = (dataId) => {
     return (data) => {
@@ -87,8 +87,6 @@ function CitaOdontologica(props) {
         flagConsulCita = true;
       }
     }
-
-
 
     if (flagConsulCita) {
       console.log('Entro');
@@ -194,7 +192,7 @@ function CitaOdontologica(props) {
       </div>
       <div className="row">
         <div className="col-12">
-          <h1 className="my-3">Agendamiento de Cita</h1>
+          <h1 className="my-3">Valoración</h1>
         </div>
       </div>
       {renderButtons()}

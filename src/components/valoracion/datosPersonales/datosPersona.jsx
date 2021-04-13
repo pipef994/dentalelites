@@ -25,7 +25,9 @@ function DatosPersona(props) {
     relationship: '',
     tellp: '',
     nAccompanying: '',
-    tAccompanying: ''
+    tAccompanying: '',
+    motConsulta: '',
+    antecedentes: ''
   })
 
   const onChange = (e) => {
@@ -96,21 +98,14 @@ function DatosPersona(props) {
               { value: "viudo", text: "Viudo" }
             ]} />
           </div>
-          <div className="form-row">
-            <Input name="Ocupacion" value={formData.Ocupacion} onChange={onChange} label="Ocupación" />
-            <Input name="nResponsible" value={formData.nResponsible} onChange={onChange} label="Nombre de Responsable" />
-          </div>
-          <div className="form-row">
-            <Input name="relationship" value={formData.relationship} onChange={onChange} label="Parentesco" />
-            <Input name="tellp" value={formData.tellp} onChange={onChange} label="Telefono de Responsable" />
-          </div>
-          <div className="form-row">
-            <Input name="nAccompanying" value={formData.nAccompanying} onChange={onChange} label="Nombre del Acompañante" />
-            <Input name="tAccompanying" value={formData.tAccompanying} onChange={onChange} label="Telefono del Acompañante" />
+          <div className='form-group mt-4'>
+            <label htmlFor="motConsulta">Motivo de consulta</label>
+            <textarea name="motConsulta" id="motConsulta" className="form-control"
+              value={formData.motConsulta} onChange={onChange} />
           </div>
           <div className='form-group mt-4'>
-            <label htmlFor="antMedOdoFa">Antecedentes Medicos y Odontologicos Familiares</label>
-            <textarea name="antMedOdoFa" id="antMedOdoFa" className="form-control"
+            <label htmlFor="antecedentes">Antecedentes</label>
+            <textarea name="antecedentes" id="antecedentes" className="form-control"
               value={formData.antMedOdoFa} onChange={onChange} />
           </div>
         </div>
