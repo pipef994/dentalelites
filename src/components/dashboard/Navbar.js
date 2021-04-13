@@ -69,6 +69,11 @@ class Navbar extends React.Component {
                 </ReactBootStrap.Nav.Link>
               </ReactBootStrap.Nav>
             )}
+            <ReactBootStrap.Nav>
+              <ReactBootStrap.Nav.Link href="/valoracion">
+                Valoración
+              </ReactBootStrap.Nav.Link>
+            </ReactBootStrap.Nav>
           </ReactBootStrap.Nav>
           <ReactBootStrap.Nav>
             <ReactBootStrap.Nav.Link href="/logout">
