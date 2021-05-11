@@ -69,11 +69,17 @@ class Navbar extends React.Component {
                 </ReactBootStrap.Nav.Link>
               </ReactBootStrap.Nav>
             )}
-            <ReactBootStrap.Nav>
-              <ReactBootStrap.Nav.Link href="/valoracion">
-                Valoración
-              </ReactBootStrap.Nav.Link>
-            </ReactBootStrap.Nav>
+            <ReactBootStrap.NavDropdown
+                title="Valoración"
+                id="collasible-nav-dropdown"
+              >
+                <ReactBootStrap.NavDropdown.Item href="/valoracion">
+                  Crear
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="/tratamientos">
+                  Gestionar Tratamientos
+                </ReactBootStrap.NavDropdown.Item>
+              </ReactBootStrap.NavDropdown>
           </ReactBootStrap.Nav>
           <ReactBootStrap.Nav>
             <ReactBootStrap.Nav.Link href="/logout">

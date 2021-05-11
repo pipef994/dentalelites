@@ -18,7 +18,7 @@ function DatosPersona(props) {
     tvinculacion: '',
     grammar: '',
     age: '',
-    sex: '',
+    gender: '',
     estC: '',
     Ocupacion: '',
     nResponsible: '',
@@ -85,7 +85,7 @@ function DatosPersona(props) {
             <Input name="age" value={formData.age} onChange={onChange} label="Edad" />
           </div>
           <div className="form-row">
-            <SelectInput name="sex" value={formData.sex} onChange={onChange} label="Sexo" options={[
+            <SelectInput name="sex" value={formData.gender} onChange={onChange} label="Genero " options={[
               { value: "wh", text: "" },
               { value: "man", text: "Hombre" },
               { value: "woman", text: "Mujer" }

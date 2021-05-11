@@ -19,6 +19,8 @@ import Odontograma from "./components/odontograma";
 import Evolucion from "./components/hclinicas/modificarEvolucion/evolucion";
 import ConsultarHistoria from "./components/hclinicas/consultar/consultarHistoria";
 import Valoracion from "./components/valoracion";
+import Tratamientos from "./components/valoracion/tratamientos/lista";
+
 
 function App() {
   const [userEmail, setloginUpdate] = useState(
@@ -46,6 +48,7 @@ function App() {
                 <Route path="/odontograma" exact component={Odontograma} />
                 <Route path="/evolucion" exact component={Evolucion} />
                 <Route path="/valoracion" exact component={Valoracion} />
+                <Route path="/tratamientos" exact component={Tratamientos} />
                 <Route
                   path="/consultar-hc"
                   exact
