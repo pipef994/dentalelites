@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form';
+import { Formik, Form } from 'formik'
 
 function DatosPersona(props) {
   const { register, errors, handleSubmit, setError, clearError } = useForm();
@@ -39,78 +40,98 @@ function DatosPersona(props) {
     props.updateValues(newState)
   }
 
+
+
   return (
-    <form>
-      <div className="card">
-        <h5 className="card-header">Datos de Identificación</h5>
-        <div className="card-body">
-          <div className="form-row">
-            <SelectInput name="tipId" value={formData.tipId} onChange={onChange} label="Tipo Identificación" options={[
-              { value: "", text: "--Seleccione--" },
-              { value: "cc", text: "Cédula de ciudadanía" },
-              { value: "ce", text: "Cédula de extranjería" },
-              { value: "ps", text: "Pasaporte" },
-              { value: "ti", text: "Tarjeta de identidad" }
-            ]} />
-            <Input name="nIdent" value={formData.nIdent} onChange={onChange} label="N° Identificación" />
-          </div>
-          <div className="form-row">
-            <Input name="FlastName" value={formData.FlastName} onChange={onChange} label="Primer Apellido" />
-            {errors.FlastName && <p>*Campo Obligatorio</p>}
-            <Input name="SlastName" value={formData.SlastName} onChange={onChange} label="Segundo Apellido" />
-          </div>
-          <div className="form-row">
-            <Input name="name" value={formData.name} onChange={onChange} label="Nombre" />
-            <Input name="direction" value={formData.direction} onChange={onChange} label="Dirección" />
-          </div>
-          <div className="form-row">
-            <Input name="tell" value={formData.tell} onChange={onChange} label="Telefono" />
-            <Input name="cell" value={formData.cell} onChange={onChange} label="Celular" />
-          </div>
-          <div className="form-row">
-            <Input name="muni" value={formData.muni} onChange={onChange} label="Municipio" />
-            <Input name="email" value={formData.email} onChange={onChange} label="Correo Electronico" />
-          </div>
-          <div className="form-row">
-            <Input name="rh" value={formData.rh} onChange={onChange} label="RH" />
-            <SelectInput name="tvinculacion" value={formData.tvinculacion} onChange={onChange} label="Tipo Vinculación EPS" options={[
-              { value: "wh", text: "" },
-              { value: "sub", text: "SUB" },
-              { value: "ccot", text: "C.COT" },
-              { value: "cben", text: "C.BEN" }
-            ]} />
-          </div>
-          <div className="form-row">
-            <Input name="grammar" value={formData.grammar} onChange={onChange} label="Fecha Nacimiento" />
-            <Input name="age" value={formData.age} onChange={onChange} label="Edad" />
-          </div>
-          <div className="form-row">
-            <SelectInput name="sex" value={formData.gender} onChange={onChange} label="Genero " options={[
-              { value: "wh", text: "" },
-              { value: "man", text: "Hombre" },
-              { value: "woman", text: "Mujer" }
-            ]} />
-            <SelectInput name="estC" value={formData.estC} onChange={onChange} label="Estado Civil" options={[
-              { value: "soltero", text: "Soltero" },
-              { value: "casado", text: "Casado" },
-              { value: "unionLibre", text: "Union libre" },
-              { value: "divorciado", text: "Divorciado" },
-              { value: "viudo", text: "Viudo" }
-            ]} />
-          </div>
-          <div className='form-group mt-4'>
-            <label htmlFor="motConsulta">Motivo de consulta</label>
-            <textarea name="motConsulta" id="motConsulta" className="form-control"
-              value={formData.motConsulta} onChange={onChange} />
-          </div>
-          <div className='form-group mt-4'>
-            <label htmlFor="antecedentes">Antecedentes</label>
-            <textarea name="antecedentes" id="antecedentes" className="form-control"
-              value={formData.antMedOdoFa} onChange={onChange} />
+    <Formik
+      initialValues={{
+        FlastName: ''
+      }}
+    >
+      <Form>
+        <div className="card">
+          <h5 className="card-header">Datos de Identificación</h5>
+          <div className="card-body">
+            <div className="form-row">
+              <SelectInput name="tipId" value={formData.tipId} onChange={onChange} label="Tipo Identificación" options={[
+                { value: "", text: "--Seleccione--" },
+                { value: "cc", text: "Cédula de ciudadanía" },
+                { value: "ce", text: "Cédula de extranjería" },
+                { value: "ps", text: "Pasaporte" },
+                { value: "ti", text: "Tarjeta de identidad" }
+              ]} />
+              <Input name="nIdent" value={formData.nIdent} onChange={onChange} label="N° Identificación" />
+            </div>
+
+            <div className="form-row">
+              <Input name="FlastName" value={formData.FlastName} onChange={onChange} label="Primer Apellido"
+                ref={register({ required: true, pattern: /^[A-Za-z]+$/i })} />
+              {errors.FlastName && <p>*Campo Obligatorio</p>}
+              <Input name="SlastName" value={formData.SlastName} onChange={onChange} label="Segundo Apellido" />
+            </div>
+
+            <div className="form-row">
+              <Input name="name" value={formData.name} onChange={onChange} label="Nombre" />
+              <Input name="direction" value={formData.direction} onChange={onChange} label="Dirección" />
+            </div>
+
+            <div className="form-row">
+              <Input name="tell" value={formData.tell} onChange={onChange} label="Telefono" />
+              <Input name="cell" value={formData.cell} onChange={onChange} label="Celular" />
+            </div>
+
+            <div className="form-row">
+              <Input name="muni" value={formData.muni} onChange={onChange} label="Municipio" />
+              <Input name="email" value={formData.email} onChange={onChange} label="Correo Electronico" />
+            </div>
+
+            <div className="form-row">
+              <Input name="rh" value={formData.rh} onChange={onChange} label="RH" />
+              <SelectInput name="tvinculacion" value={formData.tvinculacion} onChange={onChange} label="Tipo Vinculación EPS" options={[
+                { value: "wh", text: "" },
+                { value: "sub", text: "SUB" },
+                { value: "ccot", text: "C.COT" },
+                { value: "cben", text: "C.BEN" }
+              ]} />
+            </div>
+
+            <div className="form-row">
+              <Input name="grammar" value={formData.grammar} onChange={onChange} label="Fecha Nacimiento" />
+              <Input name="age" value={formData.age} onChange={onChange} label="Edad" />
+            </div>
+
+            <div className="form-row">
+              <SelectInput name="sex" value={formData.gender} onChange={onChange} label="Genero " options={[
+                { value: "wh", text: "" },
+                { value: "man", text: "Hombre" },
+                { value: "woman", text: "Mujer" },
+                { value: "notBinary", text: "No Binario" },
+                { value: "undefined", text: "No definidio" }
+              ]} />
+              <SelectInput name="estC" value={formData.estC} onChange={onChange} label="Estado Civil" options={[
+                { value: "soltero", text: "Soltero" },
+                { value: "casado", text: "Casado" },
+                { value: "unionLibre", text: "Union libre" },
+                { value: "divorciado", text: "Divorciado" },
+                { value: "viudo", text: "Viud@" }
+              ]} />
+            </div>
+
+            <div className='form-group mt-4'>
+              <label htmlFor="motConsulta">Motivo de consulta</label>
+              <textarea name="motConsulta" id="motConsulta" className="form-control"
+                value={formData.motConsulta} onChange={onChange} />
+            </div>
+
+            <div className='form-group mt-4'>
+              <label htmlFor="antecedentes">Antecedentes</label>
+              <textarea name="antecedentes" id="antecedentes" className="form-control"
+                value={formData.antMedOdoFa} onChange={onChange} />
+            </div>
           </div>
         </div>
-      </div>
-    </form >
+      </Form >
+    </Formik>
   )
 
 }

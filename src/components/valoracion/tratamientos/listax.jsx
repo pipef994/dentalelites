@@ -62,8 +62,6 @@ const Lista = (props) => {
       .catch(e => console.log(e));
   }, [])
 
-
-
   const BuscarTratamiento = () => {
     fetch(`${baseUrl}`, { method: 'GET' })
     .then(res => res.json())

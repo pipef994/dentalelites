@@ -13,11 +13,12 @@
     "animate.css": "^4.1.1",
     "bootstrap": "^4.5.3",
     "clsx": "^1.1.0",
+    "formik": "^2.2.7",
     "global": "^4.4.0",
     "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
-    "react-bootstrap": "^1.0.1",
+    "react-bootstrap": "^1.6.0",
     "react-calendar": "^3.0.1",
     "react-canvas-draw": "^1.1.1",
     "react-dom": "^16.13.1",
@@ -29,7 +30,8 @@
     "reactstrap": "^8.7.1",
     "redux": "^4.0.5",
     "sweetalert2": "^10.0.2",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",

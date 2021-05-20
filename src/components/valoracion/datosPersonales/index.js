@@ -1,6 +1,5 @@
 //Redirecciones
 import Tratamiento from "./tratamiento";
-// import Calentdario from "./calendario";
 import DatosPersona from "./datosPersona";
 
 export default [
@@ -11,9 +10,5 @@ export default [
   {
     component: Tratamiento,
     dataId: "tratamiento",
-  },
-  // {
-  //   component: Calentdario,
-  //   dataId: "calendario",
-  // },
+  }
 ];

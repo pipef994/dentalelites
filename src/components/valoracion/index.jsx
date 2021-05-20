@@ -15,26 +15,25 @@ const steps = [
 function CitaOdontologica(props) {
   const [currentStep, setCurrentStep] = useState(0)
   const [saving, setSaving] = useState(false)
-  const [saveStatus, setSaveStatus] = useState("")
-  // const [nextPass, setnextPass] = useState(false)
   const [formData, setFormData] = useState({
     datospersona: {},
     tratamiento: {},
-    // calendario: {}
   })
 
   let tempFormData = formData;
-  // tempFormData.tratamiento.user = window.localStorage.getItem("email"); //Se toma el correo de memoria
-  // console.log('Formularios', tempFormData);
   const totalSteps = 2;
 
   const changeFormData = (dataId) => {
-    return (data) => {
+    const data = (data) => {
       tempFormData = {
         ...tempFormData,
         [dataId]: { ...data }
       }
     }
+
+    console.log(dataId);
+
+    return data;
   }
 
   const Step = ({ Component, dataId }) => {
@@ -51,74 +50,21 @@ function CitaOdontologica(props) {
     setCurrentStep(currentStep + 1);
     setFormData(tempFormData);
   }
+
   const previousStep = () => {
     setCurrentStep(currentStep - 1)
-  }
-
-  const validaciones = (formData) => {
-
-    let flagConsulCita = new Boolean(false);
-    let fechActual = new Date();
-    let fcalendario = new Date();
-    let horaCita = formData.calendario.hour;
-    let docOdontologo = formData.tratamiento.odont;
-
-    fcalendario = formData.calendario.date;
-    fechActual.setHours(0, 0, 0, 0);
-    fcalendario.setHours(0, 0, 0, 0);
-
-    let aux = moment(fcalendario).weekday();
-    console.log("dia de la semana", aux);
-
-    if (aux === 6) {
-      Swal.fire({
-        icon: 'warning',
-        text: 'Por favor selecciona otra fecha!, los domingos no son días habiles.'
-      })
-      flagConsulCita = false;
-    } else {
-      if (fcalendario.getTime() <= fechActual.getTime()) {
-        Swal.fire({
-          icon: 'warning',
-          text: 'La fecha seleccionada debe ser mayor a la actual!'
-        })
-        flagConsulCita = false;
-      } else {
-        flagConsulCita = true;
-      }
-    }
-
-    if (flagConsulCita) {
-      console.log('Entro');
-      fcalendario = fcalendario.toISOString();
-      console.log(fcalendario);
-      fetch(`http://localhost:8080/citas/consulCita/${docOdontologo}/${fcalendario}/${horaCita}`, {
-        method: 'GET',
-      }).then(res => {
-        return res.json()
-      }).then(res => {
-        if (res.mensaje === "OK") {
-          Swal.fire({
-            icon: 'warning',
-            text: '¡La fecha o hora seleccionada ya se encuentra agendada por favor selecciona otra!'
-          })
-        } else {
-          saveCi(formData);
-        }
-      }).catch(e => console.log(e));
-    }
   }
 
   const orquestador = () => {
     setSaving(true);
     setFormData(tempFormData);
-    validaciones(tempFormData);
+    save(formData)
     setSaving(false);
   }
 
-  const saveCi = (formData) => {
+  const save = (formData) => {
 
-    fetch('http://localhost:8080/citas', {
+    fetch('http://localhost:8080/presupuestos', {
       method: 'POST',
       body: JSON.stringify(tempFormData),
       headers: {
@@ -127,28 +73,16 @@ function CitaOdontologica(props) {
     }).then(res => res.json())
       .then(res => {
         if (res.mensaje === "OK") {
-          var email = window.localStorage.getItem("email"); //Se toma el correo de memoria
           Swal.fire({
             icon: 'success',
-            text: 'Cita Agendada con exito, a su correo llegara la notificación del agendamiento de la cita!'
+            text: 'Presupuesto creado con exito, a su correo llegara el presupuesto!'
           });
-
-          let fdate = moment(tempFormData.calendario.date).format("MMMM DD YYYY");
-          let hour = tempFormData.calendario.hour;
-          fetch(`http://localhost:8080/citas/enviarCita/${email}/${fdate}/${hour}`, {
-            method: 'GET',
-          }).then(res => res.json()).
-            then(res => {
-              if (res.mensaje === 'OK') {
-                console.log('Correo enviado');
-              }
-            })
         }
       }).catch(e => {
         console.log(e);
         Swal.fire({
           icon: 'warning',
-          text: 'Ocurrio un inconveniente al agendar tu cita!'
+          text: 'Ocurrio un inconveniente al agendar crear el presupuesto!'
         })
       })
       .finally(() => {
