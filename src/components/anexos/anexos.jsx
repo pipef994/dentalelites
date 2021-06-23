@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from 'react';
+import React, { useState, Fragment, useRef } from "react";
 import "./anexos.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -10,26 +10,26 @@ import {
   ModalBody,
   FormGroup,
   ModalFooter,
+  Input,
+  FormText,
 } from "reactstrap";
 import CanvasDraw from "react-canvas-draw";
-import Swal from 'sweetalert2';
-
+import Swal from "sweetalert2";
 
 const Anexos = (props) => {
-
   const firstCanvas = useRef(null);
   const secondCanvas = useRef(null);
   const [evoData, setEvoData] = useState([]);
 
   const [idData, setidData] = useState({
     tipId: "",
-    idPaciente: ""
+    idPaciente: "",
   });
 
   const handleIdChange = (e) => {
     setidData({
       ...idData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -38,9 +38,7 @@ const Anexos = (props) => {
   const [state, setState] = useState({
     // data: data,
     form: {
-      fecha: "",
-      tratamiento: "",
-      firma: "",
+      archivo: "",
     },
   });
 
@@ -55,44 +53,44 @@ const Anexos = (props) => {
   const clearCanvas = () => {
     const undo = firstCanvas.current.clear();
     console.log(undo);
-  }
+  };
 
   const insertar = () => {
     //Obtengo la firma dibujada
     let fecha = new Date(state.form.fecha);
-    fecha = fecha.toLocaleDateString()
+    fecha = fecha.toLocaleDateString();
     const data = firstCanvas.current.getSaveData();
     var valorNuevo = {
       ...state.form,
       firma: data,
       ...idData,
-      fecha
+      fecha,
     };
     setAbrirModal(false);
-    fetch('http://localhost:8080/Anexos', {
-      method: 'POST',
+    fetch("http://localhost:8080/Anexos", {
+      method: "POST",
       body: JSON.stringify(valorNuevo),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
-      .then(res => {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
         if (res.mensaje === "evoCreada") {
           consultarAnexos();
           setidData({
             tipId: "",
-            idPaciente: ""
-          })
+            idPaciente: "",
+          });
         } else {
-
         }
       })
-      .catch(e => {
-        console.log(e)
-      })
-  }
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setState({
       ...state,
       form: {
@@ -109,26 +107,26 @@ const Anexos = (props) => {
     tipId = tipId.toString();
 
     fetch(`http://localhost:8080/Anexos/searchEvo/${tipId}/${idPaciente}`, {
-      method: 'GET',
-    }).then(res => res.json()).
-      then(res => {
-        console.log('res.mensaje', res.mensaje);
-        if (res.mensaje === 'OK') {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log("res.mensaje", res.mensaje);
+        if (res.mensaje === "OK") {
           setEvoData(res.data);
         } else {
           Swal.fire({
-            icon: 'error',
-            text: 'El usuario no presenta evolución odontológica!'
-          })
+            icon: "error",
+            text: "El usuario no presenta evolución odontológica!",
+          });
           setidData({
             tipId: "",
-            idPaciente: ""
-          })
+            idPaciente: "",
+          });
         }
-      }).catch(
-        e => console.log(e)
-      );
-  }
+      })
+      .catch((e) => console.log(e));
+  };
 
   return (
     <div className="container">
@@ -162,7 +160,7 @@ const Anexos = (props) => {
                 <div className="form-group mb-2 ml-5">
                   <label htmlFor="idPaciente">
                     Identificación del paciente
-                      </label>
+                  </label>
                   <input
                     class="form-control mx-2"
                     type="text"
@@ -174,10 +172,22 @@ const Anexos = (props) => {
                   />
                 </div>
                 <div className="form-group mb-2">
-                  <button type="button" className="btn btn-info mx-2" id="consultar" name="consultar" onClick={consultarAnexos}>
+                  <button
+                    type="button"
+                    className="btn btn-info mx-2"
+                    id="consultar"
+                    name="consultar"
+                    onClick={consultarAnexos}
+                  >
                     Consultar
-                   </button>
-                  <button type="button" className="btn btn-success mx-2" id="cargar" name="cargar" onClick={() => mostrarModalInsertar()} >
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-success mx-2"
+                    id="cargar"
+                    name="cargar"
+                    onClick={() => mostrarModalInsertar()}
+                  >
                     Cargar
                   </button>
                 </div>
@@ -194,27 +204,16 @@ const Anexos = (props) => {
           <Table>
             <thead>
               <tr>
-                <th>Fecha</th>
-                <th>Tratamiento odontológico ejecutado</th>
-                <th>Firma Paciente</th>
+                <th>Archivo a cargar</th>
               </tr>
             </thead>
             <tbody>
-              {
-                evoData.map((dato) => (
-                  <tr key={dato.fecha}>
-                    <td>{dato.fecha}</td>
-                    <td>{dato.tratamiento}</td>
-                    <td>
-                      <CanvasDraw
-                        hideGrid={true}
-                        disabled={true}
-                        style={{ border: '1px solid #000000', width: 300, height: 150 }}
-                        saveData={dato.firma}
-                      />
-                    </td>
-                  </tr>
-                ))}
+              {evoData.map((dato) => (
+                <tr key={dato.fecha}>
+                  <td>{dato.fecha}</td>
+                  <td>{dato.archivo}</td>
+                </tr>
+              ))}
             </tbody>
           </Table>
         )}
@@ -222,57 +221,33 @@ const Anexos = (props) => {
 
       <Modal isOpen={abrirModal}>
         <ModalHeader>
-          <div><h3>Insertar Evolución</h3></div>
+          <div>
+            <h3>Insertar Archivo</h3>
+          </div>
         </ModalHeader>
 
         <ModalBody>
           <FormGroup>
-            <label>
-              Fecha:
-               </label>
-            <input class="form-control" type="date" defaultValue="" id="fecha" name="fecha" onChange={handleChange} />
-          </FormGroup>
-
-          <FormGroup>
-            <label>
-              Tratamiento:
-               </label>
-            <textarea class="form-control" id="tratamiento" rows="3" name="tratamiento" onChange={handleChange}></textarea>
-          </FormGroup>
-          <FormGroup>
-            <label>
-              Firma:
-               </label>
-            <br />
-            <CanvasDraw
-              brushRadius={1}
-              catenaryColor="red"
-              hideGrid={true}
-              style={{ border: '1px solid #000000', width: 300, height: 150 }}
-              ref={firstCanvas}
-            />
-          </FormGroup>
-          <FormGroup>
-            <button type="button" class="btn btn-secondary" onClick={() => clearCanvas()}>Borrar Firma</button>
+            <Input type="file" name="archivo" id="archivo" />
+            <FormText color="muted">
+              Por favor seleccione el archivo a cargar!
+            </FormText>
           </FormGroup>
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            color="primary"
-            onClick={() => insertar()}
-          >
+          <Button color="primary" onClick={() => insertar()}>
             Insertar
-            </Button>
+          </Button>
           <Button
             className="btn btn-danger"
             onClick={() => cerrarModalInsertar()}
           >
             Cancelar
-            </Button>
+          </Button>
         </ModalFooter>
       </Modal>
-    </div >
-  )
-}
+    </div>
+  );
+};
 export default Anexos;
