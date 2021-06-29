@@ -60,6 +60,9 @@ class Navbar extends React.Component {
                 <ReactBootStrap.NavDropdown.Item href="consultar-hc">
                   Consultar
                 </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="anexos">
+                  Anexos
+                </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
             )}
             {(perfil === "admin" || perfil === "odont" || perfil === "aux") && (
