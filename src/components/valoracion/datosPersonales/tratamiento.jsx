@@ -45,15 +45,29 @@ function Tratamiento(props) {
   }
 
 
-  const handleTreatments = (data) => {
+  const handleTreatments = (data, remove) => {
+    if (remove) {
+      const newState = {
+        ...formData,
+        ...data
+      }
+
+      console.log(newState);
+      console.log(...data);
+
+    }
+
     const newState = {
-      ...formData,
       ...data
     }
+    console.log('data 2 ',data);
+
 
     setFormData(newState)
     props.updateValues(newState)
+
   }
+  
 
   return (
     <form>

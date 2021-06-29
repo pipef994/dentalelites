@@ -5,11 +5,7 @@ import classNames from 'classnames';
 
 function CustomToggle({eventKey, title, handleSearchTreatment}) {
 
-  const [treatment, setTreatment] = useState([]);
   const currentEventKey = useContext(AccordionContext); // <-- Will update every time the eventKey changes.
-
-
-
   const toggleOnClick = useAccordionToggle(eventKey, () => {
     handleSearchTreatment(eventKey);
   });

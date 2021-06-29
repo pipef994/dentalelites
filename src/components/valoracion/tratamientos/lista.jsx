@@ -12,6 +12,7 @@ var NumberFormat = require('react-number-format');
 const Lista = (props) => {
   const baseUrl = "http://localhost:8080/valoracion/tratamientos"
 
+
   const [treatments, setTreatments] = useState([]);
   const [generalTreatments, setGeneralTreatments] = useState([]);
 

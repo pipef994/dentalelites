@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion, Card } from "react-bootstrap";
+import { Accordion, Card, Table } from "react-bootstrap";
 
 
 import CustomToggle from './customToggle';
@@ -47,18 +47,32 @@ const TreatmentCard = ({ baseUrl, data, handleTreatments }) => {
           valor_total: data.valor_total
         }
       }
-   
+      
         return formTreatment;
     } )
 
     if (flag) {
       setFormData(newFormData);
-      handleTreatments(formData);
+      handleTreatments(newFormData, false);
       return;
     }
 
     setFormData([ ...formData, data]);
-    handleTreatments(formData);
+    handleTreatments(newFormData, false);
+
+    console.log();
+  }
+
+  const handleRemoveItem = (descripcion) => {
+    console.log(formData);
+
+    const index = formData.findIndex(formTreatment => formTreatment.descripcion === descripcion); //use id instead of index
+    if (index > -1) { //make sure you found it
+      setFormData(prevState => prevState.splice(index, 1));
+    }
+    
+    console.log(formData);
+    handleTreatments(formData, true);
 }
 
 
@@ -70,11 +84,25 @@ const TreatmentCard = ({ baseUrl, data, handleTreatments }) => {
 
       <Accordion.Collapse eventKey={data.id}>
         <Card.Body>
-          {treatments.map(treatment => (
-            <TreatmentSelection description={treatment.descripcion} minPrice={treatment.precio_minimo} normalPrice={treatment.precio_normal} 
-            handleTreatmentForm={handleTreatmentForm} >
-            </TreatmentSelection>
-          ))}
+          <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Descripción de Tratamietno</th>
+                  <th>Precio Minimo</th>
+                  <th>Precio Normal</th>
+                  <th>Cantidad</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {treatments.map(treatment => (
+                  <TreatmentSelection description={treatment.descripcion} minPrice={treatment.precio_minimo} normalPrice={treatment.precio_normal} 
+                  handleTreatmentForm={handleTreatmentForm} handleRemoveItem={handleRemoveItem}>
+                  </TreatmentSelection>
+                ))}
+              </tbody>
+          </Table>
+
         </Card.Body>
       </Accordion.Collapse>
     </>
