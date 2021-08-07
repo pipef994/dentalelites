@@ -21,6 +21,9 @@ import ConsultarHistoria from "./components/hclinicas/consultar/consultarHistori
 import Valoracion from "./components/valoracion";
 import Tratamientos from "./components/valoracion/tratamientos/lista";
 import Anexos from "./components/anexos/anexos";
+import Consentimiento from "./components/consentimientos/consentimiento";
+import ConsentList from "./components/consentimientos/ConsentList";
+
 
 
 function App() {
@@ -48,8 +51,10 @@ function App() {
                 <Route path="/cancela2 " exact component={Cancelacion2} />
                 <Route path="/odontograma" exact component={Odontograma} />
                 <Route path="/evolucion" exact component={Evolucion} />
-                <Route path="/valoracion" exact component={Valoracion} />
+                <Route path="/valoracion" exact component={Valoracion} /> 
                 <Route path="/tratamientos" exact component={Tratamientos} />
+                <Route path="/consentimiento" exact component={Consentimiento} />
+                <Route path="/consentimiento/list" exact component={ConsentList} />
                 <Route path="/anexos" exact component={Anexos} />
                 <Route
                   path="/consultar-hc"

@@ -1,0 +1,24 @@
+.dataResult {
+    margin-top: 5px;
+    height: 200px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+
+.dataResult .dataItem{
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+.dataItem{
+    margin-left: 10px;
+}
+
+.dataItem:hover{
+    background-color: lightgreen;
+    cursor: pointer;
+}

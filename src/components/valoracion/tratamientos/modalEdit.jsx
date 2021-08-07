@@ -14,9 +14,6 @@ import SelectInput  from './selectInput';
 
 export const modalEdit = ({generalTreatmentsSelect, isOpen, close, onTreatment, onChange, baseUrl, state}) => {
 
-    console.log(state);
-
-
     const editar = () => {
         var treatment = {
           ...state.form,

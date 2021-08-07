@@ -83,6 +83,19 @@ class Navbar extends React.Component {
                   Gestionar Tratamientos
                 </ReactBootStrap.NavDropdown.Item>
               </ReactBootStrap.NavDropdown>
+
+              <ReactBootStrap.NavDropdown
+                title="Consentimientos"
+                id="collasible-nav-dropdown"
+              >
+                <ReactBootStrap.NavDropdown.Item href="/consentimiento">
+                  Asignar
+                </ReactBootStrap.NavDropdown.Item>
+                <ReactBootStrap.NavDropdown.Item href="/consentimiento/list">
+                  consultar
+                </ReactBootStrap.NavDropdown.Item>
+              </ReactBootStrap.NavDropdown>
+              
           </ReactBootStrap.Nav>
           <ReactBootStrap.Nav>
             <ReactBootStrap.Nav.Link href="/logout">
