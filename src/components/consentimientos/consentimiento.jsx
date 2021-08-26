@@ -48,7 +48,7 @@ const Consentimiento = (props) => {
     const assignConsent = () => {
       setConsentInfo();
 
-      
+
       var user = {
         ...userAsignedData,
         consent: consentAssigned,
@@ -77,7 +77,8 @@ const Consentimiento = (props) => {
         id: userAsignedData.id,
         date: fecha.toLocaleDateString(),
         consent: consentAssigned,
-        dentist: 'Jorge Alexander Atehortua'
+        dentist: 'Jorge Alexander Atehortua',
+        ready: false
       };
 
       fetch(`http://localhost:8080/consentimiento/ConsentInfo`, { 

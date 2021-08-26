@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import * as ReactBootStrap from "react-bootstrap";
 import { Button, Table } from "reactstrap";
 
 import ModalEdit from './modalEdit';
@@ -76,7 +75,7 @@ const DataTable = ({ data, loading, generalTreatmentsSelect, onTreatment, baseUr
           <th>Nombre</th>
           <th>Precio Minimo</th>
           <th>Precio Normal</th>
-          <th>Prueba</th>
+          <th>Gestión</th>
         </tr>
         
       </thead>

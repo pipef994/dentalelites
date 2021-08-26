@@ -12,7 +12,6 @@ import Recuperar from "./components/login/recuperar";
 import Agenda from "./components/agenda";
 import Calendario from "./components/agenda/cita";
 import Hclinicas from "./components/hclinicas";
-import Cancelacion from "./components/agenda/cancelar/cancelacion";
 import Cancelacion2 from "./components/agenda/cancelar/cancelacion2";
 import ListUser from "./components/usuarios/listUser";
 import Odontograma from "./components/odontograma";

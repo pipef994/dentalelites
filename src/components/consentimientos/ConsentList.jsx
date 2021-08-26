@@ -1,20 +1,53 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Table, Row, Container, Form } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faUpload } from '@fortawesome/free-solid-svg-icons'
 
-import ModalUpload  from './modalUploadConsent';
+import ModalUpload from './modalUploadConsent';
 
 
 
 const ConsentList = () => {
     const [uploadModal, setUploadModal] = useState(false);
+    const [fileChange, setFileChange] = useState(false);
+    const [data, setData] = useState([]);
+    const [selectData, setSelectData] = useState([]);
 
-    const uploadModalAction = () => {
-        setUploadModal(!uploadModal);
-      };
     
-      const closeModal = () => setUploadModal(!uploadModal);
+    const selectFile = () => {
+        setFileChange(true);
+    };
+
+    const uploadModalAction = (consentInfo) => {
+        setFileChange(false);
+        setSelectData(consentInfo)
+        setUploadModal(!uploadModal);
+    };
+
+    const closeModal = () => {
+        setFileChange(false);
+        setUploadModal(!uploadModal);
+    };
+    
+    const updateData = (consentinfo) => {
+        updateGeneralData(data, consentinfo.id)
+    }
+
+    const updateGeneralData= ( data, id ) => {
+        let objIndex = data.findIndex((obj => obj.id == id));
+        data[objIndex].ready = true;
+        setData(data);
+     }
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/consentimiento/ConsentInfo`, { method: 'GET' })
+            .then(res => res.json())
+            .then(res => {
+                setData(res.data);
+                console.log(res.data);
+            })
+            .catch(e => console.log(e));
+    }, [])
 
 
     return (
@@ -37,33 +70,22 @@ const ConsentList = () => {
                             </thead>
 
                             <tbody>
+                                {data.filter(data => !data.ready).map(data => (
 
-                                <tr key='key' className='text-center'>
-                                    <td className="text-left">fecha</td>
-                                    <td>consentimiento</td>
-                                    <td>Odontologo</td>
-                                    <td>
-                                        <Button variant="warning" className="btn btn-warning" onClick={() => uploadModalAction()}><FontAwesomeIcon icon={faEdit}  /></Button>{' '}
-                                    </td>
-                                </tr>
-
-                                {/* {data.map(data => (
-            <tr key={data.id} className='text-center'>
-              <td className="text-left">{data.descripcion}</td>
-              <td>{data.precio_minimo === 0 ? '-' : data.precio_minimo}</td>
-              <td>${data.precio_normal}</td>
-              <td>
-                <Button variant="warning" className="btn btn-warning" onClick={() => editModalAction(data)}><FontAwesomeIcon icon={faEdit} /></Button>{' '}
-                <Button variant="danger" className="btn btn-danger" onClick={() => deleteModalAction(data)}><FontAwesomeIcon icon={faTrashAlt} /></Button>{' '}
-              </td>
-            </tr>
-          ))} */}
-
+                                    <tr key={data.id} className='text-center'>
+                                        <td className="text-left">{data.date}</td>
+                                        <td>{data.consent.split('_').join(' ')}</td>
+                                        <td>{data.dentist}</td>
+                                        <td>
+                                            <Button variant="warning" className="btn btn-warning" onClick={() => uploadModalAction(data)}><FontAwesomeIcon icon={faUpload} /></Button>{' '}
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </Table>
                     </Row>
                     <Row>
-                    <ModalUpload isOpen={uploadModal} close={closeModal} />
+                        <ModalUpload isOpen={uploadModal} close={closeModal} selectFile={selectFile} file={fileChange} data={selectData} updateData={updateData}/>
                     </Row>
                 </Form>
             </Container>
